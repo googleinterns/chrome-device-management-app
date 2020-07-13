@@ -12,14 +12,19 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
-class ActiveTimeRanges {
-  String date;
-  String activeTime;
+import 'dart:convert';
+import 'package:chrome_management_app/objects/active_time_ranges.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-  ActiveTimeRanges({this.date, this.activeTime});
-
-  ActiveTimeRanges.fromJson(Map<String, dynamic> json) {
-    date = json['date'];
-    activeTime = json['activeTime'];
-  }
+void main() {
+  test('Check Json parse for active time ranges', () {
+    final dummy = ActiveTimeRanges.fromJson(json.decode("""
+      {
+        "date": "date 1",
+        "activeTime": "active time 1"
+      }
+    """));
+    expect(dummy.activeTime, 'active time 1');
+    expect(dummy.date, 'date 1');
+  });
 }
