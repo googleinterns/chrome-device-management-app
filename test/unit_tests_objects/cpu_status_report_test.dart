@@ -13,7 +13,7 @@
 /// limitations under the License.
 
 import 'dart:convert';
-import 'package:chrome_management_app/Objects/cpu_status_report.dart';
+import 'package:chrome_management_app/objects/cpu_status_report.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
