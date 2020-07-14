@@ -13,12 +13,12 @@
 /// limitations under the License.
 
 import 'dart:io';
-import 'package:chrome_management_app/Objects/account_devices.dart';
-import 'package:chrome_management_app/Objects/detailed_device.dart';
+import 'package:chrome_management_app/objects/account_devices.dart';
+import 'package:chrome_management_app/objects/detailed_device.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:http/http.dart' as http;
-import 'package:chrome_management_app/Models/api_calls.dart';
+import 'package:chrome_management_app/models/api_calls.dart';
 
 /// Class to mock a http client
 class MockClient extends Mock implements http.Client {}
