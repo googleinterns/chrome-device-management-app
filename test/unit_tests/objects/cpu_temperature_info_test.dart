@@ -12,18 +12,19 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
-class DeviceFiles {
-  String name;
-  String type;
-  String downloadUrl;
-  String createTime;
+import 'dart:convert';
+import 'package:chrome_management_app/objects/cpu_temperature_info.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-  DeviceFiles({this.name, this.type, this.downloadUrl, this.createTime});
-
-  DeviceFiles.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    type = json['type'];
-    downloadUrl = json['downloadUrl'];
-    createTime = json['createTime'];
-  }
+void main() {
+  test('Check Json parse for cpu temperature info', () {
+    final dummy = CpuTemperatureInfo.fromJson(json.decode("""
+      {
+        "temperature": "temp",
+        "label": "label"
+      }
+    """));
+    expect(dummy.temperature, 'temp');
+    expect(dummy.label, 'label');
+  });
 }

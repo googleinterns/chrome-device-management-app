@@ -12,14 +12,19 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
-class LastKnownNetwork {
-  String ipAddress;
-  String wanIpAddress;
+import 'dart:convert';
+import 'package:chrome_management_app/objects/recent_users.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-  LastKnownNetwork({this.ipAddress, this.wanIpAddress});
-
-  LastKnownNetwork.fromJson(Map<String, dynamic> json) {
-    ipAddress = json['ipAddress'];
-    wanIpAddress = json['wanIpAddress'];
-  }
+void main() {
+  test('Check Json parse for recent users', () {
+    final dummy = RecentUsers.fromJson(json.decode("""
+    {
+        "email": "email",
+        "type": "type"
+    }
+    """));
+    expect(dummy.email, 'email');
+    expect(dummy.type, 'type');
+  });
 }
