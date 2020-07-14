@@ -25,9 +25,11 @@ class AccountDevices {
   String _nextPage;
   List<BasicDevice> _chromeosdevices;
 
+  /// Constructor with optional variables.
   AccountDevices(
       [this._etag, this._kind, this._chromeosdevices, this._nextPage]);
 
+  /// Constructor form a json string.
   AccountDevices.fromJson(Map<String, dynamic> json) {
     _etag = json['etag'];
     _kind = json['kind'];

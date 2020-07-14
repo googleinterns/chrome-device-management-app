@@ -57,6 +57,7 @@ class DetailedDevice extends BasicDevice {
   String _autoUpdateExpiration;
   List<LastKnownNetwork> _lastKnownNetwork;
 
+  /// Constructor with optional variables.
   DetailedDevice(
       [kind,
       etag,
@@ -107,6 +108,7 @@ class DetailedDevice extends BasicDevice {
             annotatedAssetId,
             notes);
 
+  /// Constructor form a json string.
   DetailedDevice.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     _model = json['model'];
     _meid = json['meid'];
