@@ -13,20 +13,22 @@
 /// limitations under the License.
 
 import 'dart:convert';
-import 'package:chrome_management_app/Objects/volume_info.dart';
+import 'package:chrome_management_app/objects/device_files.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('Check Json parse for volume info', () {
-    final dummy = VolumeInfo.fromJson(json.decode("""
+  test('Check Json parse for device files', () {
+    final dummy = DeviceFiles.fromJson(json.decode("""
       {        
-        "volumeId": "volume ID",
-        "storageTotal": "storage total",
-        "storageFree": "storage free"
+        "name": "name",
+        "type": "type",
+        "downloadUrl": "url",
+        "createTime": "create time"
       }
     """));
-    expect(dummy.volumeId, 'volume ID');
-    expect(dummy.storageTotal, 'storage total');
-    expect(dummy.storageFree, 'storage free');
+    expect(dummy.createTime, 'create time');
+    expect(dummy.downloadUrl, 'url');
+    expect(dummy.name, 'name');
+    expect(dummy.type, 'type');
   });
 }

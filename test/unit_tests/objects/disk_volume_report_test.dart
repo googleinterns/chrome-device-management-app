@@ -13,7 +13,7 @@
 /// limitations under the License.
 
 import 'dart:convert';
-import 'package:chrome_management_app/Objects/disk_volume_report.dart';
+import 'package:chrome_management_app/objects/disk_volume_report.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
