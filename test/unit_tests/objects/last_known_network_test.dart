@@ -13,18 +13,18 @@
 /// limitations under the License.
 
 import 'dart:convert';
-import 'package:chrome_management_app/Objects/cpu_temperature_info.dart';
+import 'package:chrome_management_app/objects/last_known_network.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('Check Json parse for cpu temperature info', () {
-    final dummy = CpuTemperatureInfo.fromJson(json.decode("""
-      {
-        "temperature": "temp",
-        "label": "label"
+  test('Check Json parse for last known network', () {
+    final dummy = LastKnownNetwork.fromJson(json.decode("""
+      {        
+        "ipAddress": "ip address",
+        "wanIpAddress": "wan ip address"
       }
     """));
-    expect(dummy.temperature, 'temp');
-    expect(dummy.label, 'label');
+    expect(dummy.ipAddress, 'ip address');
+    expect(dummy.wanIpAddress, 'wan ip address');
   });
 }

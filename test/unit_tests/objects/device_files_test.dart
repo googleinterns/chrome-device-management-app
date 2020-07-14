@@ -12,14 +12,23 @@
 /// See the License for the specific language governing permissions and
 /// limitations under the License.
 
-class RecentUsers {
-  String type;
-  String email;
+import 'dart:convert';
+import 'package:chrome_management_app/objects/device_files.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-  RecentUsers({this.type, this.email});
-
-  RecentUsers.fromJson(Map<String, dynamic> json) {
-    type = json['type'];
-    email = json['email'];
-  }
+void main() {
+  test('Check Json parse for device files', () {
+    final dummy = DeviceFiles.fromJson(json.decode("""
+      {        
+        "name": "name",
+        "type": "type",
+        "downloadUrl": "url",
+        "createTime": "create time"
+      }
+    """));
+    expect(dummy.createTime, 'create time');
+    expect(dummy.downloadUrl, 'url');
+    expect(dummy.name, 'name');
+    expect(dummy.type, 'type');
+  });
 }
