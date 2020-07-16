@@ -24,16 +24,16 @@ import 'package:chrome_management_app/objects/detailed_device.dart';
 /// https://developers.google.com/admin-sdk/directory/v1/guides/manage-chrome-devices.
 
 class ApiCalls {
-  ///Url to get the intial page of the list of devices
-  static final _deviceListUrl =
+  ///Url to get the intial page of the list
+  static const DEVICE_LIST_URL =
       'https://www.googleapis.com/admin/directory/v1/customer/my_customer/devices/chromeos?projection=BASIC&maxResults=15';
 
-  ///Url to get the next page of the list of devices
-  static final _deviceListWithTokenUrl =
+  ///Url to get the next page of the list of devices with a next page token
+  static const DEVICE_LIST_WITH_TOKEN_URL =
       'https://www.googleapis.com/admin/directory/v1/customer/my_customer/devices/chromeos?projection=BASIC&maxResults=15&pageToken=';
 
   ///Url to get detailed information of a device
-  static final _detailedDeviceUrl =
+  static const DETAILED_DEVICE_URL =
       'https://www.googleapis.com/admin/directory/v1/customer/my_customer/devices/chromeos/';
 
   /// Calls the Directory API to get a list of devices with max results of 15.
@@ -49,10 +49,10 @@ class ApiCalls {
     var response;
     authToken = 'Bearer $authToken';
     if (nextPageToken == null) {
-      response = await client.get(_deviceListUrl,
+      response = await client.get(DEVICE_LIST_URL,
           headers: {HttpHeaders.authorizationHeader: authToken});
     } else {
-      response = await client.get(_deviceListWithTokenUrl + nextPageToken,
+      response = await client.get(DEVICE_LIST_WITH_TOKEN_URL + nextPageToken,
           headers: {HttpHeaders.authorizationHeader: authToken});
     }
     // If conection is succesful return a AccountDevices object by parsing the
@@ -76,7 +76,7 @@ class ApiCalls {
   static dynamic getDetailedDevice(
       http.Client client, String authToken, String deviceId) async {
     authToken = 'Bearer $authToken';
-    final response = await client.get(_detailedDeviceUrl + deviceId,
+    final response = await client.get(DETAILED_DEVICE_URL + deviceId,
         headers: {HttpHeaders.authorizationHeader: authToken});
     // If conection is succesful return a DetailedDevice object by parsing the
     // response body
