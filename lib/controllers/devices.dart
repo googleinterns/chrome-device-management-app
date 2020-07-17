@@ -6,11 +6,10 @@ import 'package:chrome_management_app/objects/account_devices.dart';
 class Devices {
   /// Method to get account devices
   static Future<AccountDevices> getList(
-      http.Client client, String authToken, String nextPageToken) async {
+      ApiCalls apiCall, String authToken, String nextPageToken) async {
     AccountDevices accountDevices;
     accountDevices =
-        await ApiCalls.getDeviceList(client, authToken, nextPageToken)
-            .catchError((e) {
+        await apiCall.getDeviceList(authToken, nextPageToken).catchError((e) {
       throw Exception(e);
     });
     return accountDevices;

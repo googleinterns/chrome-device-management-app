@@ -1,4 +1,5 @@
 import 'package:chrome_management_app/controllers/widget/device_summary.dart';
+import 'package:chrome_management_app/models/api_calls.dart';
 import 'package:chrome_management_app/objects/account_devices.dart';
 import 'package:chrome_management_app/objects/basic_device.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +28,8 @@ class _DeviceListState extends State<DeviceList> {
   /// Account information from Directory Chrome Devices API.
   AccountDevices _list;
 
-  /// Http Client to establish https communication with API.
-  final _client = http.Client();
+  /// API call model to do all calls to the API.
+  final _apiCall = ApiCalls(http.Client());
 
   /// Verify that all devices from account are loaded.
   bool _allDevicesLoaded = false;
@@ -72,7 +73,7 @@ class _DeviceListState extends State<DeviceList> {
     setState(() {
       _loading = true;
     });
-    Devices.getList(_client, _authToken, null).then((value) {
+    Devices.getList(_apiCall, _authToken, null).then((value) {
       setState(() {
         _list = value;
         if (_list.nextPage == null) {
@@ -98,7 +99,7 @@ class _DeviceListState extends State<DeviceList> {
     setState(() {
       _loading = true;
     });
-    await Devices.getList(_client, _authToken, _list.nextPage).then((value) {
+    await Devices.getList(_apiCall, _authToken, _list.nextPage).then((value) {
       setState(() {
         value.chromeosdevices.forEach((element) {
           _list.chromeosdevices.add(element);
