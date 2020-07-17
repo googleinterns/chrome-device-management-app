@@ -33,18 +33,6 @@ main() {
   /// Mock a device ID
   final deviceId = '789';
 
-  /// Url to get the intial page of the list of devices
-  final deviceListUrl =
-      'https://www.googleapis.com/admin/directory/v1/customer/my_customer/devices/chromeos?projection=BASIC&maxResults=15';
-
-  /// Url to get the next page of the list of devices
-  final deviceListWithTokenUrl =
-      'https://www.googleapis.com/admin/directory/v1/customer/my_customer/devices/chromeos?projection=BASIC&maxResults=15&pageToken=$nextPageToken';
-
-  /// Url to get detailed information of a device
-  final detailedDeviceUrl =
-      'https://www.googleapis.com/admin/directory/v1/customer/my_customer/devices/chromeos/$deviceId';
-
   /// Mock json response from [deviceList] and [deviceListWithTokenUrl]
   final jsonAccountDevices = """
     {
@@ -101,69 +89,71 @@ main() {
         'returns AccountDevices if the http call completes successfully without next page token',
         () async {
       final client = MockClient();
-      when(client.get(deviceListUrl,
+      when(client.get(ApiCalls.DEVICE_LIST_URL,
               headers: {HttpHeaders.authorizationHeader: 'Bearer $authToken'}))
           .thenAnswer((_) async => http.Response(jsonAccountDevices, 200));
+      final apiCall = ApiCalls(client);
 
-      expect(await ApiCalls.getDeviceList(client, authToken, null),
-          isA<AccountDevices>());
+      expect(
+          await apiCall.getDeviceList(authToken, null), isA<AccountDevices>());
     });
 
     test(
         "throws an exception if the http call for list of devices without next page token completes with an error",
         () {
       final client = MockClient();
-      when(client.get(deviceListUrl,
+      when(client.get(ApiCalls.DEVICE_LIST_URL,
               headers: {HttpHeaders.authorizationHeader: 'Bearer $authToken'}))
           .thenAnswer((_) async => http.Response('Not Found', 404));
+      final apiCall = ApiCalls(client);
 
-      expect(ApiCalls.getDeviceList(client, authToken, null), throwsException);
+      expect(apiCall.getDeviceList(authToken, null), throwsException);
     });
 
     test(
         'returns AccountDevices if the http call completes successfully with next page token',
         () async {
       final client = MockClient();
-      when(client.get(deviceListWithTokenUrl,
+      when(client.get(ApiCalls.DEVICE_LIST_WITH_TOKEN_URL,
               headers: {HttpHeaders.authorizationHeader: 'Bearer $authToken'}))
           .thenAnswer((_) async => http.Response(jsonAccountDevices, 200));
+      final apiCall = ApiCalls(client);
 
-      expect(await ApiCalls.getDeviceList(client, authToken, nextPageToken),
+      expect(await apiCall.getDeviceList(authToken, nextPageToken),
           isA<AccountDevices>());
     });
     test(
         "throws an exception if the http call for list of devices with next page token completes with an error",
         () {
       final client = MockClient();
-      when(client.get(deviceListWithTokenUrl,
+      when(client.get(ApiCalls.DEVICE_LIST_WITH_TOKEN_URL,
               headers: {HttpHeaders.authorizationHeader: 'Bearer $authToken'}))
           .thenAnswer((_) async => http.Response('Not Found', 404));
+      final apiCall = ApiCalls(client);
 
-      expect(ApiCalls.getDeviceList(client, authToken, nextPageToken),
-          throwsException);
+      expect(apiCall.getDeviceList(authToken, nextPageToken), throwsException);
     });
 
     test(
         'returns DetailedDevice if the http call to detailed device completes successfully',
         () async {
       final client = MockClient();
-      when(client.get(detailedDeviceUrl,
+      when(client.get(ApiCalls.DETAILED_DEVICE_URL,
               headers: {HttpHeaders.authorizationHeader: 'Bearer $authToken'}))
           .thenAnswer((_) async => http.Response(jsonDetailedDevice, 200));
-
-      expect(await ApiCalls.getDetailedDevice(client, authToken, deviceId),
+      final apiCall = ApiCalls(client);
+      expect(await apiCall.getDetailedDevice(authToken, deviceId),
           isA<DetailedDevice>());
     });
     test(
         "throws an exception if the http call for detailed device completes with an error",
         () {
       final client = MockClient();
-      when(client.get(detailedDeviceUrl,
+      when(client.get(ApiCalls.DETAILED_DEVICE_URL,
               headers: {HttpHeaders.authorizationHeader: 'Bearer $authToken'}))
           .thenAnswer((_) async => http.Response('Not Found', 404));
-
-      expect(ApiCalls.getDetailedDevice(client, authToken, deviceId),
-          throwsException);
+      final apiCall = ApiCalls(client);
+      expect(apiCall.getDetailedDevice(authToken, deviceId), throwsException);
     });
   });
 }
