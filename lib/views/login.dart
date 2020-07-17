@@ -1,4 +1,4 @@
-import 'package:chrome_management_app/models/auth.dart';
+import 'package:chrome_management_app/third-party/auth.dart';
 import 'package:chrome_management_app/views/list.dart';
 import 'package:flutter/material.dart';
 
