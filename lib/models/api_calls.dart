@@ -43,7 +43,6 @@ class ApiCalls {
 
   /// Calls the Directory API to get a list of devices with max results of 15.
   ///
-  /// * [client] is the http client that will do the https requests.
   /// * [authToken] is the authentication token for API to accept the requests.
   /// * [nextPageToken]  is the next page of the devices list that should
   /// retreive, if it is null the function will request the first page.
@@ -75,7 +74,6 @@ class ApiCalls {
 
   /// Calls the Directory API to get the detailed information of a device.
   ///
-  /// * [client] is the http client that will do the https requests.
   /// * [authToken] is the authentication token for API to accept the requests.
   /// * [deviceId] is the ID of the device which its detailed information
   /// will be retrieved.
