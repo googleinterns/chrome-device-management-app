@@ -42,9 +42,6 @@ class _DeviceListState extends State<DeviceList> {
   /// Account information from Directory Chrome Devices API.
   AccountDevices _list;
 
-  /// API call model to do all calls to the API.
-  final _apiCall = ApiCalls(http.Client());
-
   /// Verify that all devices from account are loaded.
   bool _allDevicesLoaded = false;
 
@@ -87,7 +84,7 @@ class _DeviceListState extends State<DeviceList> {
     setState(() {
       _loading = true;
     });
-    Devices.getList(_apiCall, _authToken, null).then((value) {
+    Devices.getList(_authToken, null).then((value) {
       setState(() {
         _list = value;
         if (_list.nextPage == null) {
@@ -113,7 +110,7 @@ class _DeviceListState extends State<DeviceList> {
     setState(() {
       _loading = true;
     });
-    await Devices.getList(_apiCall, _authToken, _list.nextPage).then((value) {
+    await Devices.getList(_authToken, _list.nextPage).then((value) {
       setState(() {
         value.chromeosdevices.forEach((element) {
           _list.chromeosdevices.add(element);
