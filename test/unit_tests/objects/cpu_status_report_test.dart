@@ -14,11 +14,13 @@
 
 import 'dart:convert';
 import 'package:chrome_management_app/objects/cpu_status_report.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Check Json parse for cpu status report', () {
-    final dummy = CpuStatusReport.fromJson(json.decode("""
+    final dummy =
+        serializers.deserializeWith(CpuStatusReport.serializer, json.decode("""
       {
         "reportTime": "report time",
         "cpuUtilizationPercentageInfo": [

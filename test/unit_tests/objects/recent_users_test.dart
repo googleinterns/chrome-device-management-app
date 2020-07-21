@@ -14,11 +14,13 @@
 
 import 'dart:convert';
 import 'package:chrome_management_app/objects/recent_users.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Check Json parse for recent users', () {
-    final dummy = RecentUsers.fromJson(json.decode("""
+    final dummy =
+        serializers.deserializeWith(RecentUsers.serializer, json.decode("""
     {
         "email": "email",
         "type": "type"

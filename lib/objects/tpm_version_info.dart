@@ -12,52 +12,48 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+part 'tpm_version_info.g.dart';
+
 /// The object holds he Trusted Plataform Modules information.
 ///
 /// See document https://developers.google.com/admin-sdk/directory/v1/reference/chromeosdevices#resource.
 
-class TpmVersionInfo {
-  String _family;
-  String _specLevel;
-  String _manufacturer;
-  String _tpmModel;
-  String _firmwareVersion;
-  String _vendorSpecific;
+abstract class TpmVersionInfo
+    implements Built<TpmVersionInfo, TpmVersionInfoBuilder> {
+  /// Anonymus constructor
+  TpmVersionInfo._();
 
-  /// Constructor with optional variables.
-  TpmVersionInfo(
-      [this._family,
-      this._specLevel,
-      this._manufacturer,
-      this._tpmModel,
-      this._firmwareVersion,
-      this._vendorSpecific]);
+  /// Factory constructor
+  static Serializer<TpmVersionInfo> get serializer =>
+      _$tpmVersionInfoSerializer;
 
-  /// Constructor from a json string.
-  TpmVersionInfo.fromJson(Map<String, dynamic> json) {
-    _family = json['family'];
-    _specLevel = json['specLevel'];
-    _manufacturer = json['manufacturer'];
-    _tpmModel = json['tpmModel'];
-    _firmwareVersion = json['firmwareVersion'];
-    _vendorSpecific = json['vendorSpecific'];
-  }
+  /// Serializer to parse from Json
+  factory TpmVersionInfo([void Function(TpmVersionInfoBuilder) updates]) =
+      _$TpmVersionInfo;
 
   /// TPM family.
-  String get family => _family;
+  @nullable
+  String get family;
 
   /// TPM specification level.
-  String get specLevel => _specLevel;
+  @nullable
+  String get specLevel;
 
   ///TPM manufacturer code.
-  String get manufacturer => _manufacturer;
+  @nullable
+  String get manufacturer;
 
   /// TPM model number.
-  String get tpmModel => _tpmModel;
+  @nullable
+  String get tpmModel;
 
   /// TPM firmware version.
-  String get firmwareVersion => _firmwareVersion;
+  @nullable
+  String get firmwareVersion;
 
   /// Vendor ID.
-  String get vendorSpecific => _vendorSpecific;
+  @nullable
+  String get vendorSpecific;
 }

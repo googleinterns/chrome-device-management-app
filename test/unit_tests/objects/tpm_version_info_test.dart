@@ -13,12 +13,14 @@
 /// limitations under the License.
 
 import 'dart:convert';
+import 'package:chrome_management_app/objects/serializers.dart';
 import 'package:chrome_management_app/objects/tpm_version_info.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Check Json parse for tpm version info', () {
-    final dummy = TpmVersionInfo.fromJson(json.decode("""
+    final dummy =
+        serializers.deserializeWith(TpmVersionInfo.serializer, json.decode("""
       {        
       "family": "family",
       "specLevel": "spec level",

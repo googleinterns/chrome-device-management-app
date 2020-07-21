@@ -13,43 +13,43 @@
 // limitations under the License.
 
 import 'basic_device.dart';
+import 'package:built_value/serializer.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+part 'account_devices.g.dart';
 
 ///
 /// The object holds the complete response of the list of chromeosdevices.
 ///
 /// See the document from
 /// https://developers.google.com/admin-sdk/directory/v1/reference/chromeosdevices/list.
-class AccountDevices {
-  String _etag;
-  String _kind;
-  List<BasicDevice> _chromeosdevices;
 
-  /// Token used to access the next page of this result.
-  String nextPage;
+abstract class AccountDevices
+    implements Built<AccountDevices, AccountDevicesBuilder> {
+  /// Anonymus constructor
+  AccountDevices._();
 
-  /// Constructor with optional variables.
-  AccountDevices(
-      [this._etag, this._kind, this._chromeosdevices, this.nextPage]);
+  /// Factory constructor
+  static Serializer<AccountDevices> get serializer =>
+      _$accountDevicesSerializer;
 
-  /// Constructor form a json string.
-  AccountDevices.fromJson(Map<String, dynamic> json) {
-    _etag = json['etag'];
-    _kind = json['kind'];
-    if (json['chromeosdevices'] != null) {
-      _chromeosdevices = new List<BasicDevice>();
-      json['chromeosdevices'].forEach((value) {
-        _chromeosdevices.add(new BasicDevice.fromJson(value));
-      });
-    }
-    nextPage = json['nextPageToken'];
-  }
+  /// Serializer to parse from Json
+  factory AccountDevices([void Function(AccountDevicesBuilder) updates]) =
+      _$AccountDevices;
 
   /// ETag of the resource.
-  String get etag => _etag;
+  @nullable
+  String get etag;
 
   /// The type of the API resource.
-  String get kind => _kind;
+  @nullable
+  String get kind;
 
   /// Chrome OS Device objects.
-  List<BasicDevice> get chromeosdevices => _chromeosdevices;
+  @nullable
+  BuiltList<BasicDevice> get chromeosdevices;
+
+  /// Next page token
+  @nullable
+  String get nextPageToken;
 }

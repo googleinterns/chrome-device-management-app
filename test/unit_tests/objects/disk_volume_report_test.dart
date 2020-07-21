@@ -14,11 +14,13 @@
 
 import 'dart:convert';
 import 'package:chrome_management_app/objects/disk_volume_report.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Check Json parse for volume info', () {
-    final dummy = DiskVolumeReport.fromJson(json.decode("""
+    final dummy =
+        serializers.deserializeWith(DiskVolumeReport.serializer, json.decode("""
       {
         "volumeInfo": [
           {

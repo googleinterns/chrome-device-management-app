@@ -13,12 +13,14 @@
 /// limitations under the License.
 
 import 'package:chrome_management_app/objects/detailed_device.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:convert';
 
 void main() {
   test('Check Json parse for full device', () {
-    final full = DetailedDevice.fromJson(json.decode("""{
+    final full =
+        serializers.deserializeWith(DetailedDevice.serializer, json.decode("""{
     "kind": "kind",
     "etag": "etag",
     "deviceId": "device ID",

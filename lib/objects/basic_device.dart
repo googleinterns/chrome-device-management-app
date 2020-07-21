@@ -12,88 +12,72 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+part 'basic_device.g.dart';
+
 /// The object holds the device response object.
 ///
 /// Include all metadata excepts the model, meid,orderNumber, willAutoRenew,
 /// osVersion,platformVersion, firmwareVersion, macAddress, and bootMode
 /// properties.
 /// See the document from
-/// https://developers.google.com/admin-sdk/directory/v1/reference/chromeosdevices/get
-///
-class BasicDevice {
-  String _kind;
-  String _etag;
-  String _deviceId;
-  String _serialNumber;
-  String _status;
-  String _lastSync;
-  String _supportEndDate;
-  String _annotatedUser;
-  String _annotatedLocation;
-  String _annotatedAssetId;
-  String _notes;
+/// https://developers.google.com/admin-sdk/directory/v1/reference/chromeosdevices/get.
 
-  /// Constructor with optional variables.
-  BasicDevice(
-      [this._kind,
-      this._etag,
-      this._deviceId,
-      this._serialNumber,
-      this._status,
-      this._lastSync,
-      this._supportEndDate,
-      this._annotatedUser,
-      this._annotatedLocation,
-      this._annotatedAssetId,
-      this._notes]);
+abstract class BasicDevice implements Built<BasicDevice, BasicDeviceBuilder> {
+  /// Anonymus constructor
+  BasicDevice._();
 
-  /// Constructor form a json string.
-  BasicDevice.fromJson(Map<String, dynamic> json) {
-    _kind = json['kind'];
-    _etag = json['etag'];
-    _deviceId = json['deviceId'];
-    _serialNumber = json['serialNumber'];
-    _status = json['status'];
-    _lastSync = json['lastSync'];
-    _supportEndDate = json['supportEndDate'];
-    _annotatedUser = json['annotatedUser'];
-    _annotatedLocation = json['annotatedLocation'];
-    _annotatedAssetId = json['annotatedAssetId'];
-    _notes = json['notes'];
-  }
+  /// Factory constructor
+  static Serializer<BasicDevice> get serializer => _$basicDeviceSerializer;
+
+  /// Serializer to parse from Json
+  factory BasicDevice([void Function(BasicDeviceBuilder) updates]) =
+      _$BasicDevice;
 
   /// Type of resource.
-  String get kind => _kind;
+  @nullable
+  String get kind;
 
   /// ETag of the resource.
-  String get etag => _etag;
+  @nullable
+  String get etag;
 
   /// The unique ID of the Chrome device.
-  String get deviceId => _deviceId;
+  @nullable
+  String get deviceId;
 
   /// The Chrome device serial number entered when the device was enabled.
-  String get serialNumber => _serialNumber;
+  @nullable
+  String get serialNumber;
 
   /// The status of the device.
-  String get status => _status;
+  @nullable
+  String get status;
 
   /// The date and time the device was last synchronized with the policy
   /// settings in the Admin console.
-  String get lastSync => _lastSync;
+  @nullable
+  String get lastSync;
 
   /// The final date the device will be supported.
-  String get supportEndDate => _supportEndDate;
+  @nullable
+  String get supportEndDate;
 
   /// The user of the device as noted by the administrator.
-  String get annotatedUser => _annotatedUser;
+  @nullable
+  String get annotatedUser;
 
   /// The address or location of the device as noted by the administrator.
-  String get annotatedLocation => _annotatedLocation;
+  @nullable
+  String get annotatedLocation;
 
   /// The asset identifier as noted by an administrator or specified
   /// during enrollment.
-  String get annotatedAssetId => _annotatedAssetId;
+  @nullable
+  String get annotatedAssetId;
 
   /// Notes about this device added by the administrator.
-  String get notes => _notes;
+  @nullable
+  String get notes;
 }

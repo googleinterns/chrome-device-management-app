@@ -13,12 +13,14 @@
 /// limitations under the License.
 
 import 'package:chrome_management_app/objects/basic_device.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:convert';
 
 void main() {
   test('Check Json parse for basic device', () {
-    final basic = BasicDevice.fromJson(json.decode(""" {
+    final basic =
+        serializers.deserializeWith(BasicDevice.serializer, json.decode(""" {
         "kind": "kind",
         "etag": "etag",
         "deviceId": "device Id",

@@ -14,11 +14,13 @@
 
 import 'dart:convert';
 import 'package:chrome_management_app/objects/last_known_network.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Check Json parse for last known network', () {
-    final dummy = LastKnownNetwork.fromJson(json.decode("""
+    final dummy =
+        serializers.deserializeWith(LastKnownNetwork.serializer, json.decode("""
       {        
         "ipAddress": "ip address",
         "wanIpAddress": "wan ip address"

@@ -13,28 +13,30 @@
 // limitations under the License.
 
 import 'volume_info.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+part 'disk_volume_report.g.dart';
 
 /// The object holds the reports of disk space and other info
 /// about mounted/connected volumes.
 ///
 /// See document https://developers.google.com/admin-sdk/directory/v1/reference/chromeosdevices#resource.
 
-class DiskVolumeReport {
-  List<VolumeInfo> _volumeInfo;
+abstract class DiskVolumeReport
+    implements Built<DiskVolumeReport, DiskVolumeReportBuilder> {
+  /// Anonymus constructor
+  DiskVolumeReport._();
 
-  /// Constructor with optional variables.
-  DiskVolumeReport([this._volumeInfo]);
+  /// Factory constructor
+  static Serializer<DiskVolumeReport> get serializer =>
+      _$diskVolumeReportSerializer;
 
-  /// Constructor form a json string.
-  DiskVolumeReport.fromJson(Map<String, dynamic> json) {
-    if (json['volumeInfo'] != null) {
-      _volumeInfo = new List<VolumeInfo>();
-      json['volumeInfo'].forEach((v) {
-        volumeInfo.add(new VolumeInfo.fromJson(v));
-      });
-    }
-  }
+  /// Serializer to parse from Json
+  factory DiskVolumeReport([void Function(DiskVolumeReportBuilder) updates]) =
+      _$DiskVolumeReport;
 
   /// Disk volumes.
-  List<VolumeInfo> get volumeInfo => _volumeInfo;
+  @nullable
+  BuiltList<VolumeInfo> get volumeInfo;
 }

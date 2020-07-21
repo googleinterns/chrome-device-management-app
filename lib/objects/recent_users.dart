@@ -12,26 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+part 'recent_users.g.dart';
+
 /// The object holds a recent userof the device.
 ///
 /// See document https://developers.google.com/admin-sdk/directory/v1/reference/chromeosdevices#resource.
 
-class RecentUsers {
-  String _type;
-  String _email;
+abstract class RecentUsers implements Built<RecentUsers, RecentUsersBuilder> {
+  /// Anonymus constructor
+  RecentUsers._();
 
-  /// Constructor with optional variables.
-  RecentUsers([this._type, this._email]);
+  /// Factory constructor
+  static Serializer<RecentUsers> get serializer => _$recentUsersSerializer;
 
-  /// Constructor from a json string.
-  RecentUsers.fromJson(Map<String, dynamic> json) {
-    _type = json['type'];
-    _email = json['email'];
-  }
+  /// Serializer to parse from Json
+  factory RecentUsers([void Function(RecentUsersBuilder) updates]) =
+      _$RecentUsers;
 
   /// The type of the user.
-  String get type => _type;
+  @nullable
+  String get type;
 
   /// The user's email address.
-  String get email => _email;
+  @nullable
+  String get email;
 }

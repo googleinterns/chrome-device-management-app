@@ -14,11 +14,13 @@
 
 import 'dart:convert';
 import 'package:chrome_management_app/objects/device_files.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Check Json parse for device files', () {
-    final dummy = DeviceFiles.fromJson(json.decode("""
+    final dummy =
+        serializers.deserializeWith(DeviceFiles.serializer, json.decode("""
       {        
         "name": "name",
         "type": "type",

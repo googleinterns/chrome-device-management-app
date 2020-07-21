@@ -13,12 +13,14 @@
 /// limitations under the License.
 
 import 'dart:convert';
+import 'package:chrome_management_app/objects/serializers.dart';
 import 'package:chrome_management_app/objects/system_ram_free_report.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Check Json parse for system ram free report', () {
-    final dummy = SystemRamFreeReport.fromJson(json.decode("""
+    final dummy = serializers.deserializeWith(
+        SystemRamFreeReport.serializer, json.decode("""
       {
         "reportTime": "report time",
         "systemRamFreeInfo": 

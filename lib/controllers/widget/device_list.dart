@@ -13,11 +13,9 @@
 // limitations under the License.
 
 import 'package:chrome_management_app/controllers/widget/device_summary.dart';
-import 'package:chrome_management_app/models/api_calls.dart';
 import 'package:chrome_management_app/objects/account_devices.dart';
 import 'package:chrome_management_app/objects/basic_device.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 import '../devices.dart';
 
@@ -87,7 +85,7 @@ class _DeviceListState extends State<DeviceList> {
     Devices.getList(_authToken, null).then((value) {
       setState(() {
         _list = value;
-        if (_list.nextPage == null) {
+        if (_list.nextPageToken == null) {
           _allDevicesLoaded = true;
         }
         _loading = false;
@@ -110,13 +108,14 @@ class _DeviceListState extends State<DeviceList> {
     setState(() {
       _loading = true;
     });
-    await Devices.getList(_authToken, _list.nextPage).then((value) {
+    await Devices.getList(_authToken, _list.nextPageToken).then((value) {
       setState(() {
         value.chromeosdevices.forEach((element) {
-          _list.chromeosdevices.add(element);
+          _list = _list.rebuild((b) => b.chromeosdevices..add(element));
         });
-        _list.nextPage = value.nextPage;
-        if (_list.nextPage == null) {
+        _list = _list.rebuild((b) => b..nextPageToken = value.nextPageToken);
+
+        if (_list.nextPageToken == null) {
           _allDevicesLoaded = true;
         }
         _loading = false;

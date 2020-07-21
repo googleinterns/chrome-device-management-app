@@ -12,36 +12,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+part 'device_files.g.dart';
+
 /// The object holds a device file to download.
 ///
 /// See document https://developers.google.com/admin-sdk/directory/v1/reference/chromeosdevices#resource.
 
-class DeviceFiles {
-  String _name;
-  String _type;
-  String _downloadUrl;
-  String _createTime;
+abstract class DeviceFiles implements Built<DeviceFiles, DeviceFilesBuilder> {
+  /// Anonymus constructor
+  DeviceFiles._();
 
-  /// Constructor with optional variables.
-  DeviceFiles([this._name, this._type, this._downloadUrl, this._createTime]);
+  /// Factory constructor
+  static Serializer<DeviceFiles> get serializer => _$deviceFilesSerializer;
 
-  /// Constructor from a json string.
-  DeviceFiles.fromJson(Map<String, dynamic> json) {
-    _name = json['name'];
-    _type = json['type'];
-    _downloadUrl = json['downloadUrl'];
-    _createTime = json['createTime'];
-  }
+  /// Serializer to parse from Json
+  factory DeviceFiles([void Function(DeviceFilesBuilder) updates]) =
+      _$DeviceFiles;
 
   /// File name.
-  String get name => _name;
+  @nullable
+  String get name;
 
   /// File type.
-  String get type => _type;
+  @nullable
+  String get type;
 
   /// File download URL.
-  String get downloadUrl => _downloadUrl;
+  @nullable
+  String get downloadUrl;
 
   /// Date and time the file was created.
-  String get createTime => _createTime;
+  @nullable
+  String get createTime;
 }

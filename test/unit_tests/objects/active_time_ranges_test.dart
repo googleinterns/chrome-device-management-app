@@ -14,11 +14,13 @@
 
 import 'dart:convert';
 import 'package:chrome_management_app/objects/active_time_ranges.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Check Json parse for active time ranges', () {
-    final dummy = ActiveTimeRanges.fromJson(json.decode("""
+    final dummy =
+        serializers.deserializeWith(ActiveTimeRanges.serializer, json.decode("""
       {
         "date": "date 1",
         "activeTime": "active time 1"

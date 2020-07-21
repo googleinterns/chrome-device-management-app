@@ -13,12 +13,15 @@
 /// limitations under the License.
 
 import 'package:chrome_management_app/objects/account_devices.dart';
+import 'package:chrome_management_app/objects/basic_device.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:convert';
 
 void main() {
   test('Check Json parse for account device', () {
-    final account = AccountDevices.fromJson(json.decode(""" 
+    var account =
+        serializers.deserializeWith(AccountDevices.serializer, json.decode(""" 
     {
     "kind": "kind",
     "etag": "etag",
@@ -72,6 +75,27 @@ void main() {
           'anotated asset id ${i + 1}');
       expect(account.chromeosdevices[i].notes, 'notes ${i + 1}');
     }
-    expect(account.nextPage, 'token');
+    expect(account.nextPageToken, 'token');
+
+    // Testing rebuilds
+    var basic =
+        serializers.deserializeWith(BasicDevice.serializer, json.decode(""" {
+        "kind": "kind",
+        "etag": "etag",
+        "deviceId": "device Id",
+        "serialNumber": "serialNumber",
+        "status": "status",
+        "lastSync": "lastSync", 
+        "supportEndDate": "supportEndDate",
+        "annotatedUser": "annotated user",
+        "annotatedLocation": "annotated location",
+        "annotatedAssetId": "anotated asset id",
+        "notes": "notes"       
+      }
+      """));
+    account = account.rebuild((b) => b.chromeosdevices..add(basic));
+    account = account.rebuild((b) => b..nextPageToken = '123');
+    expect(account.nextPageToken, '123');
+    expect(account.chromeosdevices.length, 3);
   });
 }

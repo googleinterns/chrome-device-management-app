@@ -13,12 +13,14 @@
 /// limitations under the License.
 
 import 'dart:convert';
+import 'package:chrome_management_app/objects/serializers.dart';
 import 'package:chrome_management_app/objects/volume_info.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Check Json parse for volume info', () {
-    final dummy = VolumeInfo.fromJson(json.decode("""
+    final dummy =
+        serializers.deserializeWith(VolumeInfo.serializer, json.decode("""
       {        
         "volumeId": "volume ID",
         "storageTotal": "storage total",

@@ -14,6 +14,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:chrome_management_app/objects/serializers.dart';
 import 'package:http/http.dart' as http;
 import 'package:chrome_management_app/objects/account_devices.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';
@@ -62,7 +63,8 @@ class ApiCalls {
       // If conection is succesful return a AccountDevices object by parsing the
       // response body
       if (response.statusCode == 200) {
-        return AccountDevices.fromJson(json.decode(response.body));
+        return serializers.deserializeWith(
+            AccountDevices.serializer, json.decode(response.body));
       } else {
         // If that call was not successful, throw an error.
         throw Exception(response.statusCode);
@@ -87,7 +89,8 @@ class ApiCalls {
       // If conection is succesful return a DetailedDevice object by parsing the
       // response body
       if (response.statusCode == 200) {
-        return DetailedDevice.fromJson(json.decode(response.body));
+        return serializers.deserializeWith(
+            DetailedDevice.serializer, json.decode(response.body));
       } else {
         // If that call was not successful, throw an error.
         throw Exception(response.statusCode);
