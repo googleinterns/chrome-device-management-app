@@ -13,6 +13,8 @@
 // limitations under the License.
 //
 
+import 'package:chrome_management_app/objects/serializers.dart';
+
 import 'active_time_ranges.dart';
 import 'cpu_status_report.dart';
 import 'device_files.dart';
@@ -35,16 +37,26 @@ part 'detailed_device.g.dart';
 
 abstract class DetailedDevice
     implements Built<DetailedDevice, DetailedDeviceBuilder> {
-  /// Anonymus constructor
+  /// Anonymus constructor.
   DetailedDevice._();
 
-  /// Factory constructor
+  /// Factory constructor.
   static Serializer<DetailedDevice> get serializer =>
       _$detailedDeviceSerializer;
 
-  /// Serializer to parse from Json
+  /// Serializer to parse from Json.
   factory DetailedDevice([void Function(DetailedDeviceBuilder) updates]) =
       _$DetailedDevice;
+
+  /// Map object from a json string.
+  static DetailedDevice fromMap(Map<String, dynamic> jsonData) {
+    return serializers.deserializeWith(DetailedDevice.serializer, jsonData);
+  }
+
+  /// Map object into a json string.
+  Map<String, dynamic> toMap() {
+    return serializers.serializeWith(DetailedDevice.serializer, this);
+  }
 
   /// Type of resource.
   @nullable

@@ -20,8 +20,7 @@ import 'dart:convert';
 
 void main() {
   test('Check Json parse for account device', () {
-    var account =
-        serializers.deserializeWith(AccountDevices.serializer, json.decode(""" 
+    var account = AccountDevices.fromMap(json.decode(""" 
     {
     "kind": "kind",
     "etag": "etag",

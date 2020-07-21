@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/objects/serializers.dart';
+
 import 'basic_device.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_collection/built_collection.dart';
@@ -26,16 +28,26 @@ part 'account_devices.g.dart';
 
 abstract class AccountDevices
     implements Built<AccountDevices, AccountDevicesBuilder> {
-  /// Anonymus constructor
+  /// Anonymus constructor.
   AccountDevices._();
 
-  /// Factory constructor
+  /// Factory constructor.
   static Serializer<AccountDevices> get serializer =>
       _$accountDevicesSerializer;
 
-  /// Serializer to parse from Json
+  /// Serializer to parse from Json.
   factory AccountDevices([void Function(AccountDevicesBuilder) updates]) =
       _$AccountDevices;
+
+  /// Map object from a json string.
+  static AccountDevices fromMap(Map<String, dynamic> jsonData) {
+    return serializers.deserializeWith(AccountDevices.serializer, jsonData);
+  }
+
+  /// Map object into a json string.
+  Map<String, dynamic> toMap() {
+    return serializers.serializeWith(AccountDevices.serializer, this);
+  }
 
   /// ETag of the resource.
   @nullable

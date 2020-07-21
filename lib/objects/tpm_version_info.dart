@@ -14,6 +14,7 @@
 
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
 part 'tpm_version_info.g.dart';
 
 /// The object holds he Trusted Plataform Modules information.
@@ -22,16 +23,26 @@ part 'tpm_version_info.g.dart';
 
 abstract class TpmVersionInfo
     implements Built<TpmVersionInfo, TpmVersionInfoBuilder> {
-  /// Anonymus constructor
+  /// Anonymus constructor.
   TpmVersionInfo._();
 
-  /// Factory constructor
+  /// Factory constructor.
   static Serializer<TpmVersionInfo> get serializer =>
       _$tpmVersionInfoSerializer;
 
-  /// Serializer to parse from Json
+  /// Serializer to parse from Json.
   factory TpmVersionInfo([void Function(TpmVersionInfoBuilder) updates]) =
       _$TpmVersionInfo;
+
+  /// Map object from a json string.
+  static TpmVersionInfo fromMap(Map<String, dynamic> jsonData) {
+    return serializers.deserializeWith(TpmVersionInfo.serializer, jsonData);
+  }
+
+  /// Map object into a json string.
+  Map<String, dynamic> toMap() {
+    return serializers.serializeWith(TpmVersionInfo.serializer, this);
+  }
 
   /// TPM family.
   @nullable

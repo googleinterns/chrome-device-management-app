@@ -14,6 +14,7 @@
 
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
 part 'recent_users.g.dart';
 
 /// The object holds a recent userof the device.
@@ -21,15 +22,25 @@ part 'recent_users.g.dart';
 /// See document https://developers.google.com/admin-sdk/directory/v1/reference/chromeosdevices#resource.
 
 abstract class RecentUsers implements Built<RecentUsers, RecentUsersBuilder> {
-  /// Anonymus constructor
+  /// Anonymus constructor.
   RecentUsers._();
 
-  /// Factory constructor
+  /// Factory constructor.
   static Serializer<RecentUsers> get serializer => _$recentUsersSerializer;
 
-  /// Serializer to parse from Json
+  /// Serializer to parse from Json.
   factory RecentUsers([void Function(RecentUsersBuilder) updates]) =
       _$RecentUsers;
+
+  /// Map object from a json string.
+  static RecentUsers fromMap(Map<String, dynamic> jsonData) {
+    return serializers.deserializeWith(RecentUsers.serializer, jsonData);
+  }
+
+  /// Map object into a json string.
+  Map<String, dynamic> toMap() {
+    return serializers.serializeWith(RecentUsers.serializer, this);
+  }
 
   /// The type of the user.
   @nullable

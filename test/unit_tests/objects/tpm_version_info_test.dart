@@ -19,8 +19,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Check Json parse for tpm version info', () {
-    final dummy =
-        serializers.deserializeWith(TpmVersionInfo.serializer, json.decode("""
+    final dummy = TpmVersionInfo.fromMap(json.decode("""
       {        
       "family": "family",
       "specLevel": "spec level",

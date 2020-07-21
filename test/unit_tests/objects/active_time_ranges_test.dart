@@ -19,8 +19,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Check Json parse for active time ranges', () {
-    final dummy =
-        serializers.deserializeWith(ActiveTimeRanges.serializer, json.decode("""
+    final dummy = ActiveTimeRanges.fromMap(json.decode("""
       {
         "date": "date 1",
         "activeTime": "active time 1"

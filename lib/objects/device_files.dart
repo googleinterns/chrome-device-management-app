@@ -14,6 +14,7 @@
 
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
 part 'device_files.g.dart';
 
 /// The object holds a device file to download.
@@ -21,15 +22,25 @@ part 'device_files.g.dart';
 /// See document https://developers.google.com/admin-sdk/directory/v1/reference/chromeosdevices#resource.
 
 abstract class DeviceFiles implements Built<DeviceFiles, DeviceFilesBuilder> {
-  /// Anonymus constructor
+  /// Anonymus constructor.
   DeviceFiles._();
 
-  /// Factory constructor
+  /// Factory constructor.
   static Serializer<DeviceFiles> get serializer => _$deviceFilesSerializer;
 
-  /// Serializer to parse from Json
+  /// Serializer to parse from Json.
   factory DeviceFiles([void Function(DeviceFilesBuilder) updates]) =
       _$DeviceFiles;
+
+  /// Map object from a json string.
+  static DeviceFiles fromMap(Map<String, dynamic> jsonData) {
+    return serializers.deserializeWith(DeviceFiles.serializer, jsonData);
+  }
+
+  /// Map object into a json string.
+  Map<String, dynamic> toMap() {
+    return serializers.serializeWith(DeviceFiles.serializer, this);
+  }
 
   /// File name.
   @nullable

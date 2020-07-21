@@ -19,8 +19,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Check Json parse for cpu status report', () {
-    final dummy =
-        serializers.deserializeWith(CpuStatusReport.serializer, json.decode("""
+    final dummy = CpuStatusReport.fromMap(json.decode("""
       {
         "reportTime": "report time",
         "cpuUtilizationPercentageInfo": [

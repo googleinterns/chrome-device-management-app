@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/objects/serializers.dart';
+
 import 'cpu_temperature_info.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
@@ -24,16 +26,26 @@ part 'cpu_status_report.g.dart';
 
 abstract class CpuStatusReport
     implements Built<CpuStatusReport, CpuStatusReportBuilder> {
-  /// Anonymus constructor
+  /// Anonymus constructor.
   CpuStatusReport._();
 
-  /// Serializer to parse from Json
+  /// Serializer to parse from Json.
   static Serializer<CpuStatusReport> get serializer =>
       _$cpuStatusReportSerializer;
 
-  /// Factory constructor
+  /// Factory constructor.
   factory CpuStatusReport([void Function(CpuStatusReportBuilder) updates]) =
       _$CpuStatusReport;
+
+  /// Map object from a json string.
+  static CpuStatusReport fromMap(Map<String, dynamic> jsonData) {
+    return serializers.deserializeWith(CpuStatusReport.serializer, jsonData);
+  }
+
+  /// Map object into a json string.
+  Map<String, dynamic> toMap() {
+    return serializers.serializeWith(CpuStatusReport.serializer, this);
+  }
 
   /// Date and time the report was received.
   @nullable

@@ -19,8 +19,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Check Json parse for volume info', () {
-    final dummy =
-        serializers.deserializeWith(VolumeInfo.serializer, json.decode("""
+    final dummy = VolumeInfo.fromMap(json.decode("""
       {        
         "volumeId": "volume ID",
         "storageTotal": "storage total",

@@ -14,6 +14,7 @@
 
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
 part 'cpu_temperature_info.g.dart';
 
 /// The object holds a CPU temperature sample.
@@ -22,17 +23,27 @@ part 'cpu_temperature_info.g.dart';
 
 abstract class CpuTemperatureInfo
     implements Built<CpuTemperatureInfo, CpuTemperatureInfoBuilder> {
-  /// Anonymus constructor
+  /// Anonymus constructor.
   CpuTemperatureInfo._();
 
-  /// Factory constructor
+  /// Factory constructor.
   static Serializer<CpuTemperatureInfo> get serializer =>
       _$cpuTemperatureInfoSerializer;
 
-  /// Serializer to parse from Json
+  /// Serializer to parse from Json.
   factory CpuTemperatureInfo(
           [void Function(CpuTemperatureInfoBuilder) updates]) =
       _$CpuTemperatureInfo;
+
+  /// Map object from a json string.
+  static CpuTemperatureInfo fromMap(Map<String, dynamic> jsonData) {
+    return serializers.deserializeWith(CpuTemperatureInfo.serializer, jsonData);
+  }
+
+  /// Map object into a json string.
+  Map<String, dynamic> toMap() {
+    return serializers.serializeWith(CpuTemperatureInfo.serializer, this);
+  }
 
   /// Temperature in Celsius degrees.
   @nullable

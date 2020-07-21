@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/objects/serializers.dart';
+
 import 'volume_info.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
@@ -25,16 +27,26 @@ part 'disk_volume_report.g.dart';
 
 abstract class DiskVolumeReport
     implements Built<DiskVolumeReport, DiskVolumeReportBuilder> {
-  /// Anonymus constructor
+  /// Anonymus constructor.
   DiskVolumeReport._();
 
-  /// Factory constructor
+  /// Factory constructor.
   static Serializer<DiskVolumeReport> get serializer =>
       _$diskVolumeReportSerializer;
 
-  /// Serializer to parse from Json
+  /// Serializer to parse from Json.
   factory DiskVolumeReport([void Function(DiskVolumeReportBuilder) updates]) =
       _$DiskVolumeReport;
+
+  /// Map object from a json string.
+  static DiskVolumeReport fromMap(Map<String, dynamic> jsonData) {
+    return serializers.deserializeWith(DiskVolumeReport.serializer, jsonData);
+  }
+
+  /// Map object into a json string.
+  Map<String, dynamic> toMap() {
+    return serializers.serializeWith(DiskVolumeReport.serializer, this);
+  }
 
   /// Disk volumes.
   @nullable

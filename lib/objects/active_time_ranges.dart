@@ -14,6 +14,7 @@
 
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
 part 'active_time_ranges.g.dart';
 
 /// The object holds active time range of a device.
@@ -22,16 +23,26 @@ part 'active_time_ranges.g.dart';
 
 abstract class ActiveTimeRanges
     implements Built<ActiveTimeRanges, ActiveTimeRangesBuilder> {
-  /// Anonymus constructor
+  /// Anonymus constructor.
   ActiveTimeRanges._();
 
   /// Factory constructor
   static Serializer<ActiveTimeRanges> get serializer =>
       _$activeTimeRangesSerializer;
 
-  /// Serializer to parse from Json
+  /// Serializer to parse from Json.
   factory ActiveTimeRanges([void Function(ActiveTimeRangesBuilder) updates]) =
       _$ActiveTimeRanges;
+
+  /// Map object from a json string.
+  static ActiveTimeRanges fromMap(Map<String, dynamic> jsonData) {
+    return serializers.deserializeWith(ActiveTimeRanges.serializer, jsonData);
+  }
+
+  /// Map object into a json string.
+  Map<String, dynamic> toMap() {
+    return serializers.serializeWith(ActiveTimeRanges.serializer, this);
+  }
 
   /// Date of usage of the device.
   @nullable

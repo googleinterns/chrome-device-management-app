@@ -44,3 +44,6 @@ app.*.map.json
 
 # Auto generated files by buitl_value
 *.g.dart
+
+# Build generated pubspec
+pubspec.lock

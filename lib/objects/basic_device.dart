@@ -14,6 +14,7 @@
 
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
 part 'basic_device.g.dart';
 
 /// The object holds the device response object.
@@ -25,15 +26,25 @@ part 'basic_device.g.dart';
 /// https://developers.google.com/admin-sdk/directory/v1/reference/chromeosdevices/get.
 
 abstract class BasicDevice implements Built<BasicDevice, BasicDeviceBuilder> {
-  /// Anonymus constructor
+  /// Anonymus constructor.
   BasicDevice._();
 
-  /// Factory constructor
+  /// Factory constructor.
   static Serializer<BasicDevice> get serializer => _$basicDeviceSerializer;
 
-  /// Serializer to parse from Json
+  /// Serializer to parse from Json.
   factory BasicDevice([void Function(BasicDeviceBuilder) updates]) =
       _$BasicDevice;
+
+  /// Map object from a json string.
+  static BasicDevice fromMap(Map<String, dynamic> jsonData) {
+    return serializers.deserializeWith(BasicDevice.serializer, jsonData);
+  }
+
+  /// Map object into a json string.
+  Map<String, dynamic> toMap() {
+    return serializers.serializeWith(BasicDevice.serializer, this);
+  }
 
   /// Type of resource.
   @nullable

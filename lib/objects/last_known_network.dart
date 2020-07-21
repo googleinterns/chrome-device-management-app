@@ -14,6 +14,7 @@
 
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
 part 'last_known_network.g.dart';
 
 /// The object holds the device last used network.
@@ -22,16 +23,26 @@ part 'last_known_network.g.dart';
 
 abstract class LastKnownNetwork
     implements Built<LastKnownNetwork, LastKnownNetworkBuilder> {
-  /// Anonymus constructor
+  /// Anonymus constructor.
   LastKnownNetwork._();
 
-  /// Factory constructor
+  /// Factory constructor.
   static Serializer<LastKnownNetwork> get serializer =>
       _$lastKnownNetworkSerializer;
 
-  /// Serializer to parse from Json
+  /// Serializer to parse from Json.
   factory LastKnownNetwork([void Function(LastKnownNetworkBuilder) updates]) =
       _$LastKnownNetwork;
+
+  /// Map object from a json string.
+  static LastKnownNetwork fromMap(Map<String, dynamic> jsonData) {
+    return serializers.deserializeWith(LastKnownNetwork.serializer, jsonData);
+  }
+
+  /// Map object into a json string.
+  Map<String, dynamic> toMap() {
+    return serializers.serializeWith(LastKnownNetwork.serializer, this);
+  }
 
   /// The IP address.
   @nullable

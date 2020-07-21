@@ -14,6 +14,7 @@
 
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
 part 'volume_info.g.dart';
 
 /// The object holds a disk volume information.
@@ -21,14 +22,24 @@ part 'volume_info.g.dart';
 /// See document https://developers.google.com/admin-sdk/directory/v1/reference/chromeosdevices#resource.
 
 abstract class VolumeInfo implements Built<VolumeInfo, VolumeInfoBuilder> {
-  /// Anonymus constructor
+  /// Anonymus constructor.
   VolumeInfo._();
 
-  /// Factory constructor
+  /// Factory constructor.
   static Serializer<VolumeInfo> get serializer => _$volumeInfoSerializer;
 
-  /// Serializer to parse from Json
+  /// Serializer to parse from Json.
   factory VolumeInfo([void Function(VolumeInfoBuilder) updates]) = _$VolumeInfo;
+
+  /// Map object from a json string.
+  static VolumeInfo fromMap(Map<String, dynamic> jsonData) {
+    return serializers.deserializeWith(VolumeInfo.serializer, jsonData);
+  }
+
+  /// Map object into a json string.
+  Map<String, dynamic> toMap() {
+    return serializers.serializeWith(VolumeInfo.serializer, this);
+  }
 
   /// Volume id.
   @nullable
