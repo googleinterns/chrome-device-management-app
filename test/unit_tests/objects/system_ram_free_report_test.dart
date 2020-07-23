@@ -13,7 +13,6 @@
 /// limitations under the License.
 
 import 'dart:convert';
-import 'package:chrome_management_app/objects/serializers.dart';
 import 'package:chrome_management_app/objects/system_ram_free_report.dart';
 import 'package:flutter_test/flutter_test.dart';
 
