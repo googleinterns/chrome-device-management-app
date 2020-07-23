@@ -89,7 +89,7 @@ main() {
         'returns AccountDevices if the http call completes successfully without next page token',
         () async {
       final client = MockClient();
-      when(client.get(ApiCalls.DEVICE_LIST_URL,
+      when(client.get(ApiCalls.PREFIX + ApiCalls.DEVICE_LIST_URL,
               headers: {HttpHeaders.authorizationHeader: 'Bearer $authToken'}))
           .thenAnswer((_) async => http.Response(jsonAccountDevices, 200));
       final apiCall = ApiCalls(client);
@@ -102,7 +102,7 @@ main() {
         "throws an exception if the http call for list of devices without next page token completes with an error",
         () {
       final client = MockClient();
-      when(client.get(ApiCalls.DEVICE_LIST_URL,
+      when(client.get(ApiCalls.PREFIX + ApiCalls.DEVICE_LIST_URL,
               headers: {HttpHeaders.authorizationHeader: 'Bearer $authToken'}))
           .thenAnswer((_) async => http.Response('Not Found', 404));
       final apiCall = ApiCalls(client);
@@ -114,9 +114,11 @@ main() {
         'returns AccountDevices if the http call completes successfully with next page token',
         () async {
       final client = MockClient();
-      when(client.get(ApiCalls.DEVICE_LIST_WITH_TOKEN_URL + nextPageToken,
-              headers: {HttpHeaders.authorizationHeader: 'Bearer $authToken'}))
-          .thenAnswer((_) async => http.Response(jsonAccountDevices, 200));
+      when(client.get(
+          ApiCalls.PREFIX + ApiCalls.DEVICE_LIST_WITH_TOKEN_URL + nextPageToken,
+          headers: {
+            HttpHeaders.authorizationHeader: 'Bearer $authToken'
+          })).thenAnswer((_) async => http.Response(jsonAccountDevices, 200));
       final apiCall = ApiCalls(client);
 
       expect(await apiCall.getDeviceList(authToken, nextPageToken),
@@ -126,9 +128,11 @@ main() {
         "throws an exception if the http call for list of devices with next page token completes with an error",
         () {
       final client = MockClient();
-      when(client.get(ApiCalls.DEVICE_LIST_WITH_TOKEN_URL + nextPageToken,
-              headers: {HttpHeaders.authorizationHeader: 'Bearer $authToken'}))
-          .thenAnswer((_) async => http.Response('Not Found', 404));
+      when(client.get(
+          ApiCalls.PREFIX + ApiCalls.DEVICE_LIST_WITH_TOKEN_URL + nextPageToken,
+          headers: {
+            HttpHeaders.authorizationHeader: 'Bearer $authToken'
+          })).thenAnswer((_) async => http.Response('Not Found', 404));
       final apiCall = ApiCalls(client);
 
       expect(apiCall.getDeviceList(authToken, nextPageToken), throwsException);
@@ -138,7 +142,7 @@ main() {
         'returns DetailedDevice if the http call to detailed device completes successfully',
         () async {
       final client = MockClient();
-      when(client.get(ApiCalls.DETAILED_DEVICE_URL + deviceId,
+      when(client.get(ApiCalls.PREFIX + ApiCalls.DETAILED_DEVICE_URL + deviceId,
               headers: {HttpHeaders.authorizationHeader: 'Bearer $authToken'}))
           .thenAnswer((_) async => http.Response(jsonDetailedDevice, 200));
       final apiCall = ApiCalls(client);
@@ -149,7 +153,7 @@ main() {
         "throws an exception if the http call for detailed device completes with an error",
         () {
       final client = MockClient();
-      when(client.get(ApiCalls.DETAILED_DEVICE_URL + deviceId,
+      when(client.get(ApiCalls.PREFIX + ApiCalls.DETAILED_DEVICE_URL + deviceId,
               headers: {HttpHeaders.authorizationHeader: 'Bearer $authToken'}))
           .thenAnswer((_) async => http.Response('Not Found', 404));
       final apiCall = ApiCalls(client);
