@@ -14,7 +14,6 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:chrome_management_app/objects/serializers.dart';
 import 'package:http/http.dart' as http;
 import 'package:chrome_management_app/objects/account_devices.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';

@@ -13,7 +13,6 @@
 /// limitations under the License.
 
 import 'package:chrome_management_app/objects/basic_device.dart';
-import 'package:chrome_management_app/objects/serializers.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'dart:convert';
 

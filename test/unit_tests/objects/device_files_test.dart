@@ -14,7 +14,6 @@
 
 import 'dart:convert';
 import 'package:chrome_management_app/objects/device_files.dart';
-import 'package:chrome_management_app/objects/serializers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
