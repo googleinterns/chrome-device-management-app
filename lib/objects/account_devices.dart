@@ -22,12 +22,14 @@ import 'basic_device.dart';
 class AccountDevices {
   String _etag;
   String _kind;
-  String _nextPage;
   List<BasicDevice> _chromeosdevices;
+
+  /// Token used to access the next page of this result.
+  String nextPage;
 
   /// Constructor with optional variables.
   AccountDevices(
-      [this._etag, this._kind, this._chromeosdevices, this._nextPage]);
+      [this._etag, this._kind, this._chromeosdevices, this.nextPage]);
 
   /// Constructor form a json string.
   AccountDevices.fromJson(Map<String, dynamic> json) {
@@ -39,7 +41,7 @@ class AccountDevices {
         _chromeosdevices.add(new BasicDevice.fromJson(value));
       });
     }
-    _nextPage = json['nextPageToken'];
+    nextPage = json['nextPageToken'];
   }
 
   /// ETag of the resource.
@@ -47,9 +49,6 @@ class AccountDevices {
 
   /// The type of the API resource.
   String get kind => _kind;
-
-  /// Token used to access the next page of this result.
-  String get nextPage => _nextPage;
 
   /// Chrome OS Device objects.
   List<BasicDevice> get chromeosdevices => _chromeosdevices;
