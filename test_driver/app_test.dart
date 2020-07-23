@@ -32,6 +32,17 @@ void main() {
         await driver.close();
       }
     });
+    // Bool function to verify that a widget is on the view.
+    isPresent(SerializableFinder byValueKey, FlutterDriver driver,
+        {Duration timeout = const Duration(seconds: 1)}) async {
+      try {
+        await driver.waitFor(byValueKey, timeout: timeout);
+        return true;
+      } catch (exception) {
+        return false;
+      }
+    }
+
     // Ensure that the driver is ok.
     test('check flutter driver health', () async {
       final health = await driver.checkHealth();
@@ -75,6 +86,12 @@ void main() {
           await driver
               .getText(find.byValueKey(SERIAL_NUMBER_OF_DEVICE_KEY + '30')),
           'serialNumber 30');
+
+      // Verify that device 31 isn't present.
+      expect(
+          await isPresent(
+              find.byValueKey(SERIAL_NUMBER_OF_DEVICE_KEY + '31'), driver),
+          isFalse);
     });
 
     test('Scroll top to first item', () async {
