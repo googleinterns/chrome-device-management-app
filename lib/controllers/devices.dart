@@ -20,8 +20,8 @@ import 'package:chrome_management_app/objects/account_devices.dart';
 class Devices {
   /// Method to get account devices
   static Future<AccountDevices> getList(
-      String authToken, String nextPageToken) async {
-    ApiCalls apiCall = ApiCalls(http.Client());
+      http.Client client, String authToken, String nextPageToken) async {
+    ApiCalls apiCall = ApiCalls(client);
     AccountDevices accountDevices;
     accountDevices =
         await apiCall.getDeviceList(authToken, nextPageToken).catchError((e) {

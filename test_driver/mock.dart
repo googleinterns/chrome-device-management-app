@@ -12,29 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:chrome_management_app/controllers/widget/device_list.dart';
+import 'package:chrome_management_app/views/list.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-/// View to show the list of devices of an account.
-///
-class DevicesListView extends StatelessWidget {
-  /// Authorizatio token to call the API.
-  final String token;
+/// Mocks the app main, soit starts it skips the Google authentication.
+class MyAppWithoutLogin extends StatelessWidget {
+  final String mockToken;
   final http.Client client;
-
-  /// Constructor of view
-  DevicesListView({Key key, @required this.token, this.client})
-      : super(key: key);
-
-  /// UI build of view
+  MyAppWithoutLogin({this.mockToken, this.client});
   @override
   Widget build(BuildContext context) {
-    /// Makes unpoppable the view and shows [DeviceList] widget
-    return WillPopScope(
-        onWillPop: () => Future.value(false),
-        child: Scaffold(
-          body: Container(child: DeviceList(token, client)),
-        ));
+    return MaterialApp(
+      home: DevicesListView(
+        token: mockToken,
+        client: client,
+      ),
+    );
   }
 }

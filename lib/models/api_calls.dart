@@ -14,7 +14,6 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:chrome_management_app/objects/serializers.dart';
 import 'package:http/http.dart' as http;
 import 'package:chrome_management_app/objects/account_devices.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';
@@ -52,24 +51,27 @@ class ApiCalls {
   getDeviceList(String authToken, String nextPageToken) async {
     var response;
     authToken = 'Bearer $authToken';
-    try {
-      nextPageToken == null
-          ? response = await _client.get(DEVICE_LIST_URL,
-              headers: {HttpHeaders.authorizationHeader: authToken})
-          : response = await _client.get(
-              DEVICE_LIST_WITH_TOKEN_URL + nextPageToken,
-              headers: {HttpHeaders.authorizationHeader: authToken});
+    _client == null
+        ? nextPageToken == null
+            ? response = await http.get(DEVICE_LIST_URL,
+                headers: {HttpHeaders.authorizationHeader: authToken})
+            : response = await http.get(
+                DEVICE_LIST_WITH_TOKEN_URL + nextPageToken,
+                headers: {HttpHeaders.authorizationHeader: authToken})
+        : nextPageToken == null
+            ? response = await _client.get(DEVICE_LIST_URL,
+                headers: {HttpHeaders.authorizationHeader: authToken})
+            : response = await _client.get(
+                DEVICE_LIST_WITH_TOKEN_URL + nextPageToken,
+                headers: {HttpHeaders.authorizationHeader: authToken});
 
-      // If conection is succesful return a AccountDevices object by parsing the
-      // response body
-      if (response.statusCode == 200) {
-        return AccountDevices.fromMap(json.decode(response.body));
-      } else {
-        // If that call was not successful, throw an error.
-        throw Exception(response.statusCode);
-      }
-    } finally {
-      _client.close();
+    // If conection is succesful return a AccountDevices object by parsing the
+    // response body
+    if (response.statusCode == 200) {
+      return AccountDevices.fromMap(json.decode(response.body));
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception(response.statusCode);
     }
   }
 
@@ -81,20 +83,20 @@ class ApiCalls {
   ///
   /// This method returns a [DetailedDevice] object.
   dynamic getDetailedDevice(String authToken, String deviceId) async {
+    var response;
     authToken = 'Bearer $authToken';
-    try {
-      final response = await _client.get(DETAILED_DEVICE_URL + deviceId,
-          headers: {HttpHeaders.authorizationHeader: authToken});
-      // If conection is succesful return a DetailedDevice object by parsing the
-      // response body
-      if (response.statusCode == 200) {
-        return DetailedDevice.fromMap(json.decode(response.body));
-      } else {
-        // If that call was not successful, throw an error.
-        throw Exception(response.statusCode);
-      }
-    } finally {
-      _client.close();
+    _client == null
+        ? response = await http.get(DETAILED_DEVICE_URL + deviceId,
+            headers: {HttpHeaders.authorizationHeader: authToken})
+        : response = await _client.get(DETAILED_DEVICE_URL + deviceId,
+            headers: {HttpHeaders.authorizationHeader: authToken});
+    // If conection is succesful return a DetailedDevice object by parsing the
+    // response body
+    if (response.statusCode == 200) {
+      return DetailedDevice.fromMap(json.decode(response.body));
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception(response.statusCode);
     }
   }
 

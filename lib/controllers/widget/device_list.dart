@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/models/keys_util.dart';
 import 'package:chrome_management_app/controllers/widget/device_summary.dart';
 import 'package:chrome_management_app/objects/account_devices.dart';
 import 'package:chrome_management_app/objects/basic_device.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import '../devices.dart';
 
@@ -24,12 +26,15 @@ class DeviceList extends StatefulWidget {
   /// Authorization token to get information form the Directory API.
   final String _authToken;
 
+  /// Http Client
+  final http.Client _client;
+
   /// Constructor of Widget
-  DeviceList(this._authToken, {Key key}) : super(key: key);
+  DeviceList(this._authToken, this._client, {Key key}) : super(key: key);
   @override
 
   /// Create initial state of the Widget.
-  _DeviceListState createState() => _DeviceListState(_authToken);
+  _DeviceListState createState() => _DeviceListState(_authToken, _client);
 }
 
 /// DeviceList Widget states
@@ -52,11 +57,14 @@ class _DeviceListState extends State<DeviceList> {
   /// Verify the list is loading.
   bool _loading = false;
 
-  /// Constructor of state.
-  _DeviceListState(this._authToken);
-
   /// Scroll controller to manage lazy load.
   ScrollController _scrollController;
+
+  /// Http Client
+  http.Client _client;
+
+  /// Constructor of state.
+  _DeviceListState(this._authToken, this._client);
 
   /// Initial state of the Widget.
   @override
@@ -82,7 +90,7 @@ class _DeviceListState extends State<DeviceList> {
     setState(() {
       _loading = true;
     });
-    Devices.getList(_authToken, null).then((value) {
+    Devices.getList(_client, _authToken, null).then((value) {
       setState(() {
         _list = value;
         if (_list.nextPageToken == null) {
@@ -108,7 +116,8 @@ class _DeviceListState extends State<DeviceList> {
     setState(() {
       _loading = true;
     });
-    await Devices.getList(_authToken, _list.nextPageToken).then((value) {
+    await Devices.getList(_client, _authToken, _list.nextPageToken)
+        .then((value) {
       setState(() {
         value.chromeosdevices.forEach((element) {
           _list = _list.rebuild((b) => b.chromeosdevices..add(element));
@@ -163,13 +172,16 @@ class _DeviceListState extends State<DeviceList> {
                           children: <Widget>[
                             Expanded(
                               child: ListView.builder(
+                                key: Key(LIST_OF_DEVICES_KEY),
                                 physics: AlwaysScrollableScrollPhysics(),
                                 controller: _scrollController,
                                 itemCount: _list.chromeosdevices.length,
                                 itemBuilder: (context, index) {
                                   BasicDevice device =
                                       _list.chromeosdevices[index];
-                                  return SummaryDevice(device);
+                                  return SummaryDevice(device, index + 1,
+                                      key: Key(SUMMARY_DEVICE_KEY +
+                                          (index + 1).toString()));
                                 },
                               ),
                             )

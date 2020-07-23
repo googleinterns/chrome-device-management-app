@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/models/keys_util.dart';
 import 'package:chrome_management_app/objects/basic_device.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -21,8 +22,11 @@ class SummaryDevice extends StatelessWidget {
   /// Chrome device to be rendered.
   final BasicDevice _device;
 
+  /// Index of the list of devices
+  final int _index;
+
   /// Constructir of Widget.
-  const SummaryDevice(this._device);
+  const SummaryDevice(this._device, this._index, {Key key}) : super(key: key);
 
   /// Widget UI build.
   @override
@@ -60,6 +64,7 @@ class SummaryDevice extends StatelessWidget {
                     child: Text(
                       _device.serialNumber,
                       maxLines: 1,
+                      key: Key(SERIAL_NUMBER_OF_DEVICE_KEY + _index.toString()),
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 16.0, fontWeight: FontWeight.bold),
@@ -70,6 +75,7 @@ class SummaryDevice extends StatelessWidget {
                     child: Text(
                       'User: ${_device.annotatedUser}',
                       maxLines: 2,
+                      key: Key(USER_OF_DEVICE_KEY + _index.toString()),
                       overflow: TextOverflow.clip,
                       style: TextStyle(fontSize: 14.0, color: Colors.black87),
                     )),
@@ -79,6 +85,7 @@ class SummaryDevice extends StatelessWidget {
                     child: Text(
                       'Status: ${_device.status}',
                       maxLines: 2,
+                      key: Key(STATUS_OF_DEVICE_KEY + _index.toString()),
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: 12.0, color: Colors.black87),
                     )),
@@ -88,6 +95,7 @@ class SummaryDevice extends StatelessWidget {
                   child: Text(
                     'Last Sync: ${DateFormat.yMMMd().format(DateTime.parse(_device.lastSync))}',
                     maxLines: 2,
+                    key: Key(LAST_SYNC_OF_DEVICE_KEY + _index.toString()),
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 12.0, color: Colors.grey[700]),
                   ),

@@ -22,10 +22,12 @@ import 'package:http/http.dart' as http;
 /// See more https://pub.dev/packages/flutter_web_auth.
 class GoogleAuth {
   /// Google Client ID
-  static const String GOOGLE_CLIENT_ID = 'Google client ID';
+  static const String GOOGLE_CLIENT_ID =
+      '119659549213-h13c2hr5fh6pghjtg957mvg2t21lajjq.apps.googleusercontent.com';
 
   ///Callback URI scheme
-  static const String CALLBACK_URL_SCHEME = 'Google client ID callback URI';
+  static const String CALLBACK_URL_SCHEME =
+      'com.googleusercontent.apps.119659549213-h13c2hr5fh6pghjtg957mvg2t21lajjq';
 
   /// Construct the url
   static final url = Uri.https('accounts.google.com', '/o/oauth2/v2/auth', {

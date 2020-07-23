@@ -44,7 +44,7 @@
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="GOOGLE CLIENT ID" />
+            <data android:scheme="com.googleusercontent.apps.119659549213-h13c2hr5fh6pghjtg957mvg2t21lajjq" />
           </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
