@@ -29,17 +29,19 @@ class ApiCalls {
 
   ApiCalls(this._client);
 
+  /// Url prefix
+  static const PREFIX = 'https://www.googleapis.com/admin/directory/v1';
+
   ///Url to get the intial page of the list
   static const DEVICE_LIST_URL =
-      'https://www.googleapis.com/admin/directory/v1/customer/my_customer/devices/chromeos?projection=BASIC&maxResults=15';
+      '/customer/my_customer/devices/chromeos?projection=BASIC&maxResults=15';
 
   ///Url to get the next page of the list of devices with a next page token
   static const DEVICE_LIST_WITH_TOKEN_URL =
-      'https://www.googleapis.com/admin/directory/v1/customer/my_customer/devices/chromeos?projection=BASIC&maxResults=15&pageToken=';
+      '/customer/my_customer/devices/chromeos?projection=BASIC&maxResults=15&pageToken=';
 
   ///Url to get detailed information of a device
-  static const DETAILED_DEVICE_URL =
-      'https://www.googleapis.com/admin/directory/v1/customer/my_customer/devices/chromeos/';
+  static const DETAILED_DEVICE_URL = '/customer/my_customer/devices/chromeos/';
 
   /// Calls the Directory API to get a list of devices with max results of 15.
   ///
@@ -50,20 +52,15 @@ class ApiCalls {
   /// This method returns a [AccountDevices] object.
   getDeviceList(String authToken, String nextPageToken) async {
     var response;
+    var url = nextPageToken == null
+        ? PREFIX + DEVICE_LIST_URL
+        : PREFIX + DEVICE_LIST_WITH_TOKEN_URL + nextPageToken;
     authToken = 'Bearer $authToken';
     _client == null
-        ? nextPageToken == null
-            ? response = await http.get(DEVICE_LIST_URL,
-                headers: {HttpHeaders.authorizationHeader: authToken})
-            : response = await http.get(
-                DEVICE_LIST_WITH_TOKEN_URL + nextPageToken,
-                headers: {HttpHeaders.authorizationHeader: authToken})
-        : nextPageToken == null
-            ? response = await _client.get(DEVICE_LIST_URL,
-                headers: {HttpHeaders.authorizationHeader: authToken})
-            : response = await _client.get(
-                DEVICE_LIST_WITH_TOKEN_URL + nextPageToken,
-                headers: {HttpHeaders.authorizationHeader: authToken});
+        ? response = await http
+            .get(url, headers: {HttpHeaders.authorizationHeader: authToken})
+        : response = await _client
+            .get(url, headers: {HttpHeaders.authorizationHeader: authToken});
 
     // If conection is succesful return a AccountDevices object by parsing the
     // response body
@@ -86,9 +83,9 @@ class ApiCalls {
     var response;
     authToken = 'Bearer $authToken';
     _client == null
-        ? response = await http.get(DETAILED_DEVICE_URL + deviceId,
+        ? response = await http.get(PREFIX + DETAILED_DEVICE_URL + deviceId,
             headers: {HttpHeaders.authorizationHeader: authToken})
-        : response = await _client.get(DETAILED_DEVICE_URL + deviceId,
+        : response = await _client.get(PREFIX + DETAILED_DEVICE_URL + deviceId,
             headers: {HttpHeaders.authorizationHeader: authToken});
     // If conection is succesful return a DetailedDevice object by parsing the
     // response body

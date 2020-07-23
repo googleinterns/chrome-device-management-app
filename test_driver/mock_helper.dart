@@ -26,7 +26,7 @@ class MockHelper {
   // Prepares the first response to the mocked client when it calls for the
   // first page.
   void firstPage(MockClient client) {
-    when(client.get(ApiCalls.DEVICE_LIST_URL, headers: {
+    when(client.get(ApiCalls.PREFIX + ApiCalls.DEVICE_LIST_URL, headers: {
       HttpHeaders.authorizationHeader: 'Bearer ${Data.ACCESS_TOKEN}'
     })).thenAnswer((_) async => http.Response(Data.FIRST_PAGE, 200));
   }
@@ -34,7 +34,10 @@ class MockHelper {
   // Prepares the first response to the mocked client when it calls for the
   // second page.
   void secondPage(MockClient client) {
-    when(client.get(ApiCalls.DEVICE_LIST_WITH_TOKEN_URL + Data.NEXT_PAGE_2,
+    when(client.get(
+        ApiCalls.PREFIX +
+            ApiCalls.DEVICE_LIST_WITH_TOKEN_URL +
+            Data.NEXT_PAGE_2,
         headers: {
           HttpHeaders.authorizationHeader: 'Bearer ${Data.ACCESS_TOKEN}'
         })).thenAnswer((_) async => http.Response(Data.SECOND_PAGE, 200));
