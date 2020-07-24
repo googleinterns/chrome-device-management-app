@@ -78,7 +78,6 @@ class _DeviceListState extends State<DeviceList> {
       double maxScroll = _scrollController.position.maxScrollExtent;
       double currentScroll = _scrollController.position.pixels;
       double delta = MediaQuery.of(context).size.height * 0.25;
-      print('${maxScroll - currentScroll} < $delta');
       if (maxScroll - currentScroll <= delta) {
         _getMoreDevices();
       }
