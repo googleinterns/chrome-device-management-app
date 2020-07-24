@@ -62,7 +62,7 @@ class ApiCalls {
       // If conection is succesful return a AccountDevices object by parsing the
       // response body
       if (response.statusCode == 200) {
-        return AccountDevices.fromJson(json.decode(response.body));
+        return AccountDevices.fromMap(json.decode(response.body));
       } else {
         // If that call was not successful, throw an error.
         throw Exception(response.statusCode);
@@ -88,7 +88,7 @@ class ApiCalls {
       // If conection is succesful return a DetailedDevice object by parsing the
       // response body
       if (response.statusCode == 200) {
-        return DetailedDevice.fromJson(json.decode(response.body));
+        return DetailedDevice.fromMap(json.decode(response.body));
       } else {
         // If that call was not successful, throw an error.
         throw Exception(response.statusCode);

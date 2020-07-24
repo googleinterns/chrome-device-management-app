@@ -18,7 +18,7 @@ import 'dart:convert';
 
 void main() {
   test('Check Json parse for full device', () {
-    final full = DetailedDevice.fromJson(json.decode("""{
+    final full = DetailedDevice.fromMap(json.decode("""{
     "kind": "kind",
     "etag": "etag",
     "deviceId": "device ID",

@@ -18,7 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Check Json parse for last known network', () {
-    final dummy = LastKnownNetwork.fromJson(json.decode("""
+    final dummy = LastKnownNetwork.fromMap(json.decode("""
       {        
         "ipAddress": "ip address",
         "wanIpAddress": "wan ip address"

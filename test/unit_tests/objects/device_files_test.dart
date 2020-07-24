@@ -18,7 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Check Json parse for device files', () {
-    final dummy = DeviceFiles.fromJson(json.decode("""
+    final dummy = DeviceFiles.fromMap(json.decode("""
       {        
         "name": "name",
         "type": "type",

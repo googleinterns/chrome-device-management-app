@@ -18,7 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Check Json parse for volume info', () {
-    final dummy = DiskVolumeReport.fromJson(json.decode("""
+    final dummy = DiskVolumeReport.fromMap(json.decode("""
       {
         "volumeInfo": [
           {

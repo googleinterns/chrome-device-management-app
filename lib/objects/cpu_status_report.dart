@@ -12,43 +12,50 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/objects/serializers.dart';
+
 import 'cpu_temperature_info.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+part 'cpu_status_report.g.dart';
 
 /// The object holds reports of CPU utilization and temperature.
 ///
-/// See document https://developers.google.com/admin-sdk/directory/v1/reference/chromeosdevices#resource
+/// See document https://developers.google.com/admin-sdk/directory/v1/reference/chromeosdevices#resource.
 
-class CpuStatusReport {
-  String _reportTime;
-  List<String> _cpuUtilizationPercentageInfo;
-  List<CpuTemperatureInfo> _cpuTemperatureInfo;
+abstract class CpuStatusReport
+    implements Built<CpuStatusReport, CpuStatusReportBuilder> {
+  /// Anonymus constructor.
+  CpuStatusReport._();
 
-  /// Constructor with optional variables.
-  CpuStatusReport(
-      [this._reportTime,
-      this._cpuUtilizationPercentageInfo,
-      this._cpuTemperatureInfo]);
+  /// Serializer to parse from Json.
+  static Serializer<CpuStatusReport> get serializer =>
+      _$cpuStatusReportSerializer;
 
-  /// Constructor form a json string.
-  CpuStatusReport.fromJson(Map<String, dynamic> json) {
-    _reportTime = json['reportTime'];
-    _cpuUtilizationPercentageInfo =
-        json['cpuUtilizationPercentageInfo'].cast<String>();
-    if (json['cpuTemperatureInfo'] != null) {
-      _cpuTemperatureInfo = new List<CpuTemperatureInfo>();
-      json['cpuTemperatureInfo'].forEach((v) {
-        _cpuTemperatureInfo.add(new CpuTemperatureInfo.fromJson(v));
-      });
-    }
+  /// Factory constructor.
+  factory CpuStatusReport([void Function(CpuStatusReportBuilder) updates]) =
+      _$CpuStatusReport;
+
+  /// Map object from a json string.
+  static CpuStatusReport fromMap(Map<String, dynamic> jsonData) {
+    return serializers.deserializeWith(CpuStatusReport.serializer, jsonData);
+  }
+
+  /// Map object into a json string.
+  Map<String, dynamic> toMap() {
+    return serializers.serializeWith(CpuStatusReport.serializer, this);
   }
 
   /// Date and time the report was received.
-  String get reportTime => _reportTime;
+  @nullable
+  String get reportTime;
 
   /// List of the CPU utilization percentage.
-  List<String> get cpuUtilizationPercentageInfo =>
-      _cpuUtilizationPercentageInfo;
+  @nullable
+  BuiltList<String> get cpuUtilizationPercentageInfo;
 
   /// List CPU temperature samples.
-  List<CpuTemperatureInfo> get cpuTemperatureInfo => _cpuTemperatureInfo;
+  @nullable
+  BuiltList<CpuTemperatureInfo> get cpuTemperatureInfo;
 }

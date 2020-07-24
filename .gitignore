@@ -41,3 +41,9 @@ app.*.map.json
 
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+
+# Auto generated files by buitl_value
+*.g.dart
+
+# Build generated pubspec
+pubspec.lock

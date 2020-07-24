@@ -12,26 +12,43 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
+part 'last_known_network.g.dart';
+
 /// The object holds the device last used network.
 ///
 /// See document https://developers.google.com/admin-sdk/directory/v1/reference/chromeosdevices#resource.
 
-class LastKnownNetwork {
-  String _ipAddress;
-  String _wanIpAddress;
+abstract class LastKnownNetwork
+    implements Built<LastKnownNetwork, LastKnownNetworkBuilder> {
+  /// Anonymus constructor.
+  LastKnownNetwork._();
 
-  /// Constructor with optional variables.
-  LastKnownNetwork([this._ipAddress, this._wanIpAddress]);
+  /// Factory constructor.
+  static Serializer<LastKnownNetwork> get serializer =>
+      _$lastKnownNetworkSerializer;
 
-  /// Constructor from a json string.
-  LastKnownNetwork.fromJson(Map<String, dynamic> json) {
-    _ipAddress = json['ipAddress'];
-    _wanIpAddress = json['wanIpAddress'];
+  /// Serializer to parse from Json.
+  factory LastKnownNetwork([void Function(LastKnownNetworkBuilder) updates]) =
+      _$LastKnownNetwork;
+
+  /// Map object from a json string.
+  static LastKnownNetwork fromMap(Map<String, dynamic> jsonData) {
+    return serializers.deserializeWith(LastKnownNetwork.serializer, jsonData);
+  }
+
+  /// Map object into a json string.
+  Map<String, dynamic> toMap() {
+    return serializers.serializeWith(LastKnownNetwork.serializer, this);
   }
 
   /// The IP address.
-  String get ipAddress => _ipAddress;
+  @nullable
+  String get ipAddress;
 
   /// The WAN IP address.
-  String get wanIpAddress => _wanIpAddress;
+  @nullable
+  String get wanIpAddress;
 }

@@ -12,26 +12,44 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
+part 'cpu_temperature_info.g.dart';
+
 /// The object holds a CPU temperature sample.
 ///
-/// See document https://developers.google.com/admin-sdk/directory/v1/reference/chromeosdevices#resource
+/// See document https://developers.google.com/admin-sdk/directory/v1/reference/chromeosdevices#resource.
 
-class CpuTemperatureInfo {
-  String _temperature;
-  String _label;
+abstract class CpuTemperatureInfo
+    implements Built<CpuTemperatureInfo, CpuTemperatureInfoBuilder> {
+  /// Anonymus constructor.
+  CpuTemperatureInfo._();
 
-  /// Constructor with optional variables.
-  CpuTemperatureInfo([this._temperature, this._label]);
+  /// Factory constructor.
+  static Serializer<CpuTemperatureInfo> get serializer =>
+      _$cpuTemperatureInfoSerializer;
 
-  /// Constructor form a json string.
-  CpuTemperatureInfo.fromJson(Map<String, dynamic> json) {
-    _temperature = json['temperature'];
-    _label = json['label'];
+  /// Serializer to parse from Json.
+  factory CpuTemperatureInfo(
+          [void Function(CpuTemperatureInfoBuilder) updates]) =
+      _$CpuTemperatureInfo;
+
+  /// Map object from a json string.
+  static CpuTemperatureInfo fromMap(Map<String, dynamic> jsonData) {
+    return serializers.deserializeWith(CpuTemperatureInfo.serializer, jsonData);
+  }
+
+  /// Map object into a json string.
+  Map<String, dynamic> toMap() {
+    return serializers.serializeWith(CpuTemperatureInfo.serializer, this);
   }
 
   /// Temperature in Celsius degrees.
-  String get temperature => _temperature;
+  @nullable
+  String get temperature;
 
   /// CPU label
-  String get label => _label;
+  @nullable
+  String get label;
 }

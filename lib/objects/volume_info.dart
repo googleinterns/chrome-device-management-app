@@ -12,31 +12,44 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'package:chrome_management_app/objects/serializers.dart';
+part 'volume_info.g.dart';
+
 /// The object holds a disk volume information.
 ///
 /// See document https://developers.google.com/admin-sdk/directory/v1/reference/chromeosdevices#resource.
 
-class VolumeInfo {
-  String _volumeId;
-  String _storageTotal;
-  String _storageFree;
+abstract class VolumeInfo implements Built<VolumeInfo, VolumeInfoBuilder> {
+  /// Anonymus constructor.
+  VolumeInfo._();
 
-  /// Constructor with optional variables.
-  VolumeInfo([this._volumeId, this._storageTotal, this._storageFree]);
+  /// Factory constructor.
+  static Serializer<VolumeInfo> get serializer => _$volumeInfoSerializer;
 
-  /// Constructor form a json string.
-  VolumeInfo.fromJson(Map<String, dynamic> json) {
-    _volumeId = json['volumeId'];
-    _storageTotal = json['storageTotal'];
-    _storageFree = json['storageFree'];
+  /// Serializer to parse from Json.
+  factory VolumeInfo([void Function(VolumeInfoBuilder) updates]) = _$VolumeInfo;
+
+  /// Map object from a json string.
+  static VolumeInfo fromMap(Map<String, dynamic> jsonData) {
+    return serializers.deserializeWith(VolumeInfo.serializer, jsonData);
+  }
+
+  /// Map object into a json string.
+  Map<String, dynamic> toMap() {
+    return serializers.serializeWith(VolumeInfo.serializer, this);
   }
 
   /// Volume id.
-  String get volumeId => _volumeId;
+  @nullable
+  String get volumeId;
 
   /// Total disk space in bytes.
-  String get storageTotal => _storageTotal;
+  @nullable
+  String get storageTotal;
 
   /// Free disk space in bytes.
-  String get storageFree => _storageFree;
+  @nullable
+  String get storageFree;
 }

@@ -18,7 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Check Json parse for cpu temperature info', () {
-    final dummy = CpuTemperatureInfo.fromJson(json.decode("""
+    final dummy = CpuTemperatureInfo.fromMap(json.decode("""
       {
         "temperature": "temp",
         "label": "label"

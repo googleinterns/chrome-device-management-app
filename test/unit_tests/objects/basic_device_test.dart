@@ -18,7 +18,7 @@ import 'dart:convert';
 
 void main() {
   test('Check Json parse for basic device', () {
-    final basic = BasicDevice.fromJson(json.decode(""" {
+    final basic = BasicDevice.fromMap(json.decode(""" {
         "kind": "kind",
         "etag": "etag",
         "deviceId": "device Id",

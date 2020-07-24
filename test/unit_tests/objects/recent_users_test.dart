@@ -18,7 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('Check Json parse for recent users', () {
-    final dummy = RecentUsers.fromJson(json.decode("""
+    final dummy = RecentUsers.fromMap(json.decode("""
     {
         "email": "email",
         "type": "type"
