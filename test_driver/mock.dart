@@ -12,20 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/views/list.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:chrome_management_app/models/api_calls.dart';
-import 'package:chrome_management_app/objects/account_devices.dart';
 
-/// Controller to retrieve an Account devices
-class Devices {
-  /// Method to get account devices
-  static Future<AccountDevices> getList(
-      http.Client client, String authToken, String nextPageToken) async {
-    ApiCalls apiCall = ApiCalls(client);
-    AccountDevices accountDevices =
-        await apiCall.getDeviceList(authToken, nextPageToken).catchError((e) {
-      throw Exception(e);
-    });
-    return accountDevices;
+/// Mocks the app main, soit starts it skips the Google authentication.
+class MyAppWithoutLogin extends StatelessWidget {
+  final String mockToken;
+  final http.Client client;
+  MyAppWithoutLogin({this.mockToken, this.client});
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: DevicesListView(
+        token: mockToken,
+        client: client,
+      ),
+    );
   }
 }

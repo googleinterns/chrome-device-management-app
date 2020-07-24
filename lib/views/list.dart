@@ -14,15 +14,18 @@
 
 import 'package:chrome_management_app/controllers/widget/device_list.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 /// View to show the list of devices of an account.
 ///
 class DevicesListView extends StatelessWidget {
   /// Authorizatio token to call the API.
   final String token;
+  final http.Client client;
 
   /// Constructor of view
-  DevicesListView({Key key, @required this.token}) : super(key: key);
+  DevicesListView({Key key, @required this.token, this.client})
+      : super(key: key);
 
   /// UI build of view
   @override
@@ -31,7 +34,7 @@ class DevicesListView extends StatelessWidget {
     return WillPopScope(
         onWillPop: () => Future.value(false),
         child: Scaffold(
-          body: Container(child: DeviceList(token)),
+          body: Container(child: DeviceList(token, client)),
         ));
   }
 }

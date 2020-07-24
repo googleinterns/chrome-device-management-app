@@ -56,19 +56,19 @@ class ApiCalls {
         ? PREFIX + DEVICE_LIST_URL
         : PREFIX + DEVICE_LIST_WITH_TOKEN_URL + nextPageToken;
     authToken = 'Bearer $authToken';
-    try {
-      response = await _client
-          .get(url, headers: {HttpHeaders.authorizationHeader: authToken});
-      // If conection is succesful return a AccountDevices object by parsing the
-      // response body
-      if (response.statusCode == 200) {
-        return AccountDevices.fromMap(json.decode(response.body));
-      } else {
-        // If that call was not successful, throw an error.
-        throw Exception(response.statusCode);
-      }
-    } finally {
-      _client.close();
+    _client == null
+        ? response = await http
+            .get(url, headers: {HttpHeaders.authorizationHeader: authToken})
+        : response = await _client
+            .get(url, headers: {HttpHeaders.authorizationHeader: authToken});
+
+    // If conection is succesful return a AccountDevices object by parsing the
+    // response body
+    if (response.statusCode == 200) {
+      return AccountDevices.fromMap(json.decode(response.body));
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception(response.statusCode);
     }
   }
 
@@ -80,21 +80,20 @@ class ApiCalls {
   ///
   /// This method returns a [DetailedDevice] object.
   dynamic getDetailedDevice(String authToken, String deviceId) async {
+    var response;
     authToken = 'Bearer $authToken';
-    try {
-      final response = await _client.get(
-          PREFIX + DETAILED_DEVICE_URL + deviceId,
-          headers: {HttpHeaders.authorizationHeader: authToken});
-      // If conection is succesful return a DetailedDevice object by parsing the
-      // response body
-      if (response.statusCode == 200) {
-        return DetailedDevice.fromMap(json.decode(response.body));
-      } else {
-        // If that call was not successful, throw an error.
-        throw Exception(response.statusCode);
-      }
-    } finally {
-      _client.close();
+    _client == null
+        ? response = await http.get(PREFIX + DETAILED_DEVICE_URL + deviceId,
+            headers: {HttpHeaders.authorizationHeader: authToken})
+        : response = await _client.get(PREFIX + DETAILED_DEVICE_URL + deviceId,
+            headers: {HttpHeaders.authorizationHeader: authToken});
+    // If conection is succesful return a DetailedDevice object by parsing the
+    // response body
+    if (response.statusCode == 200) {
+      return DetailedDevice.fromMap(json.decode(response.body));
+    } else {
+      // If that call was not successful, throw an error.
+      throw Exception(response.statusCode);
     }
   }
 

@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/models/keys_util.dart';
 import 'package:chrome_management_app/third-party/auth.dart';
 import 'package:chrome_management_app/views/list.dart';
 import 'package:flutter/material.dart';
@@ -41,8 +42,10 @@ class _LogInState extends State<LogIn> {
       setState(() {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    DevicesListView(token: value)),
+                builder: (BuildContext context) => DevicesListView(
+                      token: value,
+                      key: Key(LIST_VIEW_KEY),
+                    )),
             (Route<dynamic> route) => false);
       });
     }).catchError((e) {
