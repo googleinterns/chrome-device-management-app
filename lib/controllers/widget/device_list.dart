@@ -18,7 +18,6 @@ import 'package:chrome_management_app/objects/account_devices.dart';
 import 'package:chrome_management_app/objects/basic_device.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import '../devices.dart';
 
 /// Stateful Widget to show a list of devices.
