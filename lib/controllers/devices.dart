@@ -22,8 +22,7 @@ class Devices {
   static Future<AccountDevices> getList(
       String authToken, String nextPageToken) async {
     ApiCalls apiCall = ApiCalls(http.Client());
-    AccountDevices accountDevices;
-    accountDevices =
+    AccountDevices accountDevices =
         await apiCall.getDeviceList(authToken, nextPageToken).catchError((e) {
       throw Exception(e);
     });
