@@ -50,8 +50,7 @@ class _LogInState extends State<LogIn> {
       });
     }).catchError((e) {
       setState(() {
-        // TODO #34 handle errors
-        _message = 'Got error $e\nPlease try again.';
+        _message = 'Please try again.';
       });
     });
   }
@@ -68,7 +67,7 @@ class _LogInState extends State<LogIn> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               // Display message
-              Text('$_message\n'),
+              Center(child: Text('$_message\n')),
               const SizedBox(height: 80),
               RaisedButton(
                 child: Text('Authenticate'),

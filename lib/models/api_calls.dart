@@ -14,6 +14,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:chrome_management_app/models/error_handler.dart';
 import 'package:http/http.dart' as http;
 import 'package:chrome_management_app/objects/account_devices.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';
@@ -68,7 +69,7 @@ class ApiCalls {
       return AccountDevices.fromMap(json.decode(response.body));
     } else {
       // If that call was not successful, throw an error.
-      throw Exception(response.statusCode);
+      throw ErrorHandler(response.statusCode);
     }
   }
 
@@ -93,7 +94,7 @@ class ApiCalls {
       return DetailedDevice.fromMap(json.decode(response.body));
     } else {
       // If that call was not successful, throw an error.
-      throw Exception(response.statusCode);
+      throw ErrorHandler(response.statusCode);
     }
   }
 

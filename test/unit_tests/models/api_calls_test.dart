@@ -13,12 +13,13 @@
 /// limitations under the License.
 
 import 'dart:io';
+import 'package:chrome_management_app/models/error_handler.dart';
 import 'package:chrome_management_app/objects/account_devices.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:http/http.dart' as http;
 import 'package:chrome_management_app/models/api_calls.dart';
+import 'package:test/test.dart';
 
 /// Class to mock a http client
 class MockClient extends Mock implements http.Client {}
@@ -104,10 +105,11 @@ main() {
       final client = MockClient();
       when(client.get(ApiCalls.PREFIX + ApiCalls.DEVICE_LIST_URL,
               headers: {HttpHeaders.authorizationHeader: 'Bearer $authToken'}))
-          .thenAnswer((_) async => http.Response('Not Found', 404));
+          .thenAnswer((_) async => http.Response('Server Error', 501));
       final apiCall = ApiCalls(client);
 
-      expect(apiCall.getDeviceList(authToken, null), throwsException);
+      expect(apiCall.getDeviceList(authToken, null),
+          throwsA(predicate((e) => e is ErrorHandler && e.statusCode == 501)));
     });
 
     test(
@@ -132,10 +134,11 @@ main() {
           ApiCalls.PREFIX + ApiCalls.DEVICE_LIST_WITH_TOKEN_URL + nextPageToken,
           headers: {
             HttpHeaders.authorizationHeader: 'Bearer $authToken'
-          })).thenAnswer((_) async => http.Response('Not Found', 404));
+          })).thenAnswer((_) async => http.Response('Forbidden', 403));
       final apiCall = ApiCalls(client);
 
-      expect(apiCall.getDeviceList(authToken, nextPageToken), throwsException);
+      expect(apiCall.getDeviceList(authToken, nextPageToken),
+          throwsA(predicate((e) => e is ErrorHandler && e.statusCode == 403)));
     });
 
     test(
@@ -155,9 +158,10 @@ main() {
       final client = MockClient();
       when(client.get(ApiCalls.PREFIX + ApiCalls.DETAILED_DEVICE_URL + deviceId,
               headers: {HttpHeaders.authorizationHeader: 'Bearer $authToken'}))
-          .thenAnswer((_) async => http.Response('Not Found', 404));
+          .thenAnswer((_) async => http.Response('Unauthorized', 401));
       final apiCall = ApiCalls(client);
-      expect(apiCall.getDetailedDevice(authToken, deviceId), throwsException);
+      expect(apiCall.getDetailedDevice(authToken, deviceId),
+          throwsA(predicate((e) => e is ErrorHandler && e.statusCode == 401)));
     });
   });
 }

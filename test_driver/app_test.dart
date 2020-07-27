@@ -59,7 +59,7 @@ void main() {
       await driver.scrollUntilVisible(
         listFinder,
         itemFinder,
-        dyScroll: -300.0,
+        dyScroll: -400.0,
       );
 
       // Verify that the item contains the correct text.
