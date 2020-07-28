@@ -196,7 +196,9 @@ class _DeviceListState extends State<DeviceList> {
       body: _errorOnLoading
           ? _warning.statusCode > 499
               ? _alertAndRetry(_warning)
-              : _alertAndLogIn(_warning, false)
+              : _list == null
+                  ? _alertAndLogIn(_warning, true)
+                  : _alertAndLogIn(_warning, false)
           : _loading == true && _list == null
               ?
               // Loading screen if its the first loading of the list
