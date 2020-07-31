@@ -41,7 +41,7 @@ class SummaryDevice extends StatelessWidget {
         _circleColor.computeLuminance() > .5 ? Colors.black : Colors.white;
     return new Padding(
       // Padding of the widget
-      padding: EdgeInsets.only(left: 20, top: 10),
+      padding: EdgeInsets.only(left: 20),
       child: Row(
         // Creates leading circle avatar with the first to characters of the
         // serial number of the device.
@@ -90,15 +90,12 @@ class SummaryDevice extends StatelessWidget {
                       style: TextStyle(fontSize: 12.0, color: Colors.black87),
                     )),
                 // Last synchronied date of the device
-                Padding(
-                  padding: EdgeInsets.only(bottom: 5.0),
-                  child: Text(
-                    'Last Sync: ${DateFormat.yMMMd().format(DateTime.parse(_device.lastSync))}',
-                    maxLines: 2,
-                    key: Key(LAST_SYNC_OF_DEVICE_KEY + _index.toString()),
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 12.0, color: Colors.grey[700]),
-                  ),
+                Text(
+                  'Last Sync: ${DateFormat.yMMMd().format(DateTime.parse(_device.lastSync))}',
+                  maxLines: 2,
+                  key: Key(LAST_SYNC_OF_DEVICE_KEY + _index.toString()),
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 12.0, color: Colors.grey[700]),
                 ),
               ],
             ),

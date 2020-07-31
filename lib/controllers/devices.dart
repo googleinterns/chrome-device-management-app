@@ -24,7 +24,7 @@ class Devices {
     ApiCalls apiCall = ApiCalls(client);
     AccountDevices accountDevices =
         await apiCall.getDeviceList(authToken, nextPageToken).catchError((e) {
-      throw Exception(e);
+      throw e;
     });
     return accountDevices;
   }
