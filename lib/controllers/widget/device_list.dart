@@ -71,7 +71,7 @@ class _DeviceListState extends State<DeviceList> {
   void initState() {
     _scrollController = ScrollController();
     super.initState();
-    _getInitalDevices();
+    _getInitialDevices();
     // Add listener to scroll controller to load more devices when user scrolls
     // 75% or more of the view height.
     _scrollController.addListener(() {
@@ -85,7 +85,7 @@ class _DeviceListState extends State<DeviceList> {
   }
 
   /// Get initial page of the list of devices
-  _getInitalDevices() async {
+  _getInitialDevices() async {
     setState(() {
       _loading = true;
     });
@@ -178,7 +178,7 @@ class _DeviceListState extends State<DeviceList> {
             setState(() {
               _errorOnLoading = false;
             });
-            _list == null ? _getInitalDevices() : _getMoreDevices();
+            _list == null ? _getInitialDevices() : _getMoreDevices();
           },
         ),
       ],
