@@ -47,7 +47,7 @@ abstract class CpuTemperatureInfo
 
   /// Temperature in Celsius degrees.
   @nullable
-  String get temperature;
+  int get temperature;
 
   /// CPU label
   @nullable

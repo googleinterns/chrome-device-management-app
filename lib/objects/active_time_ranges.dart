@@ -50,5 +50,5 @@ abstract class ActiveTimeRanges
 
   /// Duration of usage of the device in milliseconds.
   @nullable
-  String get activeTime;
+  int get activeTime;
 }

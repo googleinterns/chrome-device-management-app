@@ -16,6 +16,7 @@ import 'package:chrome_management_app/models/error_handler.dart';
 import 'package:chrome_management_app/models/keys_util.dart';
 import 'package:chrome_management_app/controllers/widget/device_summary.dart';
 import 'package:chrome_management_app/objects/account_devices.dart';
+import 'package:chrome_management_app/views/detail.dart';
 import 'package:chrome_management_app/views/login.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -226,11 +227,23 @@ class _DeviceListState extends State<DeviceList> {
                                 itemCount: _list.chromeosdevices.length + 1,
                                 itemBuilder: (context, index) {
                                   return index < _list.chromeosdevices.length
-                                      ? SummaryDevice(
-                                          _list.chromeosdevices[index],
-                                          index + 1,
-                                          key: Key(SUMMARY_DEVICE_KEY +
-                                              (index + 1).toString()))
+                                      ? new GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        DetailedDeviceView(
+                                                            _authToken,
+                                                            _client,
+                                                            _list.chromeosdevices[
+                                                                index])));
+                                          },
+                                          child: SummaryDevice(
+                                              _list.chromeosdevices[index],
+                                              index + 1,
+                                              key: Key(SUMMARY_DEVICE_KEY +
+                                                  (index + 1).toString())))
                                       : _list.nextPageToken == null
                                           ? Padding(
                                               padding: EdgeInsets.symmetric(

@@ -22,16 +22,16 @@ void main() {
       {
         "reportTime": "report time",
         "cpuUtilizationPercentageInfo": [
-          "info 1",
-          "info 2"
+          1,
+          2
         ],
         "cpuTemperatureInfo": [
           {
-            "temperature": "temp 1",
+            "temperature": 1,
             "label": "label 1"
           },
            {
-            "temperature": "temp 2",
+            "temperature": 2,
             "label": "label 2"
           }
         ]
@@ -39,11 +39,11 @@ void main() {
     """));
     expect(dummy.reportTime, 'report time');
     for (int i = 0; i < dummy.cpuUtilizationPercentageInfo.length; i++) {
-      expect(dummy.cpuUtilizationPercentageInfo[i], 'info ${i + 1}');
+      expect(dummy.cpuUtilizationPercentageInfo[i], i + 1);
     }
     for (int i = 0; i < dummy.cpuTemperatureInfo.length; i++) {
       expect(dummy.cpuTemperatureInfo[i].label, 'label ${i + 1}');
-      expect(dummy.cpuTemperatureInfo[i].temperature, 'temp ${i + 1}');
+      expect(dummy.cpuTemperatureInfo[i].temperature, i + 1);
     }
   });
 }

@@ -21,10 +21,10 @@ void main() {
     final dummy = ActiveTimeRanges.fromMap(json.decode("""
       {
         "date": "date 1",
-        "activeTime": "active time 1"
+        "activeTime": 1
       }
     """));
-    expect(dummy.activeTime, 'active time 1');
+    expect(dummy.activeTime, 1);
     expect(dummy.date, 'date 1');
   });
 }

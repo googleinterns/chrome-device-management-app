@@ -55,11 +55,11 @@ void main() {
     "activeTimeRanges": [
       {
         "date": "date 1",
-        "activeTime": "active time 1"
+        "activeTime": 1
       },
       {
         "date": "date 2",
-        "activeTime": "active time 2"
+        "activeTime": 2
       }
     ],
     "deviceFiles": [
@@ -88,16 +88,16 @@ void main() {
       {
         "reportTime": "report time 1",
         "cpuUtilizationPercentageInfo": [
-          "info 1",
-          "info 2"
+          1,
+          2
         ],
         "cpuTemperatureInfo": [
           {
-            "temperature": "temp 1",
+            "temperature": 1,
             "label": "label 1"
           },
            {
-            "temperature": "temp 2",
+            "temperature": 2,
             "label": "label 2"
           }
         ]
@@ -198,7 +198,7 @@ void main() {
 
     for (int i = 0; i < full.activeTimeRanges.length; i++) {
       expect(full.activeTimeRanges[i].date, 'date ${i + 1}');
-      expect(full.activeTimeRanges[i].activeTime, 'active time ${i + 1}');
+      expect(full.activeTimeRanges[i].activeTime, i + 1);
     }
     for (int i = 0; i < full.deviceFiles.length; i++) {
       expect(full.deviceFiles[i].name, 'name ${i + 1}');
@@ -219,14 +219,13 @@ void main() {
       for (int j = 0;
           j < full.cpuStatusReports[i].cpuUtilizationPercentageInfo.length;
           j++) {
-        expect(full.cpuStatusReports[i].cpuUtilizationPercentageInfo[j],
-            'info ${j + 1}');
+        expect(full.cpuStatusReports[i].cpuUtilizationPercentageInfo[j], j + 1);
       }
       for (int j = 0;
           j < full.cpuStatusReports[i].cpuTemperatureInfo.length;
           j++) {
-        expect(full.cpuStatusReports[i].cpuTemperatureInfo[j].temperature,
-            'temp ${j + 1}');
+        expect(
+            full.cpuStatusReports[i].cpuTemperatureInfo[j].temperature, j + 1);
         expect(full.cpuStatusReports[i].cpuTemperatureInfo[j].label,
             'label ${j + 1}');
       }
