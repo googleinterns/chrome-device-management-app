@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/models/error_handler.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';
 import 'package:flutter/material.dart';
 
@@ -93,9 +94,8 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
                                   overflow: TextOverflow.clip,
                                 ),
                                 Text(
-                                  widget._device.annotatedAssetId == null
-                                      ? '-'
-                                      : widget._device.annotatedAssetId,
+                                  getValueOrDefault(
+                                      widget._device.annotatedAssetId),
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.black54),
                                   overflow: TextOverflow.clip,
@@ -116,9 +116,8 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
                                   overflow: TextOverflow.clip,
                                 ),
                                 Text(
-                                  widget._device.annotatedUser == null
-                                      ? '-'
-                                      : widget._device.annotatedUser,
+                                  getValueOrDefault(
+                                      widget._device.annotatedUser),
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.black54),
                                   overflow: TextOverflow.clip,
@@ -139,9 +138,8 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
                                 overflow: TextOverflow.clip,
                               ),
                               Text(
-                                widget._device.annotatedLocation == null
-                                    ? '-'
-                                    : widget._device.annotatedLocation,
+                                getValueOrDefault(
+                                    widget._device.annotatedLocation),
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black54),
                                 overflow: TextOverflow.clip,
@@ -221,9 +219,8 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
                                 overflow: TextOverflow.clip,
                               ),
                               Text(
-                                widget._device.annotatedAssetId == null
-                                    ? '-'
-                                    : widget._device.annotatedAssetId,
+                                getValueOrDefault(
+                                    widget._device.annotatedAssetId),
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black54),
                                 overflow: TextOverflow.clip,
@@ -244,9 +241,7 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
                                 overflow: TextOverflow.clip,
                               ),
                               Text(
-                                widget._device.annotatedUser == null
-                                    ? '-'
-                                    : widget._device.annotatedUser,
+                                getValueOrDefault(widget._device.annotatedUser),
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black54),
                                 overflow: TextOverflow.clip,
@@ -267,9 +262,8 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
                               overflow: TextOverflow.clip,
                             ),
                             Text(
-                              widget._device.annotatedLocation == null
-                                  ? '-'
-                                  : widget._device.annotatedLocation,
+                              getValueOrDefault(
+                                  widget._device.annotatedLocation),
                               style: TextStyle(
                                   fontSize: 16, color: Colors.black54),
                               overflow: TextOverflow.clip,
@@ -291,9 +285,7 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
                                 overflow: TextOverflow.clip,
                               ),
                               Text(
-                                widget._device.notes == null
-                                    ? '-'
-                                    : widget._device.notes,
+                                getValueOrDefault(widget._device.notes),
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black54),
                                 overflow: TextOverflow.clip,

@@ -19,7 +19,6 @@ import 'package:chrome_management_app/models/fade_on_scroll_util.dart';
 import 'package:chrome_management_app/models/error_handler.dart';
 import 'package:chrome_management_app/objects/basic_device.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';
-import 'package:chrome_management_app/views/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
@@ -84,6 +83,7 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
   _getDetailedDevice() async {
     setState(() {
       _loading = true;
+      _errorOnLoading = false;
     });
     Devices.getDetailedDevice(_client, _authToken, _basicDevice.deviceId)
         .then((value) {
@@ -100,62 +100,13 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
     });
   }
 
-  /// Pops an alert to user and sends the app to the login view.
-  _alertAndLogIn(ErrorHandler error) {
-    return AlertDialog(
-      title: Text('Warning'),
-      content: SingleChildScrollView(
-        child: ListBody(
-          children: <Widget>[
-            Text(error.message),
-          ],
-        ),
-      ),
-      actions: <Widget>[
-        FlatButton(
-          child: Text('Reauthenticate'),
-          onPressed: () {
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (BuildContext context) => LogIn()),
-                (Route<dynamic> route) => false);
-          },
-        ),
-      ],
-    );
-  }
-
-  /// Pops an alert and retry to get the devices.
-  _alertAndRetry(ErrorHandler error) {
-    return AlertDialog(
-      title: Text('Warning'),
-      content: SingleChildScrollView(
-        child: ListBody(
-          children: <Widget>[
-            Text(error.message),
-          ],
-        ),
-      ),
-      actions: <Widget>[
-        FlatButton(
-          child: Text('Try again'),
-          onPressed: () {
-            setState(() {
-              _errorOnLoading = false;
-            });
-            _getDetailedDevice();
-          },
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _errorOnLoading
           ? _warning.statusCode > 499
-              ? _alertAndRetry(_warning)
-              : _alertAndLogIn(_warning)
+              ? alertAndRetry(_warning, _getDetailedDevice)
+              : alertAndLogIn(_warning, false, context)
           : CustomScrollView(
               controller: _scrollController,
               slivers: <Widget>[

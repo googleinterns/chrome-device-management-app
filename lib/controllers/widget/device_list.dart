@@ -17,7 +17,6 @@ import 'package:chrome_management_app/models/keys_util.dart';
 import 'package:chrome_management_app/controllers/widget/device_summary.dart';
 import 'package:chrome_management_app/objects/account_devices.dart';
 import 'package:chrome_management_app/views/detail.dart';
-import 'package:chrome_management_app/views/login.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../devices.dart';
@@ -86,7 +85,7 @@ class _DeviceListState extends State<DeviceList> {
   }
 
   /// Get initial page of the list of devices
-  _getInitialDevices() async {
+  void _getInitialDevices() async {
     setState(() {
       _loading = true;
     });
@@ -108,12 +107,13 @@ class _DeviceListState extends State<DeviceList> {
   }
 
   /// Gets the next page of the devices list
-  _getMoreDevices() async {
+  void _getMoreDevices() async {
     if (_allDevicesLoaded || _loading) {
       return;
     }
     setState(() {
       _loading = true;
+      _errorOnLoading = false;
     });
     await Devices.getList(_client, _authToken, _list.nextPageToken)
         .then((value) {
@@ -137,55 +137,6 @@ class _DeviceListState extends State<DeviceList> {
     });
   }
 
-  /// Pops an alert to user and sends the app to the login view.
-  _alertAndLogIn(ErrorHandler error, bool unverifiedUser) {
-    return AlertDialog(
-      title: Text('Warning'),
-      content: SingleChildScrollView(
-        child: ListBody(
-          children: <Widget>[
-            unverifiedUser ? Text(error.unverifiedUser) : Text(error.message),
-          ],
-        ),
-      ),
-      actions: <Widget>[
-        FlatButton(
-          child: Text('Reauthenticate'),
-          onPressed: () {
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (BuildContext context) => LogIn()),
-                (Route<dynamic> route) => false);
-          },
-        ),
-      ],
-    );
-  }
-
-  /// Pops an alert and retry to get the devices.
-  _alertAndRetry(ErrorHandler error) {
-    return AlertDialog(
-      title: Text('Warning'),
-      content: SingleChildScrollView(
-        child: ListBody(
-          children: <Widget>[
-            Text(error.message),
-          ],
-        ),
-      ),
-      actions: <Widget>[
-        FlatButton(
-          child: Text('Try again'),
-          onPressed: () {
-            setState(() {
-              _errorOnLoading = false;
-            });
-            _list == null ? _getInitialDevices() : _getMoreDevices();
-          },
-        ),
-      ],
-    );
-  }
-
   /// Widget UI build
   @override
   Widget build(BuildContext context) {
@@ -196,10 +147,11 @@ class _DeviceListState extends State<DeviceList> {
       ),
       body: _errorOnLoading
           ? _warning.statusCode > 499
-              ? _alertAndRetry(_warning)
+              ? alertAndRetry(_warning,
+                  _list == null ? _getInitialDevices : _getMoreDevices)
               : _list == null
-                  ? _alertAndLogIn(_warning, true)
-                  : _alertAndLogIn(_warning, false)
+                  ? alertAndLogIn(_warning, true, context)
+                  : alertAndLogIn(_warning, false, context)
           : _loading == true && _list == null
               ?
               // Loading screen if its the first loading of the list
