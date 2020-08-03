@@ -39,11 +39,7 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
       new AnimatedSize(
           vsync: this,
           duration: const Duration(milliseconds: 500),
-          child: new ConstrainedBox(
-              constraints: new BoxConstraints(),
-              child: _isExpanded
-                  ? hardwareFull(context)
-                  : hardwareSummary(context)))
+          child: _isExpanded ? hardwareFull(context) : hardwareSummary(context))
     ]);
   }
 

@@ -38,10 +38,7 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
       new AnimatedSize(
           vsync: this,
           duration: const Duration(milliseconds: 500),
-          child: new ConstrainedBox(
-              constraints: new BoxConstraints(),
-              child:
-                  _isExpanded ? customFull(context) : customSummary(context)))
+          child: _isExpanded ? customFull(context) : customSummary(context))
     ]);
   }
 

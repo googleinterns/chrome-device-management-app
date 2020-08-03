@@ -15,7 +15,6 @@
 import 'package:chrome_management_app/controllers/devices.dart';
 import 'package:chrome_management_app/controllers/widget/custom_fields_card.dart';
 import 'package:chrome_management_app/controllers/widget/hardware_os_card.dart';
-import 'package:chrome_management_app/models/fade_on_scroll_util.dart';
 import 'package:chrome_management_app/models/error_handler.dart';
 import 'package:chrome_management_app/objects/basic_device.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';
@@ -103,6 +102,9 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(_basicDevice.serialNumber),
+      ),
       body: _errorOnLoading
           ? _warning.statusCode > 499
               ? alertAndRetry(_warning, _getDetailedDevice)
@@ -110,60 +112,6 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
           : CustomScrollView(
               controller: _scrollController,
               slivers: <Widget>[
-                /// Custom App Bar
-                SliverAppBar(
-                  pinned: true,
-                  title: FadeOnScroll(
-                      scrollController: _scrollController,
-                      fullOpacityOffset: 120,
-                      zeroOpacityOffset: 40,
-                      child: Text(_basicDevice.serialNumber)),
-                  expandedHeight: 180,
-                  flexibleSpace: FlexibleSpaceBar(
-                    titlePadding: EdgeInsets.only(bottom: 40, left: 20),
-                    title: FadeOnScroll(
-                      scrollController: _scrollController,
-                      fullOpacityOffset: 0,
-                      zeroOpacityOffset: 40,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        mainAxisSize: MainAxisSize.max,
-                        verticalDirection: VerticalDirection.down,
-                        children: <Widget>[
-                          // Serial number of the device.
-                          Padding(
-                              padding: EdgeInsets.only(bottom: 2.0),
-                              child: Text(
-                                _basicDevice.serialNumber,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontSize: 20.0),
-                              )),
-
-                          // Status of the device
-                          Padding(
-                              padding: EdgeInsets.only(bottom: 2.0),
-                              child: Text(
-                                _basicDevice.status,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 10.0, color: Colors.white54),
-                              )),
-                          // Last synchronied date of the device
-                          Text(
-                            'Last Sync: ${DateFormat.yMMMd().format(DateTime.parse(_basicDevice.lastSync))}',
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: 10.0, color: Colors.white54),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
                 SliverList(
                   delegate: SliverChildListDelegate(
                     _loading == true
@@ -175,6 +123,57 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
                             )
                           ]
                         : [
+                            Container(
+                              height: AppBar().preferredSize.height * 3,
+                              color: Colors.blue,
+                              child: Center(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.max,
+                                  verticalDirection: VerticalDirection.down,
+                                  children: <Widget>[
+                                    // Serial number of the device.
+                                    Padding(
+                                        padding: EdgeInsets.only(bottom: 2.0),
+                                        child: Text(
+                                          _basicDevice.serialNumber,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontSize: 28.0,
+                                              color: Colors.white),
+                                        )),
+
+                                    // Status of the device
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                          bottom: 2.0,
+                                        ),
+                                        child: Text(
+                                          _basicDevice.status,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              color: Colors.white54),
+                                        )),
+                                    // Last synchronied date of the device
+                                    Padding(
+                                      padding: EdgeInsets.only(bottom: 2.0),
+                                      child: Text(
+                                        'Last Sync: ${DateFormat.yMMMd().format(DateTime.parse(_basicDevice.lastSync))}',
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontSize: 20.0,
+                                            color: Colors.white54),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
                             HardwareAndOsCard(_fullDevice),
                             Padding(padding: EdgeInsets.all(10)),
                             CustomFieldsCard(_fullDevice)
