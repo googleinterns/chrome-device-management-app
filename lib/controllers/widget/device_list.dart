@@ -189,7 +189,10 @@ class _DeviceListState extends State<DeviceList> {
                                                             _authToken,
                                                             _client,
                                                             _list.chromeosdevices[
-                                                                index])));
+                                                                index]))).then(
+                                                (_) {
+                                              _getInitialDevices();
+                                            });
                                           },
                                           child: SummaryDevice(
                                               _list.chromeosdevices[index],

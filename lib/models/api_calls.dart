@@ -23,7 +23,6 @@ import 'package:chrome_management_app/objects/detailed_device.dart';
 ///
 /// See more
 /// https://developers.google.com/admin-sdk/directory/v1/guides/manage-chrome-devices.
-
 class ApiCalls {
   /// Http client that will do the https requests.
   http.Client _client;
@@ -43,6 +42,17 @@ class ApiCalls {
 
   ///Url to get detailed information of a device
   static const DETAILED_DEVICE_URL = '/customer/my_customer/devices/chromeos/';
+
+  /// Url to do a action on a device.
+  static const ACTION_URL = '/action';
+
+  /// List of deprovision reasons.
+  static const deprovisionReasons = [
+    'different_model_replacement',
+    'retiring_device',
+    'same_model_replacement',
+    'upgrade_transfer'
+  ];
 
   /// Calls the Directory API to get a list of devices with max results of 15.
   ///
@@ -84,8 +94,10 @@ class ApiCalls {
     var response;
     authToken = 'Bearer $authToken';
     _client == null
-        ? response = await http.get(PREFIX + DETAILED_DEVICE_URL + deviceId,
-            headers: {HttpHeaders.authorizationHeader: authToken})
+        ? response = await http.get(
+            PREFIX + DETAILED_DEVICE_URL + deviceId,
+            headers: {HttpHeaders.authorizationHeader: authToken},
+          )
         : response = await _client.get(PREFIX + DETAILED_DEVICE_URL + deviceId,
             headers: {HttpHeaders.authorizationHeader: authToken});
     // If conection is succesful return a DetailedDevice object by parsing the
@@ -98,5 +110,108 @@ class ApiCalls {
     }
   }
 
-  // TODO Remote commands Issue #38
+  /// Calls the Directory API to deprovise a device.
+  ///
+  /// * [authToken] is the authentication token for API to accept the requests.
+  /// * [deviceId] is the ID of the device which its detailed information
+  /// will be retrieved.
+  /// * [reason] is the reason why the device is getting a deprovision.
+  ///
+  /// This method returns true if the action was completed.
+  dynamic deprovision(String authToken, String deviceId, int reason) async {
+    var response;
+    authToken = 'Bearer $authToken';
+    _client == null
+        ? response = await http.post(
+            PREFIX + DETAILED_DEVICE_URL + deviceId + ACTION_URL,
+            headers: {HttpHeaders.authorizationHeader: authToken},
+            body: jsonEncode(<String, String>{
+              'action': 'deprovision',
+              'deprovisionReason': deprovisionReasons[reason]
+            }),
+          )
+        : response = await _client.post(
+            PREFIX + DETAILED_DEVICE_URL + deviceId + ACTION_URL,
+            headers: {HttpHeaders.authorizationHeader: authToken},
+            body: jsonEncode(<String, String>{
+              'action': 'deprovision',
+              'deprovisionReason': deprovisionReasons[reason]
+            }));
+    // If conection is succesful return a DetailedDevice object by parsing the
+    // response body
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      // If that call was not successful, throw an error.
+      throw ErrorHandler(response.statusCode);
+    }
+  }
+
+  /// Calls the Directory API to disable a device.
+  ///
+  /// * [authToken] is the authentication token for API to accept the requests.
+  /// * [deviceId] is the ID of the device which its detailed information
+  /// will be retrieved.
+  ///
+  /// This method returns true if the action was completed.
+  dynamic disable(String authToken, String deviceId) async {
+    var response;
+    authToken = 'Bearer $authToken';
+    _client == null
+        ? response = await http.post(
+            PREFIX + DETAILED_DEVICE_URL + deviceId + ACTION_URL,
+            headers: {HttpHeaders.authorizationHeader: authToken},
+            body: jsonEncode(<String, String>{
+              'action': 'disable',
+            }),
+          )
+        : response = await _client.post(
+            PREFIX + DETAILED_DEVICE_URL + deviceId + ACTION_URL,
+            headers: {HttpHeaders.authorizationHeader: authToken},
+            body: jsonEncode(<String, String>{
+              'action': 'disable',
+            }));
+    // If conection is succesful return a DetailedDevice object by parsing the
+    // response body
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      // If that call was not successful, throw an error.
+      throw ErrorHandler(response.statusCode);
+    }
+  }
+
+  /// Calls the Directory API to reenable a device.
+  ///
+  /// * [authToken] is the authentication token for API to accept the requests.
+  /// * [deviceId] is the ID of the device which its detailed information
+  /// will be retrieved.
+  ///
+  /// This method returns true if the action was completed.
+  dynamic reenable(String authToken, String deviceId) async {
+    var response;
+    authToken = 'Bearer $authToken';
+    _client == null
+        ? response = await http.post(
+            PREFIX + DETAILED_DEVICE_URL + deviceId + ACTION_URL,
+            headers: {HttpHeaders.authorizationHeader: authToken},
+            body: jsonEncode(<String, String>{
+              'action': 'reenable',
+            }),
+          )
+        : response = await _client.post(
+            PREFIX + DETAILED_DEVICE_URL + deviceId + ACTION_URL,
+            headers: {HttpHeaders.authorizationHeader: authToken},
+            body: jsonEncode(<String, String>{
+              'action': 'reenable',
+            }));
+    // If conection is succesful return a DetailedDevice object by parsing the
+    // response body
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      // If that call was not successful, throw an error.
+      throw ErrorHandler(response.statusCode);
+    }
+  }
 }
