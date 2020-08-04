@@ -154,7 +154,7 @@ class ApiCalls {
   /// will be retrieved.
   ///
   /// This method returns true if the action was completed.
-  dynamic disable(String authToken, String deviceId) async {
+  dynamic changeState(String authToken, String deviceId, String action) async {
     var response;
     authToken = 'Bearer $authToken';
     _client == null
@@ -162,48 +162,14 @@ class ApiCalls {
             PREFIX + DETAILED_DEVICE_URL + deviceId + ACTION_URL,
             headers: {HttpHeaders.authorizationHeader: authToken},
             body: jsonEncode(<String, String>{
-              'action': 'disable',
+              'action': action,
             }),
           )
         : response = await _client.post(
             PREFIX + DETAILED_DEVICE_URL + deviceId + ACTION_URL,
             headers: {HttpHeaders.authorizationHeader: authToken},
             body: jsonEncode(<String, String>{
-              'action': 'disable',
-            }));
-    // If conection is succesful return a DetailedDevice object by parsing the
-    // response body
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      // If that call was not successful, throw an error.
-      throw ErrorHandler(response.statusCode);
-    }
-  }
-
-  /// Calls the Directory API to reenable a device.
-  ///
-  /// * [authToken] is the authentication token for API to accept the requests.
-  /// * [deviceId] is the ID of the device which its detailed information
-  /// will be retrieved.
-  ///
-  /// This method returns true if the action was completed.
-  dynamic reenable(String authToken, String deviceId) async {
-    var response;
-    authToken = 'Bearer $authToken';
-    _client == null
-        ? response = await http.post(
-            PREFIX + DETAILED_DEVICE_URL + deviceId + ACTION_URL,
-            headers: {HttpHeaders.authorizationHeader: authToken},
-            body: jsonEncode(<String, String>{
-              'action': 'reenable',
-            }),
-          )
-        : response = await _client.post(
-            PREFIX + DETAILED_DEVICE_URL + deviceId + ACTION_URL,
-            headers: {HttpHeaders.authorizationHeader: authToken},
-            body: jsonEncode(<String, String>{
-              'action': 'reenable',
+              'action': action,
             }));
     // If conection is succesful return a DetailedDevice object by parsing the
     // response body

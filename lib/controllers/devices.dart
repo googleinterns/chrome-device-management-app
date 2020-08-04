@@ -23,52 +23,28 @@ class Devices {
   static Future<AccountDevices> getList(
       http.Client client, String authToken, String nextPageToken) async {
     ApiCalls apiCall = ApiCalls(client);
-    AccountDevices accountDevices =
-        await apiCall.getDeviceList(authToken, nextPageToken).catchError((e) {
-      throw e;
-    });
-    return accountDevices;
+    return await apiCall.getDeviceList(authToken, nextPageToken);
   }
 
   /// Method to get a detailed device from its device ID.
   static Future<DetailedDevice> getDetailedDevice(
       http.Client client, String authToken, String deviceId) async {
     ApiCalls apiCall = ApiCalls(client);
-    DetailedDevice device =
-        await apiCall.getDetailedDevice(authToken, deviceId).catchError((e) {
-      throw e;
-    });
-    return device;
+    return await apiCall.getDetailedDevice(authToken, deviceId);
   }
 
   /// Method to get deprovision a device from its device ID.
   static Future<bool> deproviseDevice(
       http.Client client, String authToken, String deviceId, int reason) async {
     ApiCalls apiCall = ApiCalls(client);
-    bool action =
-        await apiCall.deprovision(authToken, deviceId, reason).catchError((e) {
-      throw e;
-    });
-    return action;
+
+    return await apiCall.deprovision(authToken, deviceId, reason);
   }
 
-  /// Method to disable a device from its device ID.
-  static Future<bool> disableDevice(
-      http.Client client, String authToken, String deviceId) async {
+  /// Method to re-enable/disable a device from its device ID.
+  static Future<bool> changeState(http.Client client, String authToken,
+      String deviceId, String action) async {
     ApiCalls apiCall = ApiCalls(client);
-    bool action = await apiCall.disable(authToken, deviceId).catchError((e) {
-      throw e;
-    });
-    return action;
-  }
-
-  /// Method to reenable a device from its device ID.
-  static Future<bool> reenableDevice(
-      http.Client client, String authToken, String deviceId) async {
-    ApiCalls apiCall = ApiCalls(client);
-    bool action = await apiCall.reenable(authToken, deviceId).catchError((e) {
-      throw e;
-    });
-    return action;
+    return await apiCall.changeState(authToken, deviceId, action);
   }
 }

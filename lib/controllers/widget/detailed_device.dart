@@ -105,60 +105,40 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
     setState(() {
       _errorOnLoading = false;
     });
-
-    switch (choice) {
-      case 'Deprovision':
-        deprovisionReason(context).then((reason) {
+    if (choice == 'Deprovision') {
+      deprovisionReason(context).then((reason) {
+        if (reason != null) {
           setState(() {
             _loading = true;
           });
-          reason != null && reason != 0
-              ? Devices.deproviseDevice(
-                      _client, _authToken, _basicDevice.deviceId, reason)
-                  .then((value) {
-                  _getDetailedDevice();
-                }).catchError((e) {
-                  setState(() {
-                    _loading = false;
-                    _errorOnLoading = true;
-                    _warning = e;
-                  });
-                })
-              : setState(() {
-                  _loading = false;
-                });
-        });
-        break;
-      case 'Disable':
-        setState(() {
-          _loading = true;
-        });
-        Devices.disableDevice(_client, _authToken, _basicDevice.deviceId)
-            .then((value) {
-          _getDetailedDevice();
-        }).catchError((e) {
-          setState(() {
-            _loading = false;
-            _errorOnLoading = true;
-            _warning = e;
+          Devices.deproviseDevice(
+                  _client, _authToken, _basicDevice.deviceId, reason)
+              .then((value) {
+            _getDetailedDevice();
+          }).catchError((e) {
+            setState(() {
+              _loading = false;
+              _errorOnLoading = true;
+              _warning = e;
+            });
           });
-        });
-        break;
-      case 'Reenable':
+        }
+      });
+    } else {
+      setState(() {
+        _loading = true;
+      });
+      Devices.changeState(_client, _authToken, _basicDevice.deviceId,
+              choice == 'Disable' ? 'disable' : 'reenable')
+          .then((value) {
+        _getDetailedDevice();
+      }).catchError((e) {
         setState(() {
-          _loading = true;
+          _loading = false;
+          _errorOnLoading = true;
+          _warning = e;
         });
-        Devices.reenableDevice(_client, _authToken, _basicDevice.deviceId)
-            .then((_) {
-          _getDetailedDevice();
-        }).catchError((e) {
-          setState(() {
-            _loading = false;
-            _errorOnLoading = true;
-            _warning = e;
-          });
-        });
-        break;
+      });
     }
   }
 

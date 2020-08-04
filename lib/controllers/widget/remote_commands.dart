@@ -22,6 +22,14 @@ Future<int> deprovisionReason(BuildContext context) {
       });
 }
 
+/// Enum to get the values of the possible options of deprovision.
+enum Reasons {
+  different_model_replacement,
+  retiring_device,
+  same_model_replacement,
+  upgrade_transfer
+}
+
 /// Pop Up widget to show the possible reasons of a deprovision.
 class DeprovisionReasonSelect extends StatefulWidget {
   @override
@@ -29,66 +37,59 @@ class DeprovisionReasonSelect extends StatefulWidget {
 }
 
 class _DeprovisionReasonSelect extends State<DeprovisionReasonSelect> {
-  int _reason;
-  bool _option1 = false;
-  bool _option2 = false;
-  bool _option3 = false;
-  bool _option4 = false;
+  /// Option selected, by default is in different model replacemnet.
+  Reasons _reason = Reasons.different_model_replacement;
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
       title: const Text('Select reason for deprovision'),
       children: <Widget>[
-        CheckboxListTile(
-          onChanged: (bool newValue) {
-            _reason = 1;
-            setState(() {
-              _option1 = newValue;
-              _option2 = false;
-              _option3 = false;
-              _option4 = false;
-            });
-          },
-          value: _option1,
+        ListTile(
+          leading: Radio(
+            value: Reasons.different_model_replacement,
+            groupValue: _reason,
+            onChanged: (Reasons value) {
+              setState(() {
+                _reason = value;
+              });
+            },
+          ),
           title: const Text('Different model replacement'),
         ),
-        CheckboxListTile(
-          onChanged: (bool newValue) {
-            _reason = 2;
-            setState(() {
-              _option1 = false;
-              _option2 = newValue;
-              _option3 = false;
-              _option4 = false;
-            });
-          },
-          value: _option2,
+        ListTile(
+          leading: Radio(
+            value: Reasons.retiring_device,
+            groupValue: _reason,
+            onChanged: (Reasons value) {
+              setState(() {
+                _reason = value;
+              });
+            },
+          ),
           title: const Text('Retiring device'),
         ),
-        CheckboxListTile(
-          onChanged: (bool newValue) {
-            _reason = 3;
-            setState(() {
-              _option1 = false;
-              _option2 = false;
-              _option3 = newValue;
-              _option4 = false;
-            });
-          },
-          value: _option3,
+        ListTile(
+          leading: Radio(
+            value: Reasons.same_model_replacement,
+            groupValue: _reason,
+            onChanged: (Reasons value) {
+              setState(() {
+                _reason = value;
+              });
+            },
+          ),
           title: const Text('Same model replacement'),
         ),
-        CheckboxListTile(
-          onChanged: (bool newValue) {
-            _reason = 4;
-            setState(() {
-              _option1 = false;
-              _option2 = false;
-              _option3 = false;
-              _option4 = newValue;
-            });
-          },
-          value: _option4,
+        ListTile(
+          leading: Radio(
+            value: Reasons.upgrade_transfer,
+            groupValue: _reason,
+            onChanged: (Reasons value) {
+              setState(() {
+                _reason = value;
+              });
+            },
+          ),
           title: const Text('Upgrade transfer'),
         ),
         Row(
@@ -96,13 +97,13 @@ class _DeprovisionReasonSelect extends State<DeprovisionReasonSelect> {
           children: <Widget>[
             FlatButton(
               onPressed: () {
-                Navigator.of(context).pop(0);
+                Navigator.of(context).pop();
               },
               child: Text('Cancel'),
             ),
             FlatButton(
               onPressed: () {
-                Navigator.of(context).pop(_reason);
+                Navigator.of(context).pop(_reason.index);
               },
               child: Text('Deprovise device'),
             )
