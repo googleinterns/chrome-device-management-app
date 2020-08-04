@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/UI/common.dart';
 import 'package:chrome_management_app/models/keys_util.dart';
 import 'package:chrome_management_app/objects/basic_device.dart';
 import 'package:flutter/material.dart';
@@ -45,10 +46,9 @@ class SummaryDevice extends StatelessWidget {
           // Padding of the widget
           padding: EdgeInsets.only(left: 20),
           child: Row(
-            // Creates leading circle avatar with the first to characters of the
-            // serial number of the device.
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              // Creates leading circle avatar with the first to characters of the
+              // serial number of the device.
               CircleAvatar(
                 backgroundColor: _circleColor,
                 child: Text(_device.serialNumber.substring(0, 2).toUpperCase(),
@@ -61,47 +61,36 @@ class SummaryDevice extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     // Serial number of the device.
-                    Padding(
-                        padding: EdgeInsets.only(bottom: 2.0),
-                        child: Text(
-                          _device.serialNumber,
-                          maxLines: 1,
-                          key: Key(
-                              SERIAL_NUMBER_OF_DEVICE_KEY + _index.toString()),
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 16.0, fontWeight: FontWeight.bold),
-                        )),
+                    textLine(
+                        key: Key(
+                            SERIAL_NUMBER_OF_DEVICE_KEY + _index.toString()),
+                        text: _device.serialNumber,
+                        style: TextStyle(
+                            fontSize: 16.0, fontWeight: FontWeight.bold),
+                        padding: EdgeInsets.only(bottom: 2.0)),
                     // User of the device.
-                    Padding(
-                        padding: EdgeInsets.only(bottom: 2.0),
-                        child: Text(
+                    textLine(
+                      key: Key(USER_OF_DEVICE_KEY + _index.toString()),
+                      text:
                           'User: ${_device.annotatedUser == null ? '' : _device.annotatedUser}',
-                          maxLines: 2,
-                          key: Key(USER_OF_DEVICE_KEY + _index.toString()),
-                          overflow: TextOverflow.clip,
-                          style:
-                              TextStyle(fontSize: 14.0, color: Colors.black87),
-                        )),
-                    // Status of the device
-                    Padding(
-                        padding: EdgeInsets.only(bottom: 2.0),
-                        child: Text(
-                          'Status: ${_device.status}',
-                          maxLines: 2,
-                          key: Key(STATUS_OF_DEVICE_KEY + _index.toString()),
-                          overflow: TextOverflow.ellipsis,
-                          style:
-                              TextStyle(fontSize: 12.0, color: Colors.black87),
-                        )),
-                    // Last synchronied date of the device
-                    Text(
-                      'Last Sync: ${DateFormat.yMMMd().format(DateTime.parse(_device.lastSync))}',
-                      maxLines: 2,
-                      key: Key(LAST_SYNC_OF_DEVICE_KEY + _index.toString()),
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 12.0, color: Colors.grey[700]),
+                      style: TextStyle(fontSize: 14.0, color: Colors.black87),
+                      padding: EdgeInsets.only(bottom: 2.0),
                     ),
+                    // Status of the device
+                    textLine(
+                      padding: EdgeInsets.only(bottom: 2.0),
+                      key: Key(STATUS_OF_DEVICE_KEY + _index.toString()),
+                      text: 'Status: ${_device.status}',
+                      style: TextStyle(fontSize: 12.0, color: Colors.black87),
+                    ),
+                    // Last synchronied date of the device
+                    textLine(
+                      padding: EdgeInsets.all(0),
+                      key: Key(LAST_SYNC_OF_DEVICE_KEY + _index.toString()),
+                      text:
+                          'Last Sync: ${DateFormat.yMMMd().format(DateTime.parse(_device.lastSync))}',
+                      style: TextStyle(fontSize: 12.0, color: Colors.grey[700]),
+                    )
                   ],
                 ),
               )

@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/UI/common.dart';
 import 'package:chrome_management_app/models/error_handler.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';
 import 'package:flutter/material.dart';
@@ -48,114 +49,33 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
   Widget hardwareSummary(BuildContext context) => Card(
           child: Column(children: <Widget>[
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            detailCategory(
+                text: 'Hardware and OS',
+                width: MediaQuery.of(context).size.width * 0.4),
+            verticalDivider(MediaQuery.of(context).size.height * 0.3),
             Container(
-              margin: EdgeInsets.only(left: 10),
-              width: MediaQuery.of(context).size.width * 0.4,
-              child: Text(
-                'Hardware and OS',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 28,
-                    fontWeight: FontWeight.w500),
-                overflow: TextOverflow.clip,
-              ),
-            ),
-            Container(
-                height: MediaQuery.of(context).size.height * 0.3,
-                width: 0,
-                margin: EdgeInsets.all(0),
-                child: VerticalDivider(
-                  thickness: 1,
-                )),
-            Container(
-                width: MediaQuery.of(context).size.width * 0.4,
-                margin: EdgeInsets.only(left: 25.0),
+                width: MediaQuery.of(context).size.width * 0.5,
+                margin: EdgeInsets.only(left: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Padding(
-                        padding: EdgeInsets.only(top: 10, bottom: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              'Organization',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black87,
-                                  fontWeight: FontWeight.w500),
-                              overflow: TextOverflow.clip,
-                            ),
-                            Text(
-                              getValueOrDefault(widget._device.orgUnitPath),
-                              style: TextStyle(
-                                  fontSize: 16, color: Colors.black54),
-                              overflow: TextOverflow.clip,
-                            )
-                          ],
-                        )),
-                    Padding(
-                        padding: EdgeInsets.only(top: 10, bottom: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              'Model',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black87,
-                                  fontWeight: FontWeight.w500),
-                              overflow: TextOverflow.clip,
-                            ),
-                            Text(
-                              getValueOrDefault(widget._device.model),
-                              style: TextStyle(
-                                  fontSize: 16, color: Colors.black54),
-                              overflow: TextOverflow.clip,
-                            )
-                          ],
-                        )),
-                    Padding(
-                        padding: EdgeInsets.only(top: 10, bottom: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              'Serial Number',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black87,
-                                  fontWeight: FontWeight.w500),
-                              overflow: TextOverflow.clip,
-                            ),
-                            Text(
-                              getValueOrDefault(widget._device.serialNumber),
-                              style: TextStyle(
-                                  fontSize: 16, color: Colors.black54),
-                              overflow: TextOverflow.clip,
-                            )
-                          ],
-                        ))
+                    detailedText(
+                        title: 'Organization',
+                        value: getValueOrDefault(widget._device.orgUnitPath)),
+                    detailedText(
+                        title: 'Model',
+                        value: getValueOrDefault(widget._device.model)),
+                    detailedText(
+                        title: 'Serial Number',
+                        value: getValueOrDefault(widget._device.serialNumber))
                   ],
                 )),
           ],
         ),
-        Padding(padding: EdgeInsets.all(0), child: Divider()),
-        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          InkWell(
-              onTap: () => setState(() => _isExpanded = true),
-              child: Padding(
-                padding: EdgeInsets.all(20),
-                child: Text(
-                  'See More',
-                  style: TextStyle(color: Colors.blue[500], fontSize: 16),
-                ),
-              )),
-        ]),
+        dividerWith0MArgin(),
+        bottomCardButton(
+            title: 'See More', onTap: () => setState(() => _isExpanded = true))
       ]));
 
   /// Expanded card widget to show full information of the hardware and OS from
@@ -163,245 +83,62 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
   Widget hardwareFull(BuildContext context) => Card(
           child: Column(children: <Widget>[
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              margin: EdgeInsets.only(left: 10, right: 0),
-              width: MediaQuery.of(context).size.width * 0.4,
-              child: Text(
-                'Hardware and OS',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 28,
-                    fontWeight: FontWeight.w500),
-                overflow: TextOverflow.clip,
-              ),
-            ),
-            Container(
-                height: MediaQuery.of(context).size.height,
-                width: 0,
-                margin: EdgeInsets.all(0),
-                child: VerticalDivider(
-                  thickness: 1,
-                )),
+            detailCategory(
+                text: 'Hardware and OS',
+                width: MediaQuery.of(context).size.width * 0.4),
+            verticalDivider(MediaQuery.of(context).size.height),
             Container(
                 width: MediaQuery.of(context).size.width * 0.5,
                 margin: EdgeInsets.only(left: 10.0),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Organization',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.w500),
-                                overflow: TextOverflow.clip,
-                              ),
-                              Text(
-                                getValueOrDefault(widget._device.orgUnitPath),
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black54),
-                                overflow: TextOverflow.clip,
-                              )
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Model',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.w500),
-                                overflow: TextOverflow.clip,
-                              ),
-                              Text(
-                                getValueOrDefault(widget._device.model),
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black54),
-                                overflow: TextOverflow.clip,
-                              )
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Mac Address',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.w500),
-                                overflow: TextOverflow.clip,
-                              ),
-                              Text(
-                                getValueOrDefault(widget._device.macAddress),
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black54),
-                                overflow: TextOverflow.clip,
-                              )
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Last Known Network',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.w500),
-                                overflow: TextOverflow.clip,
-                              ),
-                              Text(
-                                widget._device.lastKnownNetwork == null
-                                    ? '-'
-                                    : widget._device.lastKnownNetwork
-                                        .map((o) => o.ipAddress)
-                                        .join('\n'),
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black54),
-                                overflow: TextOverflow.clip,
-                              )
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'OS version',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.w500),
-                                overflow: TextOverflow.clip,
-                              ),
-                              Text(
-                                getValueOrDefault(widget._device.osVersion),
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black54),
-                                overflow: TextOverflow.clip,
-                              )
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Plataform Version',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.w500),
-                                overflow: TextOverflow.clip,
-                              ),
-                              Text(
-                                getValueOrDefault(
-                                    widget._device.platformVersion),
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black54),
-                                overflow: TextOverflow.clip,
-                              )
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Device ID',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.w500),
-                                overflow: TextOverflow.clip,
-                              ),
-                              Text(
-                                getValueOrDefault(widget._device.deviceId),
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black54),
-                                overflow: TextOverflow.clip,
-                              )
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Last Enrollment Time',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.w500),
-                                overflow: TextOverflow.clip,
-                              ),
-                              Text(
-                                getValueOrDefault(
-                                    widget._device.lastEnrollmentTime),
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black54),
-                                overflow: TextOverflow.clip,
-                              )
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Auto Update Expiration',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.w500),
-                                overflow: TextOverflow.clip,
-                              ),
-                              Text(
-                                '${DateFormat.yMMMd().format(DateTime.fromMillisecondsSinceEpoch(int.parse(widget._device.autoUpdateExpiration)))}',
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black54),
-                                overflow: TextOverflow.clip,
-                              )
-                            ],
-                          )),
+                      detailedText(
+                          title: 'Organization',
+                          value: getValueOrDefault(widget._device.orgUnitPath)),
+                      detailedText(
+                          title: 'Model',
+                          value: getValueOrDefault(widget._device.model)),
+                      detailedText(
+                          title: 'Serial Number',
+                          value:
+                              getValueOrDefault(widget._device.serialNumber)),
+                      detailedText(
+                          title: 'Mac Address',
+                          value: getValueOrDefault(widget._device.macAddress)),
+                      detailedText(
+                        title: 'Last Known Network',
+                        value: widget._device.lastKnownNetwork == null
+                            ? '-'
+                            : widget._device.lastKnownNetwork
+                                .map((o) => o.ipAddress)
+                                .join('\n'),
+                      ),
+                      detailedText(
+                          title: 'OS version',
+                          value: getValueOrDefault(widget._device.osVersion)),
+                      detailedText(
+                          title: 'Plataform Version',
+                          value: getValueOrDefault(
+                              widget._device.platformVersion)),
+                      detailedText(
+                          title: 'Device ID',
+                          value: getValueOrDefault(widget._device.deviceId)),
+                      detailedText(
+                          title: 'Last Enrollment Time',
+                          value: getValueOrDefault(
+                              widget._device.lastEnrollmentTime)),
+                      detailedText(
+                          title: 'Auto Update Expiration',
+                          value:
+                              '${DateFormat.yMMMd().format(DateTime.fromMillisecondsSinceEpoch(int.parse(widget._device.autoUpdateExpiration)))}'),
                     ])),
           ],
         ),
-        Padding(padding: EdgeInsets.all(0), child: Divider()),
-        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          InkWell(
-            onTap: () => setState(() => _isExpanded = false),
-            child: Padding(
-              padding: EdgeInsets.all(20),
-              child: Text(
-                'See Less',
-                style: TextStyle(color: Colors.blue[500], fontSize: 16),
-              ),
-            ),
-          )
-        ]),
+        dividerWith0MArgin(),
+        bottomCardButton(
+            title: 'See More',
+            onTap: () => setState(() => _isExpanded = false)),
       ]));
 }
