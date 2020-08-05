@@ -49,24 +49,25 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
           child: Column(children: <Widget>[
         Row(
           children: [
-            detailCategory(
+            DetailCategory(
                 text: 'Custom fields',
                 width: MediaQuery.of(context).size.width * 0.4),
-            verticalDivider(MediaQuery.of(context).size.height * 0.3),
+            CustomVerticalDivider(
+                height: MediaQuery.of(context).size.height * 0.3),
             Container(
                 width: MediaQuery.of(context).size.width * 0.5,
                 margin: EdgeInsets.only(left: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    detailedText(
+                    DetailedText(
                         title: 'Asset ID',
                         value:
                             getValueOrDefault(widget._device.annotatedAssetId)),
-                    detailedText(
+                    DetailedText(
                         title: 'User',
                         value: getValueOrDefault(widget._device.annotatedUser)),
-                    detailedText(
+                    DetailedText(
                         title: 'Location',
                         value:
                             getValueOrDefault(widget._device.annotatedLocation))
@@ -74,8 +75,8 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
                 )),
           ],
         ),
-        dividerWith0MArgin(),
-        bottomCardButton(
+        DividerWith0MArgin(),
+        BottomCardButton(
             title: 'See More', onTap: () => setState(() => _isExpanded = true))
       ]));
 
@@ -85,36 +86,37 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
           child: Column(children: <Widget>[
         Row(
           children: [
-            detailCategory(
+            DetailCategory(
                 text: 'Custom fields',
                 width: MediaQuery.of(context).size.width * 0.4),
-            verticalDivider(MediaQuery.of(context).size.height * 0.5),
+            CustomVerticalDivider(
+                height: MediaQuery.of(context).size.height * 0.5),
             Container(
                 width: MediaQuery.of(context).size.width * 0.5,
                 margin: EdgeInsets.only(left: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    detailedText(
+                    DetailedText(
                         title: 'Asset ID',
                         value:
                             getValueOrDefault(widget._device.annotatedAssetId)),
-                    detailedText(
+                    DetailedText(
                         title: 'User',
                         value: getValueOrDefault(widget._device.annotatedUser)),
-                    detailedText(
+                    DetailedText(
                         title: 'Location',
                         value: getValueOrDefault(
                             widget._device.annotatedLocation)),
-                    detailedText(
+                    DetailedText(
                         title: 'Notes',
                         value: getValueOrDefault(widget._device.notes))
                   ],
                 )),
           ],
         ),
-        dividerWith0MArgin(),
-        bottomCardButton(
+        DividerWith0MArgin(),
+        BottomCardButton(
             title: 'See Less', onTap: () => setState(() => _isExpanded = false))
       ]));
 }

@@ -50,31 +50,32 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
           child: Column(children: <Widget>[
         Row(
           children: [
-            detailCategory(
+            DetailCategory(
                 text: 'Hardware and OS',
                 width: MediaQuery.of(context).size.width * 0.4),
-            verticalDivider(MediaQuery.of(context).size.height * 0.3),
+            CustomVerticalDivider(
+                height: MediaQuery.of(context).size.height * 0.3),
             Container(
                 width: MediaQuery.of(context).size.width * 0.5,
                 margin: EdgeInsets.only(left: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    detailedText(
+                    DetailedText(
                         title: 'Organization',
                         value: getValueOrDefault(widget._device.orgUnitPath)),
-                    detailedText(
+                    DetailedText(
                         title: 'Model',
                         value: getValueOrDefault(widget._device.model)),
-                    detailedText(
+                    DetailedText(
                         title: 'Serial Number',
                         value: getValueOrDefault(widget._device.serialNumber))
                   ],
                 )),
           ],
         ),
-        dividerWith0MArgin(),
-        bottomCardButton(
+        DividerWith0MArgin(),
+        BottomCardButton(
             title: 'See More', onTap: () => setState(() => _isExpanded = true))
       ]));
 
@@ -84,30 +85,30 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
           child: Column(children: <Widget>[
         Row(
           children: [
-            detailCategory(
+            DetailCategory(
                 text: 'Hardware and OS',
                 width: MediaQuery.of(context).size.width * 0.4),
-            verticalDivider(MediaQuery.of(context).size.height),
+            CustomVerticalDivider(height: MediaQuery.of(context).size.height),
             Container(
                 width: MediaQuery.of(context).size.width * 0.5,
                 margin: EdgeInsets.only(left: 10.0),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      detailedText(
+                      DetailedText(
                           title: 'Organization',
                           value: getValueOrDefault(widget._device.orgUnitPath)),
-                      detailedText(
+                      DetailedText(
                           title: 'Model',
                           value: getValueOrDefault(widget._device.model)),
-                      detailedText(
+                      DetailedText(
                           title: 'Serial Number',
                           value:
                               getValueOrDefault(widget._device.serialNumber)),
-                      detailedText(
+                      DetailedText(
                           title: 'Mac Address',
                           value: getValueOrDefault(widget._device.macAddress)),
-                      detailedText(
+                      DetailedText(
                         title: 'Last Known Network',
                         value: widget._device.lastKnownNetwork == null
                             ? '-'
@@ -115,29 +116,29 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
                                 .map((o) => o.ipAddress)
                                 .join('\n'),
                       ),
-                      detailedText(
+                      DetailedText(
                           title: 'OS version',
                           value: getValueOrDefault(widget._device.osVersion)),
-                      detailedText(
+                      DetailedText(
                           title: 'Plataform Version',
                           value: getValueOrDefault(
                               widget._device.platformVersion)),
-                      detailedText(
+                      DetailedText(
                           title: 'Device ID',
                           value: getValueOrDefault(widget._device.deviceId)),
-                      detailedText(
+                      DetailedText(
                           title: 'Last Enrollment Time',
                           value: getValueOrDefault(
                               widget._device.lastEnrollmentTime)),
-                      detailedText(
+                      DetailedText(
                           title: 'Auto Update Expiration',
                           value:
                               '${DateFormat.yMMMd().format(DateTime.fromMillisecondsSinceEpoch(int.parse(widget._device.autoUpdateExpiration)))}'),
                     ])),
           ],
         ),
-        dividerWith0MArgin(),
-        bottomCardButton(
+        DividerWith0MArgin(),
+        BottomCardButton(
             title: 'See More',
             onTap: () => setState(() => _isExpanded = false)),
       ]));

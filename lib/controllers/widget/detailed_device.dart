@@ -183,7 +183,7 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
                       SliverList(
                         delegate: SliverChildListDelegate(
                           [
-                            detailedHeader(
+                            DetailedHeader(
                               serialNumber: _fullDevice.serialNumber,
                               status: _fullDevice.status,
                               lastSync:

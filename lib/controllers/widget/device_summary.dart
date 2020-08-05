@@ -61,7 +61,7 @@ class SummaryDevice extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     // Serial number of the device.
-                    textLine(
+                    TextLine(
                         key: Key(
                             SERIAL_NUMBER_OF_DEVICE_KEY + _index.toString()),
                         text: _device.serialNumber,
@@ -69,7 +69,7 @@ class SummaryDevice extends StatelessWidget {
                             fontSize: 16.0, fontWeight: FontWeight.bold),
                         padding: EdgeInsets.only(bottom: 2.0)),
                     // User of the device.
-                    textLine(
+                    TextLine(
                       key: Key(USER_OF_DEVICE_KEY + _index.toString()),
                       text:
                           'User: ${_device.annotatedUser == null ? '' : _device.annotatedUser}',
@@ -77,14 +77,14 @@ class SummaryDevice extends StatelessWidget {
                       padding: EdgeInsets.only(bottom: 2.0),
                     ),
                     // Status of the device
-                    textLine(
+                    TextLine(
                       padding: EdgeInsets.only(bottom: 2.0),
                       key: Key(STATUS_OF_DEVICE_KEY + _index.toString()),
                       text: 'Status: ${_device.status}',
                       style: TextStyle(fontSize: 12.0, color: Colors.black87),
                     ),
                     // Last synchronied date of the device
-                    textLine(
+                    TextLine(
                       padding: EdgeInsets.all(0),
                       key: Key(LAST_SYNC_OF_DEVICE_KEY + _index.toString()),
                       text:
