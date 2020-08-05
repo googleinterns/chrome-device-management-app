@@ -14,7 +14,7 @@
 import 'package:flutter/material.dart';
 
 /// Pops an alert and on tap loads the function from the parameter.
-Future<int> deprovisionReason(BuildContext context) {
+Future<Reasons> deprovisionReason(BuildContext context) {
   return showDialog(
       context: context,
       builder: (context) {
@@ -92,8 +92,8 @@ class _DeprovisionReasonSelect extends State<DeprovisionReasonSelect> {
           ),
           title: const Text('Upgrade transfer'),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        ButtonBar(
+          alignment: MainAxisAlignment.center,
           children: <Widget>[
             FlatButton(
               onPressed: () {
@@ -103,7 +103,7 @@ class _DeprovisionReasonSelect extends State<DeprovisionReasonSelect> {
             ),
             FlatButton(
               onPressed: () {
-                Navigator.of(context).pop(_reason.index);
+                Navigator.of(context).pop(_reason);
               },
               child: Text('Deprovise device'),
             )

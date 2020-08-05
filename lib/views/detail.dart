@@ -15,23 +15,14 @@
 import 'package:chrome_management_app/controllers/widget/detailed_device.dart';
 import 'package:chrome_management_app/objects/basic_device.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 /// View to show the details from a device.
 class DetailedDeviceView extends StatelessWidget {
-  /// Authorizatio token to call the API.
-  final String _token;
-
-  /// Http Client
-  final http.Client _client;
-
   /// Basic information from device.
   final BasicDevice _device;
 
   /// Constructor of view
   DetailedDeviceView(
-    this._token,
-    this._client,
     this._device, {
     Key key,
   }) : super(key: key);
@@ -42,6 +33,6 @@ class DetailedDeviceView extends StatelessWidget {
     /// Makes unpoppable the view and shows [DeviceList] widget
     return WillPopScope(
         onWillPop: () => Future.value(true),
-        child: DetailedDeviceSummary(_token, _client, _device));
+        child: DetailedDeviceSummary(_device));
   }
 }

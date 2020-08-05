@@ -14,6 +14,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:chrome_management_app/controllers/widget/remote_commands.dart';
 import 'package:chrome_management_app/models/error_handler.dart';
 import 'package:http/http.dart' as http;
 import 'package:chrome_management_app/objects/account_devices.dart';
@@ -47,12 +48,12 @@ class ApiCalls {
   static const ACTION_URL = '/action';
 
   /// List of deprovision reasons.
-  static const deprovisionReasons = [
-    'different_model_replacement',
-    'retiring_device',
-    'same_model_replacement',
-    'upgrade_transfer'
-  ];
+  Map<Reasons, String> deprovisionReasons = {
+    Reasons.different_model_replacement: 'different_model_replacement',
+    Reasons.retiring_device: 'retiring_device',
+    Reasons.same_model_replacement: 'same_model_replacement',
+    Reasons.upgrade_transfer: 'upgrade_transfer'
+  };
 
   /// Calls the Directory API to get a list of devices with max results of 15.
   ///
@@ -61,7 +62,8 @@ class ApiCalls {
   /// retreive, if it is null the function will request the first page.
   ///
   /// This method returns a [AccountDevices] object.
-  getDeviceList(String authToken, String nextPageToken) async {
+  Future<AccountDevices> getDeviceList(
+      String authToken, String nextPageToken) async {
     var response;
     var url = nextPageToken == null
         ? PREFIX + DEVICE_LIST_URL
@@ -90,7 +92,8 @@ class ApiCalls {
   /// will be retrieved.
   ///
   /// This method returns a [DetailedDevice] object.
-  dynamic getDetailedDevice(String authToken, String deviceId) async {
+  Future<DetailedDevice> getDetailedDevice(
+      String authToken, String deviceId) async {
     var response;
     authToken = 'Bearer $authToken';
     _client == null
@@ -118,7 +121,8 @@ class ApiCalls {
   /// * [reason] is the reason why the device is getting a deprovision.
   ///
   /// This method returns true if the action was completed.
-  dynamic deprovision(String authToken, String deviceId, int reason) async {
+  Future<bool> deprovision(
+      String authToken, String deviceId, Reasons reason) async {
     var response;
     authToken = 'Bearer $authToken';
     _client == null
@@ -154,7 +158,8 @@ class ApiCalls {
   /// will be retrieved.
   ///
   /// This method returns true if the action was completed.
-  dynamic changeState(String authToken, String deviceId, String action) async {
+  Future<bool> changeState(
+      String authToken, String deviceId, String action) async {
     var response;
     authToken = 'Bearer $authToken';
     _client == null
