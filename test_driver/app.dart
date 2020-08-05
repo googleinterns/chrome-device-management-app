@@ -12,8 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/models/globalObject.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_driver/driver_extension.dart';
+import 'package:provider/provider.dart';
 import 'data.dart';
 import 'mock.dart' as app;
 import 'mock_helper.dart';
@@ -32,5 +34,7 @@ void main() {
   // Prepares the second page of devices for API response.
   mockHelper.secondPage(client);
   // Runs app
-  runApp(app.MyAppWithoutLogin(mockToken: Data.ACCESS_TOKEN, client: client));
+  runApp(ChangeNotifierProvider(
+      create: (context) => GlobalObject(Data.ACCESS_TOKEN, client),
+      child: app.MyAppWithoutLogin()));
 }

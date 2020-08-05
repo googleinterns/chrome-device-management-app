@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 // Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,16 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:chrome_management_app/views/list.dart';
-import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-/// Mocks the app main, soit starts it skips the Google authentication.
-class MyAppWithoutLogin extends StatelessWidget {
-  MyAppWithoutLogin();
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DevicesListView(),
-    );
+/// Class to handle a access token and a http client through a provider.
+class GlobalObject extends ChangeNotifier {
+  String accessToken;
+  http.Client client;
+  GlobalObject(this.accessToken, this.client);
+  changeToken(String token) {
+    accessToken = token;
   }
 }

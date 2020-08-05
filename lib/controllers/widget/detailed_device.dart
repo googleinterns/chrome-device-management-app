@@ -18,41 +18,29 @@ import 'package:chrome_management_app/controllers/widget/custom_fields_card.dart
 import 'package:chrome_management_app/controllers/widget/hardware_os_card.dart';
 import 'package:chrome_management_app/controllers/widget/remote_commands.dart';
 import 'package:chrome_management_app/models/error_handler.dart';
+import 'package:chrome_management_app/models/globalObject.dart';
 import 'package:chrome_management_app/objects/basic_device.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 /// Stateful Widget to show the summary of a detailed device.
 class DetailedDeviceSummary extends StatefulWidget {
-  /// Authorization token to get information from the Directory API.
-  final String _authToken;
-
-  /// Http Client
-  final http.Client _client;
-
   final BasicDevice _device;
 
   /// Constructor of Widget
-  DetailedDeviceSummary(this._authToken, this._client, this._device, {Key key})
-      : super(key: key);
+  DetailedDeviceSummary(this._device, {Key key}) : super(key: key);
   @override
 
   /// Create initial state of the Widget.
   _DetailedDeviceSummaryState createState() =>
-      _DetailedDeviceSummaryState(_authToken, _client, _device);
+      _DetailedDeviceSummaryState(_device);
 }
 
 /// DeviceList Widget states
 class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
-  /// Authorization token to get information from the Directory API.
-  String _authToken;
-
-  /// Http Client
-  http.Client _client;
-
   /// Verify the device is loading.
   bool _loading = false;
 
@@ -70,7 +58,7 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
 
   /// Scroll controller to manage animations.
   ScrollController _scrollController = ScrollController();
-  _DetailedDeviceSummaryState(this._authToken, this._client, this._basicDevice);
+  _DetailedDeviceSummaryState(this._basicDevice);
 
   /// Initial state of the Widget.
   @override
@@ -86,7 +74,10 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
       _loading = true;
       _errorOnLoading = false;
     });
-    Devices.getDetailedDevice(_client, _authToken, _basicDevice.deviceId)
+    getDetailedDevice(
+            Provider.of<GlobalObject>(context, listen: false).client,
+            Provider.of<GlobalObject>(context, listen: false).accessToken,
+            _basicDevice.deviceId)
         .then((value) {
       setState(() {
         _fullDevice = value;
@@ -112,8 +103,11 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
           setState(() {
             _loading = true;
           });
-          Devices.deproviseDevice(
-                  _client, _authToken, _basicDevice.deviceId, reason)
+          deproviseDevice(
+                  Provider.of<GlobalObject>(context, listen: false).client,
+                  Provider.of<GlobalObject>(context, listen: false).accessToken,
+                  _basicDevice.deviceId,
+                  reason)
               .then((value) {
             _getDetailedDevice();
           }).catchError((e) {
@@ -129,7 +123,10 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
       setState(() {
         _loading = true;
       });
-      Devices.changeState(_client, _authToken, _basicDevice.deviceId,
+      changeState(
+              Provider.of<GlobalObject>(context, listen: false).client,
+              Provider.of<GlobalObject>(context, listen: false).accessToken,
+              _basicDevice.deviceId,
               choice == 'Disable' ? 'disable' : 'reenable')
           .then((value) {
         _getDetailedDevice();

@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/models/globalObject.dart';
 import 'package:chrome_management_app/models/keys_util.dart';
 import 'package:chrome_management_app/third-party/auth.dart';
 import 'package:chrome_management_app/views/list.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 /// View that will hold the Google Sign In Authenication.
 class LogIn extends StatefulWidget {
@@ -40,10 +42,10 @@ class _LogInState extends State<LogIn> {
   void authenticate() async {
     GoogleAuth.authenticate().then((value) {
       setState(() {
+        Provider.of<GlobalObject>(context, listen: false).changeToken(value);
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
-                builder: (BuildContext context) => DevicesListView(
-                      token: value,
+                builder: (context) => DevicesListView(
                       key: Key(LIST_VIEW_KEY),
                     )),
             (Route<dynamic> route) => false);

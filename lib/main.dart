@@ -12,12 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/models/globalObject.dart';
 import 'package:chrome_management_app/views/login.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 /// Intial function runs into Google Sign In view.
 void main() {
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+    // Initialize the model in the builder. That way, Provider
+    // can own Counter's lifecycle, making sure to call `dispose`
+    // when not needed anymore.
+    create: (context) => GlobalObject(null, null),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
