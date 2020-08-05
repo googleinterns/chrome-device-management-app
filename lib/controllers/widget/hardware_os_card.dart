@@ -145,17 +145,18 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
           ],
         ),
         Padding(padding: EdgeInsets.all(0), child: Divider()),
-        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          InkWell(
-              onTap: () => setState(() => _isExpanded = true),
-              child: Padding(
-                padding: EdgeInsets.all(20),
-                child: Text(
-                  'See More',
-                  style: TextStyle(color: Colors.blue[500], fontSize: 16),
-                ),
-              )),
-        ]),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            ButtonBar(
+              children: [
+                FlatButton(
+                    onPressed: () => setState(() => _isExpanded = true),
+                    child: Text('See More'))
+              ],
+            ),
+          ],
+        ),
       ]));
 
   /// Expanded card widget to show full information of the hardware and OS from
@@ -391,17 +392,17 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
           ],
         ),
         Padding(padding: EdgeInsets.all(0), child: Divider()),
-        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          InkWell(
-            onTap: () => setState(() => _isExpanded = false),
-            child: Padding(
-              padding: EdgeInsets.all(20),
-              child: Text(
-                'See Less',
-                style: TextStyle(color: Colors.blue[500], fontSize: 16),
-              ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            ButtonBar(
+              children: [
+                FlatButton(
+                    onPressed: () => setState(() => _isExpanded = false),
+                    child: Text('See Less'))
+              ],
             ),
-          )
-        ]),
+          ],
+        ),
       ]));
 }

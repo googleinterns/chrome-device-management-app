@@ -152,15 +152,12 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                InkWell(
-                  onTap: () => setState(() => _isExpanded = true),
-                  child: Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Text(
-                      'See More',
-                      style: TextStyle(color: Colors.blue[500], fontSize: 16),
-                    ),
-                  ),
+                ButtonBar(
+                  children: [
+                    FlatButton(
+                        onPressed: () => setState(() => _isExpanded = true),
+                        child: Text('See More'))
+                  ],
                 ),
               ],
             ),
@@ -293,17 +290,17 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
           ],
         ),
         Padding(padding: EdgeInsets.all(0), child: Divider()),
-        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          InkWell(
-            onTap: () => setState(() => _isExpanded = false),
-            child: Padding(
-              padding: EdgeInsets.all(20),
-              child: Text(
-                'See Less',
-                style: TextStyle(color: Colors.blue[500], fontSize: 16),
-              ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            ButtonBar(
+              children: [
+                FlatButton(
+                    onPressed: () => setState(() => _isExpanded = false),
+                    child: Text('See Less'))
+              ],
             ),
-          )
-        ]),
+          ],
+        ),
       ]));
 }
