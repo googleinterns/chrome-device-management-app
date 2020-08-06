@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'package:chrome_management_app/models/error_handler.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -91,7 +90,7 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
                               overflow: TextOverflow.clip,
                             ),
                             Text(
-                              getValueOrDefault(widget._device.orgUnitPath),
+                              widget._device.orgUnitPath ?? '-',
                               style: TextStyle(
                                   fontSize: 16, color: Colors.black54),
                               overflow: TextOverflow.clip,
@@ -112,7 +111,7 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
                               overflow: TextOverflow.clip,
                             ),
                             Text(
-                              getValueOrDefault(widget._device.model),
+                              widget._device.model ?? '-',
                               style: TextStyle(
                                   fontSize: 16, color: Colors.black54),
                               overflow: TextOverflow.clip,
@@ -133,7 +132,7 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
                               overflow: TextOverflow.clip,
                             ),
                             Text(
-                              getValueOrDefault(widget._device.serialNumber),
+                              widget._device.serialNumber ?? '-',
                               style: TextStyle(
                                   fontSize: 16, color: Colors.black54),
                               overflow: TextOverflow.clip,
@@ -207,7 +206,7 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
                                 overflow: TextOverflow.clip,
                               ),
                               Text(
-                                getValueOrDefault(widget._device.orgUnitPath),
+                                widget._device.orgUnitPath ?? '-',
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black54),
                                 overflow: TextOverflow.clip,
@@ -228,7 +227,7 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
                                 overflow: TextOverflow.clip,
                               ),
                               Text(
-                                getValueOrDefault(widget._device.model),
+                                widget._device.model ?? '-',
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black54),
                                 overflow: TextOverflow.clip,
@@ -249,7 +248,7 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
                                 overflow: TextOverflow.clip,
                               ),
                               Text(
-                                getValueOrDefault(widget._device.macAddress),
+                                widget._device.macAddress ?? '-',
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black54),
                                 overflow: TextOverflow.clip,
@@ -295,7 +294,7 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
                                 overflow: TextOverflow.clip,
                               ),
                               Text(
-                                getValueOrDefault(widget._device.osVersion),
+                                widget._device.osVersion ?? '-',
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black54),
                                 overflow: TextOverflow.clip,
@@ -316,8 +315,7 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
                                 overflow: TextOverflow.clip,
                               ),
                               Text(
-                                getValueOrDefault(
-                                    widget._device.platformVersion),
+                                widget._device.platformVersion ?? '-',
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black54),
                                 overflow: TextOverflow.clip,
@@ -338,7 +336,7 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
                                 overflow: TextOverflow.clip,
                               ),
                               Text(
-                                getValueOrDefault(widget._device.deviceId),
+                                widget._device.deviceId ?? '-',
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black54),
                                 overflow: TextOverflow.clip,
@@ -359,8 +357,7 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
                                 overflow: TextOverflow.clip,
                               ),
                               Text(
-                                getValueOrDefault(
-                                    widget._device.lastEnrollmentTime),
+                                widget._device.lastEnrollmentTime ?? '-',
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black54),
                                 overflow: TextOverflow.clip,
