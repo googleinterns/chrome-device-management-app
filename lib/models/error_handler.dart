@@ -47,10 +47,6 @@ class ErrorHandler implements Exception {
   int get statusCode => _statusCode;
 }
 
-getValueOrDefault(dynamic value) {
-  return value == null ? '-' : value.toString();
-}
-
 /// Pops an alert to user and sends the app to the login view.
 alertAndLogIn(ErrorHandler error, bool unverifiedUser, BuildContext context) {
   return new AlertDialog(

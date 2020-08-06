@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import 'package:chrome_management_app/UI/common.dart';
-import 'package:chrome_management_app/models/error_handler.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -63,13 +62,12 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
                   children: <Widget>[
                     DetailedText(
                         title: 'Organization',
-                        value: getValueOrDefault(widget._device.orgUnitPath)),
+                        value: widget._device.orgUnitPath ?? '-'),
                     DetailedText(
-                        title: 'Model',
-                        value: getValueOrDefault(widget._device.model)),
+                        title: 'Model', value: widget._device.model ?? '-'),
                     DetailedText(
                         title: 'Serial Number',
-                        value: getValueOrDefault(widget._device.serialNumber))
+                        value: widget._device.serialNumber ?? '-')
                   ],
                 )),
           ],
@@ -97,17 +95,15 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
                     children: <Widget>[
                       DetailedText(
                           title: 'Organization',
-                          value: getValueOrDefault(widget._device.orgUnitPath)),
+                          value: widget._device.orgUnitPath ?? '-'),
                       DetailedText(
-                          title: 'Model',
-                          value: getValueOrDefault(widget._device.model)),
+                          title: 'Model', value: widget._device.model ?? '-'),
                       DetailedText(
                           title: 'Serial Number',
-                          value:
-                              getValueOrDefault(widget._device.serialNumber)),
+                          value: widget._device.serialNumber ?? '-'),
                       DetailedText(
                           title: 'Mac Address',
-                          value: getValueOrDefault(widget._device.macAddress)),
+                          value: widget._device.macAddress ?? '-'),
                       DetailedText(
                         title: 'Last Known Network',
                         value: widget._device.lastKnownNetwork == null
@@ -118,18 +114,16 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
                       ),
                       DetailedText(
                           title: 'OS version',
-                          value: getValueOrDefault(widget._device.osVersion)),
+                          value: widget._device.osVersion ?? '-'),
                       DetailedText(
                           title: 'Plataform Version',
-                          value: getValueOrDefault(
-                              widget._device.platformVersion)),
+                          value: widget._device.platformVersion ?? '-'),
                       DetailedText(
                           title: 'Device ID',
-                          value: getValueOrDefault(widget._device.deviceId)),
+                          value: widget._device.deviceId ?? '-'),
                       DetailedText(
                           title: 'Last Enrollment Time',
-                          value: getValueOrDefault(
-                              widget._device.lastEnrollmentTime)),
+                          value: widget._device.lastEnrollmentTime ?? '-'),
                       DetailedText(
                           title: 'Auto Update Expiration',
                           value:

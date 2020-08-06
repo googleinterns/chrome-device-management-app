@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import 'package:chrome_management_app/UI/common.dart';
-import 'package:chrome_management_app/models/error_handler.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';
 import 'package:flutter/material.dart';
 
@@ -62,15 +61,13 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
                   children: <Widget>[
                     DetailedText(
                         title: 'Asset ID',
-                        value:
-                            getValueOrDefault(widget._device.annotatedAssetId)),
+                        value: widget._device.annotatedAssetId ?? '-'),
                     DetailedText(
                         title: 'User',
-                        value: getValueOrDefault(widget._device.annotatedUser)),
+                        value: widget._device.annotatedUser ?? '-'),
                     DetailedText(
                         title: 'Location',
-                        value:
-                            getValueOrDefault(widget._device.annotatedLocation))
+                        value: widget._device.annotatedLocation ?? '-')
                   ],
                 )),
           ],
@@ -99,18 +96,15 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
                   children: <Widget>[
                     DetailedText(
                         title: 'Asset ID',
-                        value:
-                            getValueOrDefault(widget._device.annotatedAssetId)),
+                        value: widget._device.annotatedAssetId ?? '-'),
                     DetailedText(
                         title: 'User',
-                        value: getValueOrDefault(widget._device.annotatedUser)),
+                        value: widget._device.annotatedUser ?? '-'),
                     DetailedText(
                         title: 'Location',
-                        value: getValueOrDefault(
-                            widget._device.annotatedLocation)),
+                        value: widget._device.annotatedLocation ?? '-'),
                     DetailedText(
-                        title: 'Notes',
-                        value: getValueOrDefault(widget._device.notes))
+                        title: 'Notes', value: widget._device.notes ?? '-')
                   ],
                 )),
           ],
