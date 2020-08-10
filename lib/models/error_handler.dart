@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/views/login.dart';
+import 'package:flutter/material.dart';
+
 /// Model to manage the possible exceptions from the API responses.
 class ErrorHandler implements Exception {
   /// Status code of the exception.
@@ -42,4 +45,48 @@ class ErrorHandler implements Exception {
 
   /// Getter for status code.
   int get statusCode => _statusCode;
+}
+
+/// Pops an alert to user and sends the app to the login view.
+alertAndLogIn(ErrorHandler error, bool unverifiedUser, BuildContext context) {
+  return new AlertDialog(
+    title: Text('Warning'),
+    content: SingleChildScrollView(
+      child: ListBody(
+        children: <Widget>[
+          unverifiedUser ? Text(error.unverifiedUser) : Text(error.message),
+        ],
+      ),
+    ),
+    actions: <Widget>[
+      FlatButton(
+        child: Text('Reauthenticate'),
+        onPressed: () {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (BuildContext context) => LogIn()),
+              (Route<dynamic> route) => false);
+        },
+      ),
+    ],
+  );
+}
+
+/// Pops an alert and on tap loads the function from the parameter.
+alertAndRetry(ErrorHandler error, Function func) {
+  return new AlertDialog(
+    title: Text('Warning'),
+    content: SingleChildScrollView(
+      child: ListBody(
+        children: <Widget>[
+          Text(error.message),
+        ],
+      ),
+    ),
+    actions: <Widget>[
+      FlatButton(
+        child: Text('Try again'),
+        onPressed: func,
+      ),
+    ],
+  );
 }

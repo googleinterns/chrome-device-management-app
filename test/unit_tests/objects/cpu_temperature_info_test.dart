@@ -20,11 +20,11 @@ void main() {
   test('Check Json parse for cpu temperature info', () {
     final dummy = CpuTemperatureInfo.fromMap(json.decode("""
       {
-        "temperature": "temp",
+        "temperature": 1,
         "label": "label"
       }
     """));
-    expect(dummy.temperature, 'temp');
+    expect(dummy.temperature, 1);
     expect(dummy.label, 'label');
   });
 }

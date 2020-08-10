@@ -53,7 +53,7 @@ abstract class CpuStatusReport
 
   /// List of the CPU utilization percentage.
   @nullable
-  BuiltList<String> get cpuUtilizationPercentageInfo;
+  BuiltList<int> get cpuUtilizationPercentageInfo;
 
   /// List CPU temperature samples.
   @nullable
