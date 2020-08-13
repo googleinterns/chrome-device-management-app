@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/UI/common.dart';
 import 'package:chrome_management_app/controllers/devices.dart';
 import 'package:chrome_management_app/controllers/widget/custom_fields_card.dart';
 import 'package:chrome_management_app/controllers/widget/hardware_os_card.dart';
@@ -182,56 +183,11 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
                       SliverList(
                         delegate: SliverChildListDelegate(
                           [
-                            Container(
-                              height: AppBar().preferredSize.height * 3,
-                              color: Colors.blue,
-                              child: Center(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.max,
-                                  verticalDirection: VerticalDirection.down,
-                                  children: <Widget>[
-                                    // Serial number of the device.
-                                    Padding(
-                                        padding: EdgeInsets.only(bottom: 2.0),
-                                        child: Text(
-                                          _fullDevice.serialNumber,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontSize: 28.0,
-                                              color: Colors.white),
-                                        )),
-
-                                    // Status of the device
-                                    Padding(
-                                        padding: EdgeInsets.only(
-                                          bottom: 2.0,
-                                        ),
-                                        child: Text(
-                                          _fullDevice.status,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontSize: 20.0,
-                                              color: Colors.white54),
-                                        )),
-                                    // Last synchronied date of the device
-                                    Padding(
-                                      padding: EdgeInsets.only(bottom: 2.0),
-                                      child: Text(
-                                        'Last Sync: ${DateFormat.yMMMd().format(DateTime.parse(_fullDevice.lastSync))}',
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 20.0,
-                                            color: Colors.white54),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
+                            DetailedHeader(
+                              serialNumber: _fullDevice.serialNumber,
+                              status: _fullDevice.status,
+                              lastSync:
+                                  'Last Sync: ${DateFormat.yMMMd().format(DateTime.parse(_fullDevice.lastSync))}',
                             ),
                             HardwareAndOsCard(_fullDevice),
                             Padding(padding: EdgeInsets.all(10)),

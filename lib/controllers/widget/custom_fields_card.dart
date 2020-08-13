@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/UI/common.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';
 import 'package:flutter/material.dart';
 
@@ -44,257 +45,72 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
   /// Collapsed card widget to show a breif summary of the custom fields of a
   /// device.
   Widget customSummary(BuildContext context) => Card(
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 10),
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  child: Text(
-                    'Custom fields',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w500),
-                    overflow: TextOverflow.clip,
-                  ),
-                ),
-                Container(
-                    height: MediaQuery.of(context).size.height * 0.3,
-                    width: 0,
-                    margin: EdgeInsets.all(0),
-                    child: VerticalDivider(
-                      thickness: 1,
-                    )),
-                Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    margin: EdgeInsets.only(left: 25.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                            padding: EdgeInsets.only(top: 10, bottom: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Asset ID',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.black87,
-                                      fontWeight: FontWeight.w500),
-                                  overflow: TextOverflow.clip,
-                                ),
-                                Text(
-                                  widget._device.annotatedAssetId ?? '-',
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.black54),
-                                  overflow: TextOverflow.clip,
-                                )
-                              ],
-                            )),
-                        Padding(
-                            padding: EdgeInsets.only(top: 10, bottom: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'User',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.black87,
-                                      fontWeight: FontWeight.w500),
-                                  overflow: TextOverflow.clip,
-                                ),
-                                Text(
-                                  widget._device.annotatedUser ?? '-',
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.black54),
-                                  overflow: TextOverflow.clip,
-                                )
-                              ],
-                            )),
-                        Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Location',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.w500),
-                                overflow: TextOverflow.clip,
-                              ),
-                              Text(
-                                widget._device.annotatedLocation ?? '-',
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black54),
-                                overflow: TextOverflow.clip,
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    )),
-              ],
-            ),
-            Padding(padding: EdgeInsets.all(0), child: Divider()),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                ButtonBar(
-                  children: [
-                    FlatButton(
-                        onPressed: () => setState(() => _isExpanded = true),
-                        child: Text('See More'))
+          child: Column(children: <Widget>[
+        Row(
+          children: [
+            DetailCategory(
+                text: 'Custom fields',
+                width: MediaQuery.of(context).size.width * 0.4),
+            CustomVerticalDivider(
+                height: MediaQuery.of(context).size.height * 0.3),
+            Container(
+                width: MediaQuery.of(context).size.width * 0.5,
+                margin: EdgeInsets.only(left: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    DetailedText(
+                        title: 'Asset ID',
+                        value: widget._device.annotatedAssetId ?? '-'),
+                    DetailedText(
+                        title: 'User',
+                        value: widget._device.annotatedUser ?? '-'),
+                    DetailedText(
+                        title: 'Location',
+                        value: widget._device.annotatedLocation ?? '-')
                   ],
-                ),
-              ],
-            ),
+                )),
           ],
         ),
-      );
+        DividerWith0MArgin(),
+        BottomCardButton(
+            title: 'See More', onTap: () => setState(() => _isExpanded = true))
+      ]));
 
   /// Expanded card widget to show full information of the custom fields from
   /// a device.
   Widget customFull(BuildContext context) => Card(
           child: Column(children: <Widget>[
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              margin: EdgeInsets.only(left: 10, right: 0),
-              width: MediaQuery.of(context).size.width * 0.4,
-              child: Text(
-                'Custom fields',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 28,
-                    fontWeight: FontWeight.w500),
-                overflow: TextOverflow.clip,
-              ),
-            ),
-            Container(
-                height: MediaQuery.of(context).size.height * 0.5,
-                width: 0,
-                margin: EdgeInsets.all(0),
-                child: VerticalDivider(
-                  thickness: 1,
-                )),
+            DetailCategory(
+                text: 'Custom fields',
+                width: MediaQuery.of(context).size.width * 0.4),
+            CustomVerticalDivider(
+                height: MediaQuery.of(context).size.height * 0.5),
             Container(
                 width: MediaQuery.of(context).size.width * 0.5,
                 margin: EdgeInsets.only(left: 10.0),
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Asset ID',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.w500),
-                                overflow: TextOverflow.clip,
-                              ),
-                              Text(
-                                widget._device.annotatedAssetId ?? '-',
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black54),
-                                overflow: TextOverflow.clip,
-                              )
-                            ],
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'User',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.w500),
-                                overflow: TextOverflow.clip,
-                              ),
-                              Text(
-                                widget._device.annotatedUser ?? '-',
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black54),
-                                overflow: TextOverflow.clip,
-                              )
-                            ],
-                          )),
-                      Padding(
-                        padding: EdgeInsets.only(top: 10, bottom: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              'Location',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black87,
-                                  fontWeight: FontWeight.w500),
-                              overflow: TextOverflow.clip,
-                            ),
-                            Text(
-                              widget._device.annotatedLocation ?? '-',
-                              style: TextStyle(
-                                  fontSize: 16, color: Colors.black54),
-                              overflow: TextOverflow.clip,
-                            )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Notes',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black87,
-                                    fontWeight: FontWeight.w500),
-                                overflow: TextOverflow.clip,
-                              ),
-                              Text(
-                                widget._device.notes ?? '-',
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.black54),
-                                overflow: TextOverflow.clip,
-                              )
-                            ],
-                          )),
-                    ])),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    DetailedText(
+                        title: 'Asset ID',
+                        value: widget._device.annotatedAssetId ?? '-'),
+                    DetailedText(
+                        title: 'User',
+                        value: widget._device.annotatedUser ?? '-'),
+                    DetailedText(
+                        title: 'Location',
+                        value: widget._device.annotatedLocation ?? '-'),
+                    DetailedText(
+                        title: 'Notes', value: widget._device.notes ?? '-')
+                  ],
+                )),
           ],
         ),
-        Padding(padding: EdgeInsets.all(0), child: Divider()),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            ButtonBar(
-              children: [
-                FlatButton(
-                    onPressed: () => setState(() => _isExpanded = false),
-                    child: Text('See Less'))
-              ],
-            ),
-          ],
-        ),
+        DividerWith0MArgin(),
+        BottomCardButton(
+            title: 'See Less', onTap: () => setState(() => _isExpanded = false))
       ]));
 }
