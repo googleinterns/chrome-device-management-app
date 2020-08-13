@@ -13,35 +13,27 @@
 // limitations under the License.
 
 import 'package:chrome_management_app/models/error_handler.dart';
+import 'package:chrome_management_app/models/globalObject.dart';
 import 'package:chrome_management_app/models/keys_util.dart';
 import 'package:chrome_management_app/controllers/widget/device_summary.dart';
 import 'package:chrome_management_app/objects/account_devices.dart';
 import 'package:chrome_management_app/views/detail.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import '../devices.dart';
 
 /// Stateful Widget to show a list of devices.
 class DeviceList extends StatefulWidget {
-  /// Authorization token to get information form the Directory API.
-  final String _authToken;
-
-  /// Http Client
-  final http.Client _client;
-
   /// Constructor of Widget
-  DeviceList(this._authToken, this._client, {Key key}) : super(key: key);
+  DeviceList({Key key}) : super(key: key);
   @override
 
   /// Create initial state of the Widget.
-  _DeviceListState createState() => _DeviceListState(_authToken, _client);
+  _DeviceListState createState() => _DeviceListState();
 }
 
 /// DeviceList Widget states
 class _DeviceListState extends State<DeviceList> {
-  /// Authorization token to call the list of devices.
-  String _authToken;
-
   /// Account information from Directory Chrome Devices API.
   AccountDevices _list;
 
@@ -60,11 +52,8 @@ class _DeviceListState extends State<DeviceList> {
   /// Scroll controller to manage lazy load.
   ScrollController _scrollController;
 
-  /// Http Client
-  http.Client _client;
-
   /// Constructor of state.
-  _DeviceListState(this._authToken, this._client);
+  _DeviceListState();
 
   /// Initial state of the Widget.
   @override
@@ -89,7 +78,9 @@ class _DeviceListState extends State<DeviceList> {
     setState(() {
       _loading = true;
     });
-    Devices.getList(_client, _authToken, null).then((value) {
+    getList(Provider.of<GlobalObject>(context, listen: false).client,
+            Provider.of<GlobalObject>(context, listen: false).accessToken, null)
+        .then((value) {
       setState(() {
         _list = value;
         if (_list.nextPageToken == null) {
@@ -115,7 +106,10 @@ class _DeviceListState extends State<DeviceList> {
       _loading = true;
       _errorOnLoading = false;
     });
-    await Devices.getList(_client, _authToken, _list.nextPageToken)
+    await getList(
+            Provider.of<GlobalObject>(context, listen: false).client,
+            Provider.of<GlobalObject>(context, listen: false).accessToken,
+            _list.nextPageToken)
         .then((value) {
       setState(() {
         value.chromeosdevices.forEach((element) {
@@ -185,11 +179,11 @@ class _DeviceListState extends State<DeviceList> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        DetailedDeviceView(
-                                                            _authToken,
-                                                            _client,
-                                                            _list.chromeosdevices[
-                                                                index])));
+                                                        DetailedDeviceView(_list
+                                                                .chromeosdevices[
+                                                            index]))).then((_) {
+                                              _getInitialDevices();
+                                            });
                                           },
                                           child: SummaryDevice(
                                               _list.chromeosdevices[index],

@@ -15,42 +15,31 @@
 import 'package:chrome_management_app/controllers/devices.dart';
 import 'package:chrome_management_app/controllers/widget/custom_fields_card.dart';
 import 'package:chrome_management_app/controllers/widget/hardware_os_card.dart';
+import 'package:chrome_management_app/controllers/widget/remote_commands.dart';
 import 'package:chrome_management_app/models/error_handler.dart';
+import 'package:chrome_management_app/models/globalObject.dart';
 import 'package:chrome_management_app/objects/basic_device.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 /// Stateful Widget to show the summary of a detailed device.
 class DetailedDeviceSummary extends StatefulWidget {
-  /// Authorization token to get information from the Directory API.
-  final String _authToken;
-
-  /// Http Client
-  final http.Client _client;
-
   final BasicDevice _device;
 
   /// Constructor of Widget
-  DetailedDeviceSummary(this._authToken, this._client, this._device, {Key key})
-      : super(key: key);
+  DetailedDeviceSummary(this._device, {Key key}) : super(key: key);
   @override
 
   /// Create initial state of the Widget.
   _DetailedDeviceSummaryState createState() =>
-      _DetailedDeviceSummaryState(_authToken, _client, _device);
+      _DetailedDeviceSummaryState(_device);
 }
 
 /// DeviceList Widget states
 class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
-  /// Authorization token to get information from the Directory API.
-  String _authToken;
-
-  /// Http Client
-  http.Client _client;
-
   /// Verify the device is loading.
   bool _loading = false;
 
@@ -68,7 +57,7 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
 
   /// Scroll controller to manage animations.
   ScrollController _scrollController = ScrollController();
-  _DetailedDeviceSummaryState(this._authToken, this._client, this._basicDevice);
+  _DetailedDeviceSummaryState(this._basicDevice);
 
   /// Initial state of the Widget.
   @override
@@ -84,7 +73,10 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
       _loading = true;
       _errorOnLoading = false;
     });
-    Devices.getDetailedDevice(_client, _authToken, _basicDevice.deviceId)
+    getDetailedDevice(
+            Provider.of<GlobalObject>(context, listen: false).client,
+            Provider.of<GlobalObject>(context, listen: false).accessToken,
+            _basicDevice.deviceId)
         .then((value) {
       setState(() {
         _fullDevice = value;
@@ -99,30 +91,97 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
     });
   }
 
+  /// Triggers an action on the device from the pop up menu.
+  _actionDevice(String choice) async {
+    setState(() {
+      _errorOnLoading = false;
+    });
+    if (choice == 'Deprovision') {
+      deprovisionReason(context).then((reason) {
+        if (reason != null) {
+          setState(() {
+            _loading = true;
+          });
+          deproviseDevice(
+                  Provider.of<GlobalObject>(context, listen: false).client,
+                  Provider.of<GlobalObject>(context, listen: false).accessToken,
+                  _basicDevice.deviceId,
+                  reason)
+              .then((value) {
+            _getDetailedDevice();
+          }).catchError((e) {
+            setState(() {
+              _loading = false;
+              _errorOnLoading = true;
+              _warning = e;
+            });
+          });
+        }
+      });
+    } else {
+      setState(() {
+        _loading = true;
+      });
+      changeState(
+              Provider.of<GlobalObject>(context, listen: false).client,
+              Provider.of<GlobalObject>(context, listen: false).accessToken,
+              _basicDevice.deviceId,
+              choice == 'Disable' ? 'disable' : 'reenable')
+          .then((value) {
+        _getDetailedDevice();
+      }).catchError((e) {
+        setState(() {
+          _loading = false;
+          _errorOnLoading = true;
+          _warning = e;
+        });
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(_basicDevice.serialNumber),
-      ),
-      body: _errorOnLoading
-          ? _warning.statusCode > 499
-              ? alertAndRetry(_warning, _getDetailedDevice)
-              : alertAndLogIn(_warning, false, context)
-          : CustomScrollView(
-              controller: _scrollController,
-              slivers: <Widget>[
-                SliverList(
-                  delegate: SliverChildListDelegate(
-                    _loading == true
-                        ?
-                        // Loading screen device is loading.
-                        [
-                            Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          ]
-                        : [
+    return _loading == true
+        ?
+        // Loading screen device is loading.
+        Scaffold(
+            appBar: AppBar(title: Text(_basicDevice.serialNumber)),
+            body: Center(child: CircularProgressIndicator()))
+        : Scaffold(
+            appBar: _fullDevice.status == 'DEPROVISIONED'
+                ? AppBar(
+                    title: Text(_fullDevice.serialNumber),
+                  )
+                : AppBar(
+                    title: Text(_fullDevice.serialNumber),
+                    actions: <Widget>[
+                      PopupMenuButton<String>(
+                        onSelected: _actionDevice,
+                        itemBuilder: (BuildContext context) {
+                          return (_fullDevice.status == 'ACTIVE'
+                                  ? ['Disable', 'Deprovision']
+                                  : ['Reenable', 'Deprovision'])
+                              .map((String choice) {
+                            return PopupMenuItem<String>(
+                              child: Text(choice),
+                              value: choice,
+                              enabled: true,
+                            );
+                          }).toList();
+                        },
+                      ),
+                    ],
+                  ),
+            body: _errorOnLoading
+                ? _warning.statusCode > 499
+                    ? alertAndRetry(_warning, _getDetailedDevice)
+                    : alertAndLogIn(_warning, false, context)
+                : CustomScrollView(
+                    controller: _scrollController,
+                    slivers: <Widget>[
+                      SliverList(
+                        delegate: SliverChildListDelegate(
+                          [
                             Container(
                               height: AppBar().preferredSize.height * 3,
                               color: Colors.blue,
@@ -137,7 +196,7 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
                                     Padding(
                                         padding: EdgeInsets.only(bottom: 2.0),
                                         child: Text(
-                                          _basicDevice.serialNumber,
+                                          _fullDevice.serialNumber,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
@@ -151,7 +210,7 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
                                           bottom: 2.0,
                                         ),
                                         child: Text(
-                                          _basicDevice.status,
+                                          _fullDevice.status,
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
@@ -162,7 +221,7 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 2.0),
                                       child: Text(
-                                        'Last Sync: ${DateFormat.yMMMd().format(DateTime.parse(_basicDevice.lastSync))}',
+                                        'Last Sync: ${DateFormat.yMMMd().format(DateTime.parse(_fullDevice.lastSync))}',
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
@@ -178,10 +237,10 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
                             Padding(padding: EdgeInsets.all(10)),
                             CustomFieldsCard(_fullDevice)
                           ],
+                        ),
+                      )
+                    ],
                   ),
-                )
-              ],
-            ),
-    );
+          );
   }
 }
