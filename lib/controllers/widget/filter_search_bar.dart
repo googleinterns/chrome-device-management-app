@@ -96,8 +96,8 @@ _pickDate(BuildContext context, DateTime date, DateTime firstDate,
   return showDatePicker(
       context: context,
       initialDate: date ?? DateTime.now(),
-      firstDate: firstDate ?? DateTime.now().subtract(new Duration(days: 500)),
-      lastDate: lastDate ?? DateTime.now().add(new Duration(days: 500)));
+      firstDate: firstDate ?? DateTime(1990),
+      lastDate: lastDate ?? DateTime(DateTime.now().year + 5));
 }
 
 /// Dialog to fill and apply a filter
