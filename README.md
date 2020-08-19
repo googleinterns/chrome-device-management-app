@@ -7,20 +7,20 @@ Note that this is not an officially supported Google product.
 
 ### Google Sign In
 CDM App uses [openID](https://developers.google.com/identity/protocols/oauth2/openid-connect) to a log in with a Google account. The app uses [flutter_web_auth](https://pub.dev/packages/flutter_web_auth) to authenticate the user. 
-![](images/sign_in_demo.mp4)
+![](images/sign_in_demo.gif)
 
 ### List of Chrome Devices
 In the list of devices the user can see the basic information of all the devices in the accountby scrolling.
-![](images/list_demo.mp4)
+![](images/list_demo.gif)
 
 ### Filtering the list
 In the list of Chrome Devices the user could filter the list to facilitate the search of specific devices.
-![](images/filter_demo.mp4)
+![](images/filter_demo.gif)
 
 ### Detailed Device
 When a device is tapped, the app sends you to a new view where the user can see more information about a device.
-![](images/detailed_demo.mp4)
+![](images/detailed_demo.gif)
 
 ### Remote Commands
 In the detailed device view the user can do some remote commands to the device as disable, reenable and deprovision.
-![](images/remote_commands_demo.mp4)
+![](images/remote_commands_demo.gif)
