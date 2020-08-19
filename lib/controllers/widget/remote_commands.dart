@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+import 'package:chrome_management_app/models/keys_util.dart';
 import 'package:flutter/material.dart';
 
 /// Pops an alert and on tap loads the function from the parameter.
@@ -46,6 +47,7 @@ class _DeprovisionReasonSelect extends State<DeprovisionReasonSelect> {
       children: <Widget>[
         ListTile(
           leading: Radio(
+            key: Key(DEPROVISION_REASON_DIFF_MODEL),
             value: Reasons.different_model_replacement,
             groupValue: _reason,
             onChanged: (Reasons value) {
@@ -58,6 +60,7 @@ class _DeprovisionReasonSelect extends State<DeprovisionReasonSelect> {
         ),
         ListTile(
           leading: Radio(
+            key: Key(DEPROVISION_REASON_RETIRING_DEVICE),
             value: Reasons.retiring_device,
             groupValue: _reason,
             onChanged: (Reasons value) {
@@ -70,6 +73,7 @@ class _DeprovisionReasonSelect extends State<DeprovisionReasonSelect> {
         ),
         ListTile(
           leading: Radio(
+            key: Key(DEPROVISION_REASON_SAME_MODEL),
             value: Reasons.same_model_replacement,
             groupValue: _reason,
             onChanged: (Reasons value) {
@@ -82,6 +86,7 @@ class _DeprovisionReasonSelect extends State<DeprovisionReasonSelect> {
         ),
         ListTile(
           leading: Radio(
+            key: Key(DEPROVISION_REASON_UPGRADE_TRANSFER),
             value: Reasons.upgrade_transfer,
             groupValue: _reason,
             onChanged: (Reasons value) {
@@ -102,6 +107,7 @@ class _DeprovisionReasonSelect extends State<DeprovisionReasonSelect> {
               child: Text('Cancel'),
             ),
             FlatButton(
+              key: Key(DEPROVISION_REASON_APPLY),
               onPressed: () {
                 Navigator.of(context).pop(_reason);
               },

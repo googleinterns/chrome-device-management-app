@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/models/keys_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -340,6 +341,7 @@ class _FilterTextDialog extends State<FilterTextDialog> {
                   },
                   child: Text('Cancel')),
               FlatButton(
+                key: Key(FILTERS_APPLY),
                 onPressed: () {
                   Navigator.of(context).pop(_isDate(_filter)
                       ? _dateToString(_optionDate)
