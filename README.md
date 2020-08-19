@@ -19,8 +19,8 @@ In the list of Chrome Devices the user could filter the list to facilitate the s
 
 ### Detailed Device
 When a device is tapped, the app sends you to a new view where the user can see more information about a device.   
-<img src="images/images/detailed_demo.gif" width="180" height="320">     
+<img src="images/detailed_demo.gif" width="180" height="320">     
 
 ### Remote Commands
 In the detailed device view the user can do some remote commands to the device as disable, reenable and deprovision.    
-<img src="images/images/remote_commands_demo.gif" width="180" height="320">   
+<img src="images/remote_commands_demo.gif" width="180" height="320">   
