@@ -6,7 +6,7 @@ Chrome Device Management App is aiming to help admins to complete urgent tasks t
 Note that this is not an officially supported Google product.
 
 ### Google Sign In
-CDM App uses [openID](https://developers.google.com/identity/protocols/oauth2/openid-connect) to a log in with a Google account. The app uses [flutter_web_auth](https://pub.dev/packages/flutter_web_auth) to authenticate the user.    
+CDM App uses [openID](https://developers.google.com/identity/protocols/oauth2/openid-connect) to a login with a Google account. The app uses [flutter_web_auth](https://pub.dev/packages/flutter_web_auth) to authenticate the user.    
 <img src="images/sign_in_demo.gif" width="180" height="320">    
 
 ### List of Chrome Devices
