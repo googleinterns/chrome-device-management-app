@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import 'package:chrome_management_app/UI/common.dart';
+import 'package:chrome_management_app/models/keys_util.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -62,19 +63,27 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
                   children: <Widget>[
                     DetailedText(
                         title: 'Organization',
-                        value: widget._device.orgUnitPath ?? '-'),
+                        value: widget._device.orgUnitPath ?? '-',
+                        key: Key(HARDWARE_OS_ORGANIZATION_KEY)),
                     DetailedText(
-                        title: 'Model', value: widget._device.model ?? '-'),
+                        title: 'Model',
+                        value: widget._device.model ?? '-',
+                        key: Key(HARDWARE_OS_MODEL_KEY)),
                     DetailedText(
-                        title: 'Serial Number',
-                        value: widget._device.serialNumber ?? '-')
+                      title: 'Serial Number',
+                      value: widget._device.serialNumber ?? '-',
+                      key: Key(HARDWARE_OS_SERIAL_NUMBER_OF_DEVICE_KEY),
+                    )
                   ],
                 )),
           ],
         ),
         DividerWith0MArgin(),
         BottomCardButton(
-            title: 'See More', onTap: () => setState(() => _isExpanded = true))
+          title: 'See More',
+          onTap: () => setState(() => _isExpanded = true),
+          key: Key(HARDWARE_OS_MORE_LESS_BUTTON_KEY),
+        )
       ]));
 
   /// Expanded card widget to show full information of the hardware and OS from
@@ -95,15 +104,20 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
                     children: <Widget>[
                       DetailedText(
                           title: 'Organization',
-                          value: widget._device.orgUnitPath ?? '-'),
+                          value: widget._device.orgUnitPath ?? '-',
+                          key: Key(HARDWARE_OS_ORGANIZATION_KEY)),
                       DetailedText(
-                          title: 'Model', value: widget._device.model ?? '-'),
+                          title: 'Model',
+                          value: widget._device.model ?? '-',
+                          key: Key(HARDWARE_OS_MODEL_KEY)),
                       DetailedText(
                           title: 'Serial Number',
-                          value: widget._device.serialNumber ?? '-'),
+                          value: widget._device.serialNumber ?? '-',
+                          key: Key(HARDWARE_OS_SERIAL_NUMBER_OF_DEVICE_KEY)),
                       DetailedText(
                           title: 'Mac Address',
-                          value: widget._device.macAddress ?? '-'),
+                          value: widget._device.macAddress ?? '-',
+                          key: Key(HARDWARE_OS_MAC_ADDRESS_KEY)),
                       DetailedText(
                         title: 'Last Known Network',
                         value: widget._device.lastKnownNetwork == null
@@ -111,29 +125,39 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
                             : widget._device.lastKnownNetwork
                                 .map((o) => o.ipAddress)
                                 .join('\n'),
+                        key: Key(HARDWARE_OS_LAST_KNOWN_NETWORK_KEY),
                       ),
                       DetailedText(
                           title: 'OS version',
-                          value: widget._device.osVersion ?? '-'),
+                          value: widget._device.osVersion ?? '-',
+                          key: Key(HARDWARE_OS_VERSION_KEY)),
                       DetailedText(
                           title: 'Plataform Version',
-                          value: widget._device.platformVersion ?? '-'),
+                          value: widget._device.platformVersion ?? '-',
+                          key: Key(HARDWARE_OS_PLATAFORM_VERSION_KEY)),
                       DetailedText(
                           title: 'Device ID',
-                          value: widget._device.deviceId ?? '-'),
+                          value: widget._device.deviceId ?? '-',
+                          key: Key(HARDWARE_OS_DEVICE_ID_KEY)),
                       DetailedText(
                           title: 'Last Enrollment Time',
-                          value: widget._device.lastEnrollmentTime ?? '-'),
+                          value: widget._device.lastEnrollmentTime != null
+                              ? "${DateFormat.yMMMd().format(DateTime.parse(widget._device.lastEnrollmentTime))}"
+                              : '-',
+                          key: Key(HARDWARE_OS_LAST_ENROLLMENT_TIME_KEY)),
                       DetailedText(
                           title: 'Auto Update Expiration',
-                          value:
-                              '${DateFormat.yMMMd().format(DateTime.fromMillisecondsSinceEpoch(int.parse(widget._device.autoUpdateExpiration)))}'),
+                          value: widget._device.autoUpdateExpiration != null
+                              ? '${DateFormat.yMMMd().format(DateTime.fromMillisecondsSinceEpoch(int.parse(widget._device.autoUpdateExpiration)))}'
+                              : '-',
+                          key: Key(HARDWARE_OS_AUTO_UPDATE_EXPIRATION_KEY)),
                     ])),
           ],
         ),
         DividerWith0MArgin(),
         BottomCardButton(
-            title: 'See More',
-            onTap: () => setState(() => _isExpanded = false)),
+            title: 'See Less',
+            onTap: () => setState(() => _isExpanded = false),
+            key: Key(HARDWARE_OS_MORE_LESS_BUTTON_KEY))
       ]));
 }

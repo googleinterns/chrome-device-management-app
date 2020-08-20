@@ -35,7 +35,8 @@ class TextLine extends Padding {
 
 /// Widget used to show a custom title and a subtitle.
 class DetailedText extends Padding {
-  DetailedText({@required String title, @required String value})
+  DetailedText(
+      {@required String title, @required String value, @required Key key})
       : super(
             padding: EdgeInsets.only(top: 10, bottom: 10),
             child: Column(
@@ -51,6 +52,7 @@ class DetailedText extends Padding {
                 ),
                 Text(
                   value,
+                  key: key,
                   style: TextStyle(fontSize: 16, color: Colors.black54),
                   overflow: TextOverflow.clip,
                 )
@@ -106,12 +108,19 @@ class DetailedHeader extends Container {
 
 /// Widget that creates a bottom button.
 class BottomCardButton extends Row {
-  BottomCardButton({@required String title, @required Function onTap})
+  BottomCardButton(
+      {@required String title, @required Function onTap, @required Key key})
       : super(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             ButtonBar(
-              children: [FlatButton(onPressed: onTap, child: Text(title))],
+              children: [
+                FlatButton(
+                  onPressed: onTap,
+                  child: Text(title),
+                  key: key,
+                )
+              ],
             ),
           ],
         );
@@ -142,4 +151,25 @@ class DetailCategory extends Container {
             overflow: TextOverflow.clip,
           ),
         );
+}
+
+///Widget that creates a filter chip.
+class CustomFilterChip extends InputChip {
+  CustomFilterChip(
+      {@required String text,
+      @required Function delete,
+      @required Function change})
+      : super(
+            label: Text(text,
+                style: TextStyle(
+                  color: Colors.white,
+                )),
+            backgroundColor: Colors.grey,
+            deleteIcon: Icon(
+              Icons.cancel,
+              key: Key(FILTERS_CANCEL),
+            ),
+            onDeleted: delete,
+            onPressed: change,
+            elevation: 2.0);
 }

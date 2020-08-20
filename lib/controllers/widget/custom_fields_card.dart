@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import 'package:chrome_management_app/UI/common.dart';
+import 'package:chrome_management_app/models/keys_util.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';
 import 'package:flutter/material.dart';
 
@@ -61,20 +62,25 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
                   children: <Widget>[
                     DetailedText(
                         title: 'Asset ID',
-                        value: widget._device.annotatedAssetId ?? '-'),
+                        value: widget._device.annotatedAssetId ?? '-',
+                        key: Key(CUSTOM_FIELDS_ASSET_ID_KEY)),
                     DetailedText(
                         title: 'User',
-                        value: widget._device.annotatedUser ?? '-'),
+                        value: widget._device.annotatedUser ?? '-',
+                        key: Key(CUSTOM_FIELDS_USER_KEY)),
                     DetailedText(
                         title: 'Location',
-                        value: widget._device.annotatedLocation ?? '-')
+                        value: widget._device.annotatedLocation ?? '-',
+                        key: Key(CUSTOM_FIELDS_LOCATION_KEY))
                   ],
                 )),
           ],
         ),
         DividerWith0MArgin(),
         BottomCardButton(
-            title: 'See More', onTap: () => setState(() => _isExpanded = true))
+            title: 'See More',
+            onTap: () => setState(() => _isExpanded = true),
+            key: Key(CUSTOM_FIELDS_MORE_LESS_BUTTON_KEY))
       ]));
 
   /// Expanded card widget to show full information of the custom fields from
@@ -96,21 +102,28 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
                   children: <Widget>[
                     DetailedText(
                         title: 'Asset ID',
-                        value: widget._device.annotatedAssetId ?? '-'),
+                        value: widget._device.annotatedAssetId ?? '-',
+                        key: Key(CUSTOM_FIELDS_ASSET_ID_KEY)),
                     DetailedText(
                         title: 'User',
-                        value: widget._device.annotatedUser ?? '-'),
+                        value: widget._device.annotatedUser ?? '-',
+                        key: Key(CUSTOM_FIELDS_USER_KEY)),
                     DetailedText(
                         title: 'Location',
-                        value: widget._device.annotatedLocation ?? '-'),
+                        value: widget._device.annotatedLocation ?? '-',
+                        key: Key(CUSTOM_FIELDS_LOCATION_KEY)),
                     DetailedText(
-                        title: 'Notes', value: widget._device.notes ?? '-')
+                        title: 'Notes',
+                        value: widget._device.notes ?? '-',
+                        key: Key(CUSTOM_FIELDS_NOTES_KEY))
                   ],
                 )),
           ],
         ),
         DividerWith0MArgin(),
         BottomCardButton(
-            title: 'See Less', onTap: () => setState(() => _isExpanded = false))
+            title: 'See Less',
+            onTap: () => setState(() => _isExpanded = false),
+            key: Key(CUSTOM_FIELDS_MORE_LESS_BUTTON_KEY))
       ]));
 }

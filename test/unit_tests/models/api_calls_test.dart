@@ -95,8 +95,8 @@ main() {
           .thenAnswer((_) async => http.Response(jsonAccountDevices, 200));
       final apiCall = ApiCalls(client);
 
-      expect(
-          await apiCall.getDeviceList(authToken, null), isA<AccountDevices>());
+      expect(await apiCall.getDeviceList(authToken, null, Map()),
+          isA<AccountDevices>());
     });
 
     test(
@@ -108,7 +108,7 @@ main() {
           .thenAnswer((_) async => http.Response('Server Error', 501));
       final apiCall = ApiCalls(client);
 
-      expect(apiCall.getDeviceList(authToken, null),
+      expect(apiCall.getDeviceList(authToken, null, Map()),
           throwsA(predicate((e) => e is ErrorHandler && e.statusCode == 501)));
     });
 
@@ -123,7 +123,7 @@ main() {
           })).thenAnswer((_) async => http.Response(jsonAccountDevices, 200));
       final apiCall = ApiCalls(client);
 
-      expect(await apiCall.getDeviceList(authToken, nextPageToken),
+      expect(await apiCall.getDeviceList(authToken, nextPageToken, Map()),
           isA<AccountDevices>());
     });
     test(
@@ -137,7 +137,7 @@ main() {
           })).thenAnswer((_) async => http.Response('Forbidden', 403));
       final apiCall = ApiCalls(client);
 
-      expect(apiCall.getDeviceList(authToken, nextPageToken),
+      expect(apiCall.getDeviceList(authToken, nextPageToken, Map()),
           throwsA(predicate((e) => e is ErrorHandler && e.statusCode == 403)));
     });
 
