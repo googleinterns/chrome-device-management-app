@@ -33,6 +33,16 @@ void main() {
   mockHelper.firstPage(client);
   // Prepares the second page of devices for API response.
   mockHelper.secondPage(client);
+  //Prepares the detailed view of first device for API response.
+  mockHelper.detailedView(client);
+  //Prepares the response to diasable the first device for API response.
+  mockHelper.disableFirstDevice(client);
+  //Prepares the response to reenable the first device for API response.
+  mockHelper.reenableFirstDevice(client);
+  //Prepares the response to deprovision the first device for API response.
+  mockHelper.deprovisionFirstDevice(client);
+  //Prepares the page of filtered devices for API response.
+  mockHelper.filteredPage(client);
   // Runs app
   runApp(ChangeNotifierProvider(
       create: (context) => GlobalObject(Data.ACCESS_TOKEN, client),

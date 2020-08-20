@@ -19,6 +19,7 @@ import 'package:chrome_management_app/controllers/widget/hardware_os_card.dart';
 import 'package:chrome_management_app/controllers/widget/remote_commands.dart';
 import 'package:chrome_management_app/models/error_handler.dart';
 import 'package:chrome_management_app/models/globalObject.dart';
+import 'package:chrome_management_app/models/keys_util.dart';
 import 'package:chrome_management_app/objects/basic_device.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';
 import 'package:flutter/material.dart';
@@ -158,16 +159,21 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
                     actions: <Widget>[
                       PopupMenuButton<String>(
                         onSelected: _actionDevice,
+                        key: Key(REMOTE_COMMAND_MENU),
                         itemBuilder: (BuildContext context) {
                           return (_fullDevice.status == 'ACTIVE'
                                   ? ['Disable', 'Deprovision']
                                   : ['Reenable', 'Deprovision'])
                               .map((String choice) {
                             return PopupMenuItem<String>(
-                              child: Text(choice),
-                              value: choice,
-                              enabled: true,
-                            );
+                                child: Text(choice),
+                                value: choice,
+                                enabled: true,
+                                key: Key(choice == 'Deprovision'
+                                    ? REMOTE_COMMAND_DEPROVISION
+                                    : choice == 'Reenable'
+                                        ? REMOTE_COMMAND_REENABLE
+                                        : REMOTE_COMMAND_DISABLE));
                           }).toList();
                         },
                       ),
@@ -179,6 +185,7 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
                     : alertAndLogIn(_warning, false, context)
                 : CustomScrollView(
                     controller: _scrollController,
+                    key: Key(DETAILED_VIEW_SCROLLINNG_LIST),
                     slivers: <Widget>[
                       SliverList(
                         delegate: SliverChildListDelegate(

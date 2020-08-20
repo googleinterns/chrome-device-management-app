@@ -164,6 +164,7 @@ class _DeviceListState extends State<DeviceList> {
           // Filter pop up menu button
           PopupMenuButton<Filters>(
             onSelected: _applyFilter,
+            key: Key(FILTERS_MENU),
             itemBuilder: (BuildContext context) {
               return Filters.values
                   .where((element) =>
@@ -174,6 +175,7 @@ class _DeviceListState extends State<DeviceList> {
                 return PopupMenuItem<Filters>(
                   child: Text(filtersTitle[choice]),
                   value: choice,
+                  key: Key(filtersTitle[choice]),
                   enabled: true,
                 );
               }).toList();

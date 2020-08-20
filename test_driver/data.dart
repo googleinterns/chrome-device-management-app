@@ -3,9 +3,10 @@ class Data {
   static const ACCESS_TOKEN = '123';
   // Next page token to the second page.
   static const NEXT_PAGE_2 = '2';
-
+  String status = 'ACTIVE';
   // First page of devices in json.
-  static const FIRST_PAGE = """ 
+  String firstPage() {
+    return """ 
     {
     "kind": "kind",
     "etag": "etag",
@@ -15,12 +16,12 @@ class Data {
         "etag": "etag 1",
         "deviceId": "a1",
         "serialNumber": "serialNumber 1",
-        "status": "status 1",
+        "status": "$status",
         "lastSync": "2019-10-01T18:50:21.781Z", 
         "supportEndDate": "supportEndDate 1",
         "annotatedUser": "annotated user 1",
         "annotatedLocation": "annotated location 1",
-        "annotatedAssetId": "anotated asset id 1",
+        "annotatedAssetId": "annotated asset id 1",
         "notes": "notes 1"       
       },
       {
@@ -33,7 +34,7 @@ class Data {
         "supportEndDate": "supportEndDate 2",
         "annotatedUser": "annotated user 2",
         "annotatedLocation": "annotated location 2",
-        "annotatedAssetId": "anotated asset id 2",
+        "annotatedAssetId": "annotated asset id 2",
         "notes": "notes 2"       
       },
             {
@@ -46,7 +47,7 @@ class Data {
         "supportEndDate": "supportEndDate 3",
         "annotatedUser": "annotated user 3",
         "annotatedLocation": "annotated location 3",
-        "annotatedAssetId": "anotated asset id 3",
+        "annotatedAssetId": "annotated asset id 3",
         "notes": "notes 3"       
       },
             {
@@ -59,7 +60,7 @@ class Data {
         "supportEndDate": "supportEndDate 4",
         "annotatedUser": "annotated user 4",
         "annotatedLocation": "annotated location 4",
-        "annotatedAssetId": "anotated asset id 4",
+        "annotatedAssetId": "annotated asset id 4",
         "notes": "notes 4"       
       },
             {
@@ -72,7 +73,7 @@ class Data {
         "supportEndDate": "supportEndDate 5",
         "annotatedUser": "annotated user 5",
         "annotatedLocation": "annotated location 5",
-        "annotatedAssetId": "anotated asset id 5",
+        "annotatedAssetId": "annotated asset id 5",
         "notes": "notes 5"       
       },
             {
@@ -85,7 +86,7 @@ class Data {
         "supportEndDate": "supportEndDate 6",
         "annotatedUser": "annotated user 6",
         "annotatedLocation": "annotated location 6",
-        "annotatedAssetId": "anotated asset id 6",
+        "annotatedAssetId": "annotated asset id 6",
         "notes": "notes 6"       
       },
             {
@@ -98,7 +99,7 @@ class Data {
         "supportEndDate": "supportEndDate 7",
         "annotatedUser": "annotated user 7",
         "annotatedLocation": "annotated location 7",
-        "annotatedAssetId": "anotated asset id 7",
+        "annotatedAssetId": "annotated asset id 7",
         "notes": "notes 7"       
       },
             {
@@ -111,7 +112,7 @@ class Data {
         "supportEndDate": "supportEndDate 8",
         "annotatedUser": "annotated user 8",
         "annotatedLocation": "annotated location 8",
-        "annotatedAssetId": "anotated asset id 8",
+        "annotatedAssetId": "annotated asset id 8",
         "notes": "notes 8"       
       },
             {
@@ -124,7 +125,7 @@ class Data {
         "supportEndDate": "supportEndDate 9",
         "annotatedUser": "annotated user 9",
         "annotatedLocation": "annotated location 9",
-        "annotatedAssetId": "anotated asset id 9",
+        "annotatedAssetId": "annotated asset id 9",
         "notes": "notes 9"       
       },
             {
@@ -137,7 +138,7 @@ class Data {
         "supportEndDate": "supportEndDate 10",
         "annotatedUser": "annotated user 10",
         "annotatedLocation": "annotated location 10",
-        "annotatedAssetId": "anotated asset id 10",
+        "annotatedAssetId": "annotated asset id 10",
         "notes": "notes 10"       
       },
             {
@@ -150,7 +151,7 @@ class Data {
         "supportEndDate": "supportEndDate 11",
         "annotatedUser": "annotated user 11",
         "annotatedLocation": "annotated location 11",
-        "annotatedAssetId": "anotated asset id 11",
+        "annotatedAssetId": "annotated asset id 11",
         "notes": "notes 11"       
       },
             {
@@ -163,7 +164,7 @@ class Data {
         "supportEndDate": "supportEndDate 12",
         "annotatedUser": "annotated user 12",
         "annotatedLocation": "annotated location 12",
-        "annotatedAssetId": "anotated asset id 12",
+        "annotatedAssetId": "annotated asset id 12",
         "notes": "notes 12"       
       },
             {
@@ -176,7 +177,7 @@ class Data {
         "supportEndDate": "supportEndDate 13",
         "annotatedUser": "annotated user 13",
         "annotatedLocation": "annotated location 13",
-        "annotatedAssetId": "anotated asset id 13",
+        "annotatedAssetId": "annotated asset id 13",
         "notes": "notes 13"       
       },
             {
@@ -189,7 +190,7 @@ class Data {
         "supportEndDate": "supportEndDate 14",
         "annotatedUser": "annotated user 14",
         "annotatedLocation": "annotated location 14",
-        "annotatedAssetId": "anotated asset id 14",
+        "annotatedAssetId": "annotated asset id 14",
         "notes": "notes 14"       
       },
             {
@@ -202,13 +203,15 @@ class Data {
         "supportEndDate": "supportEndDate 15",
         "annotatedUser": "annotated user 15",
         "annotatedLocation": "annotated location 15",
-        "annotatedAssetId": "anotated asset id 15",
+        "annotatedAssetId": "annotated asset id 15",
         "notes": "notes 15"       
       }
     ],
     "nextPageToken": "$NEXT_PAGE_2"
   }
 """;
+  }
+
   // Second page of devices in json.
   static const SECOND_PAGE = """ 
     {
@@ -225,7 +228,7 @@ class Data {
         "supportEndDate": "supportEndDate 16",
         "annotatedUser": "annotated user 16",
         "annotatedLocation": "annotated location 16",
-        "annotatedAssetId": "anotated asset id 16",
+        "annotatedAssetId": "annotated asset id 16",
         "notes": "notes 16"       
       },
       {
@@ -238,7 +241,7 @@ class Data {
         "supportEndDate": "supportEndDate 17",
         "annotatedUser": "annotated user 17",
         "annotatedLocation": "annotated location 17",
-        "annotatedAssetId": "anotated asset id 17",
+        "annotatedAssetId": "annotated asset id 17",
         "notes": "notes 17"       
       },
             {
@@ -251,7 +254,7 @@ class Data {
         "supportEndDate": "supportEndDate 18",
         "annotatedUser": "annotated user 18",
         "annotatedLocation": "annotated location 18",
-        "annotatedAssetId": "anotated asset id 18",
+        "annotatedAssetId": "annotated asset id 18",
         "notes": "notes 18"       
       },
             {
@@ -264,7 +267,7 @@ class Data {
         "supportEndDate": "supportEndDate 19",
         "annotatedUser": "annotated user 19",
         "annotatedLocation": "annotated location 19",
-        "annotatedAssetId": "anotated asset id 19",
+        "annotatedAssetId": "annotated asset id 19",
         "notes": "notes 19"       
       },
             {
@@ -277,7 +280,7 @@ class Data {
         "supportEndDate": "supportEndDate 20",
         "annotatedUser": "annotated user 20",
         "annotatedLocation": "annotated location 20",
-        "annotatedAssetId": "anotated asset id 20",
+        "annotatedAssetId": "annotated asset id 20",
         "notes": "notes 20"       
       },
             {
@@ -290,7 +293,7 @@ class Data {
         "supportEndDate": "supportEndDate 21",
         "annotatedUser": "annotated user 21",
         "annotatedLocation": "annotated location 21",
-        "annotatedAssetId": "anotated asset id 21",
+        "annotatedAssetId": "annotated asset id 21",
         "notes": "notes 21"       
       },
             {
@@ -303,7 +306,7 @@ class Data {
         "supportEndDate": "supportEndDate 22",
         "annotatedUser": "annotated user 22",
         "annotatedLocation": "annotated location 22",
-        "annotatedAssetId": "anotated asset id 22",
+        "annotatedAssetId": "annotated asset id 22",
         "notes": "notes 22"       
       },
             {
@@ -316,7 +319,7 @@ class Data {
         "supportEndDate": "supportEndDate 23",
         "annotatedUser": "annotated user 23",
         "annotatedLocation": "annotated location 23",
-        "annotatedAssetId": "anotated asset id 23",
+        "annotatedAssetId": "annotated asset id 23",
         "notes": "notes 23"       
       },
             {
@@ -329,7 +332,7 @@ class Data {
         "supportEndDate": "supportEndDate 24",
         "annotatedUser": "annotated user 24",
         "annotatedLocation": "annotated location 24",
-        "annotatedAssetId": "anotated asset id 24",
+        "annotatedAssetId": "annotated asset id 24",
         "notes": "notes 24"       
       },
             {
@@ -342,7 +345,7 @@ class Data {
         "supportEndDate": "supportEndDate 25",
         "annotatedUser": "annotated user 25",
         "annotatedLocation": "annotated location 25",
-        "annotatedAssetId": "anotated asset id 25",
+        "annotatedAssetId": "annotated asset id 25",
         "notes": "notes 25"       
       },
             {
@@ -355,7 +358,7 @@ class Data {
         "supportEndDate": "supportEndDate 26",
         "annotatedUser": "annotated user 26",
         "annotatedLocation": "annotated location 26",
-        "annotatedAssetId": "anotated asset id 26",
+        "annotatedAssetId": "annotated asset id 26",
         "notes": "notes 26"       
       },
             {
@@ -368,7 +371,7 @@ class Data {
         "supportEndDate": "supportEndDate 27",
         "annotatedUser": "annotated user 27",
         "annotatedLocation": "annotated location 27",
-        "annotatedAssetId": "anotated asset id 27",
+        "annotatedAssetId": "annotated asset id 27",
         "notes": "notes 27"       
       },
             {
@@ -381,7 +384,7 @@ class Data {
         "supportEndDate": "supportEndDate 28",
         "annotatedUser": "annotated user 28",
         "annotatedLocation": "annotated location 28",
-        "annotatedAssetId": "anotated asset id 28",
+        "annotatedAssetId": "annotated asset id 28",
         "notes": "notes 28"       
       },
             {
@@ -394,7 +397,7 @@ class Data {
         "supportEndDate": "supportEndDate 29",
         "annotatedUser": "annotated user 29",
         "annotatedLocation": "annotated location 29",
-        "annotatedAssetId": "anotated asset id 29",
+        "annotatedAssetId": "annotated asset id 29",
         "notes": "notes 29"       
       },
             {
@@ -407,10 +410,75 @@ class Data {
         "supportEndDate": "supportEndDate 30",
         "annotatedUser": "annotated user 30",
         "annotatedLocation": "annotated location 30",
-        "annotatedAssetId": "anotated asset id 30",
+        "annotatedAssetId": "annotated asset id 30",
         "notes": "notes 30"       
       }
     ]
   }
 """;
+
+  String detailedDevice() {
+    return """
+    {
+      "kind": "kind 1",
+      "etag": "etag1",
+      "deviceId": "a1",
+      "serialNumber": "serialNumber 1",
+      "status": "$status",
+      "lastSync": "2019-10-01T18:50:21.781Z",
+      "annotatedUser": "Bob",
+      "annotatedLocation": "SF",
+      "annotatedAssetId": "IDac9492",
+      "model": "ASUS Chromebook Flip C100PA",
+      "osVersion": "54.0.2837.0",
+      "platformVersion": "8737.1.0",
+      "firmwareVersion": "Google_Veyron_Minnie.6588.197.0",
+      "macAddress": "macAddress 1",
+      "bootMode": "Verified",
+      "lastEnrollmentTime": "2020-06-30T01:55:50.886Z",
+      "orgUnitPath": "/",
+      "systemRamTotal": "0",
+      "annotatedAssetId": "annotated asset id 1",
+      "notes": "notes 1",
+      "autoUpdateExpiration": "1593586800000"
+    }
+    """;
+  }
+
+  static const FILTERED_PAGE = """ 
+    {
+    "kind": "kind",
+    "etag": "etag",
+    "chromeosdevices": [
+        {
+          "kind": "kind 21",
+          "etag": "etag 21",
+          "deviceId": "i21",
+          "serialNumber": "serialNumber 21",
+          "status": "status 21",
+          "lastSync": "2019-10-01T18:50:21.781Z", 
+          "supportEndDate": "supportEndDate 21",
+          "annotatedUser": "annotated user 21",
+          "annotatedLocation": "annotated location 21",
+          "annotatedAssetId": "annotated asset id 21",
+          "notes": "notes 21"       
+        }
+      ]
+    }
+      """;
+
+  /// Changes status to disable.
+  void disable() {
+    status = 'DISABLED';
+  }
+
+  /// Changes status to active.
+  void reenable() {
+    status = 'ACTIVE';
+  }
+
+  /// Changes status to deprovision.
+  void deprovision() {
+    status = 'DEPROVISIONED';
+  }
 }
