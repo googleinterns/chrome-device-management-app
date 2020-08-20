@@ -14,6 +14,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:chrome_management_app/controllers/widget/filter_search_bar.dart';
 import 'package:chrome_management_app/controllers/widget/remote_commands.dart';
 import 'package:chrome_management_app/models/error_handler.dart';
 import 'package:http/http.dart' as http;
@@ -55,6 +56,21 @@ class ApiCalls {
     Reasons.upgrade_transfer: 'upgrade_transfer'
   };
 
+  /// Map to stroe the query code for each filter.
+  Map<Filters, String> queryCode = {
+    Filters.asset_id: 'asset_id',
+    Filters.date_registered: 'register',
+    Filters.ethernet_mac: 'ethernet_mac',
+    Filters.last_sync: 'sync',
+    Filters.location: 'location',
+    Filters.notes: 'note',
+    Filters.recent_user: 'recent_user',
+    Filters.serial_number: 'id',
+    Filters.status: 'status',
+    Filters.user: 'user',
+    Filters.wifi_mac: 'wifi_mac'
+  };
+
   /// Calls the Directory API to get a list of devices with max results of 15.
   ///
   /// * [authToken] is the authentication token for API to accept the requests.
@@ -62,12 +78,18 @@ class ApiCalls {
   /// retreive, if it is null the function will request the first page.
   ///
   /// This method returns a [AccountDevices] object.
-  Future<AccountDevices> getDeviceList(
-      String authToken, String nextPageToken) async {
+  Future<AccountDevices> getDeviceList(String authToken, String nextPageToken,
+      Map<Filters, String> filters) async {
     var response;
     var url = nextPageToken == null
         ? PREFIX + DEVICE_LIST_URL
         : PREFIX + DEVICE_LIST_WITH_TOKEN_URL + nextPageToken;
+    if (filters != null && filters.isNotEmpty) {
+      url += '&query=' +
+          filters.entries
+              .map((e) => queryCode[e.key] + ':' + e.value)
+              .join(' ');
+    }
     authToken = 'Bearer $authToken';
     _client == null
         ? response = await http

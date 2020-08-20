@@ -133,7 +133,7 @@ class _HardwareAndOsCardState extends State<HardwareAndOsCard>
         ),
         DividerWith0MArgin(),
         BottomCardButton(
-            title: 'See More',
+            title: 'See Less',
             onTap: () => setState(() => _isExpanded = false)),
       ]));
 }

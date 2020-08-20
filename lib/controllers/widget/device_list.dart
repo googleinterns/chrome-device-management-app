@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:chrome_management_app/UI/common.dart';
 import 'package:chrome_management_app/models/error_handler.dart';
 import 'package:chrome_management_app/models/globalObject.dart';
 import 'package:chrome_management_app/models/keys_util.dart';
@@ -21,6 +22,7 @@ import 'package:chrome_management_app/views/detail.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../devices.dart';
+import 'filter_search_bar.dart';
 
 /// Stateful Widget to show a list of devices.
 class DeviceList extends StatefulWidget {
@@ -52,6 +54,9 @@ class _DeviceListState extends State<DeviceList> {
   /// Scroll controller to manage lazy load.
   ScrollController _scrollController;
 
+  /// Stores the applied filters
+  Map<Filters, String> _filtersSelected = new Map();
+
   /// Constructor of state.
   _DeviceListState();
 
@@ -77,9 +82,14 @@ class _DeviceListState extends State<DeviceList> {
   void _getInitialDevices() async {
     setState(() {
       _loading = true;
+      _list = null;
+      _allDevicesLoaded = false;
     });
-    getList(Provider.of<GlobalObject>(context, listen: false).client,
-            Provider.of<GlobalObject>(context, listen: false).accessToken, null)
+    getList(
+            Provider.of<GlobalObject>(context, listen: false).client,
+            Provider.of<GlobalObject>(context, listen: false).accessToken,
+            null,
+            _filtersSelected)
         .then((value) {
       setState(() {
         _list = value;
@@ -109,7 +119,8 @@ class _DeviceListState extends State<DeviceList> {
     await getList(
             Provider.of<GlobalObject>(context, listen: false).client,
             Provider.of<GlobalObject>(context, listen: false).accessToken,
-            _list.nextPageToken)
+            _list.nextPageToken,
+            _filtersSelected)
         .then((value) {
       setState(() {
         value.chromeosdevices.forEach((element) {
@@ -131,6 +142,17 @@ class _DeviceListState extends State<DeviceList> {
     });
   }
 
+  /// Shows dialog to fill the value of the filter selected and then applies it.
+  void _applyFilter(Filters filter) {
+    filterText(context, filter, _filtersSelected[filter] ?? null)
+        .then((value) => setState(() {
+              if (value != null && value != '') {
+                _filtersSelected[filter] = value;
+                _getInitialDevices();
+              }
+            }));
+  }
+
   /// Widget UI build
   @override
   Widget build(BuildContext context) {
@@ -138,32 +160,71 @@ class _DeviceListState extends State<DeviceList> {
       // Top App bar with text
       appBar: AppBar(
         title: Text('Chrome OS Devices'),
+        actions: <Widget>[
+          // Filter pop up menu button
+          PopupMenuButton<Filters>(
+            onSelected: _applyFilter,
+            itemBuilder: (BuildContext context) {
+              return Filters.values
+                  .where((element) =>
+                      _filtersSelected == null ||
+                      !_filtersSelected.containsKey(element))
+                  .toList()
+                  .map((Filters choice) {
+                return PopupMenuItem<Filters>(
+                  child: Text(filtersTitle[choice]),
+                  value: choice,
+                  enabled: true,
+                );
+              }).toList();
+            },
+            icon: Icon(Icons.filter_list),
+          ),
+        ],
       ),
-      body: _errorOnLoading
-          ? _warning.statusCode > 499
-              ? alertAndRetry(_warning,
-                  _list == null ? _getInitialDevices : _getMoreDevices)
-              : _list == null
-                  ? alertAndLogIn(_warning, true, context)
-                  : alertAndLogIn(_warning, false, context)
-          : _loading == true && _list == null
-              ?
-              // Loading screen if its the first loading of the list
-              Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Container(
-                  child: _list.chromeosdevices.length == 0
-                      ?
-                      // Show a message when there are no devices on the account
-                      Center(
-                          child: Text('No devices to show'),
-                        )
-                      :
-                      // Show list of devices with SummaryDevice Widget
-                      Column(
-                          children: <Widget>[
-                            Expanded(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          // Filters Selected
+          Wrap(
+            spacing: 2.0,
+            children: _filtersSelected.entries
+                .map((entry) => CustomFilterChip(
+                    text: filtersTitle[entry.key] + ': ' + entry.value,
+                    delete: () => setState(() {
+                          _filtersSelected.remove(entry.key);
+                          _getInitialDevices();
+                        }),
+                    change: () => setState(() {
+                          _applyFilter(entry.key);
+                        })))
+                .toList(),
+          ),
+          _errorOnLoading
+              ? _warning.statusCode > 499
+                  ? alertAndRetry(_warning,
+                      _list == null ? _getInitialDevices : _getMoreDevices)
+                  : _list == null
+                      ? alertAndLogIn(_warning, true, context)
+                      : alertAndLogIn(_warning, false, context)
+              : _loading == true && _list == null
+                  ?
+                  // Loading screen if its the first loading of the list
+                  Expanded(
+                      child: Center(
+                      child: CircularProgressIndicator(),
+                    ))
+                  : Container(
+                      child: _list.chromeosdevices == null ||
+                              _list.chromeosdevices.length == 0
+                          ?
+                          // Show a message when there are no devices on the account
+                          Center(
+                              child: Text('No devices to show'),
+                            )
+                          :
+                          // Show list of devices with SummaryDevice Widget
+                          Expanded(
                               child: ListView.separated(
                                 padding: EdgeInsets.symmetric(vertical: 8.0),
                                 separatorBuilder: (context, index) => Divider(),
@@ -209,10 +270,10 @@ class _DeviceListState extends State<DeviceList> {
                                               ));
                                 },
                               ),
-                            )
-                          ],
-                        ),
-                ),
+                            ),
+                    ),
+        ],
+      ),
     );
   }
 }

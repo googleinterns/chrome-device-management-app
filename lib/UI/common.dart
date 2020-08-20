@@ -143,3 +143,20 @@ class DetailCategory extends Container {
           ),
         );
 }
+
+///Widget that creates a filter chip.
+class CustomFilterChip extends InputChip {
+  CustomFilterChip(
+      {@required String text,
+      @required Function delete,
+      @required Function change})
+      : super(
+            label: Text(text,
+                style: TextStyle(
+                  color: Colors.white,
+                )),
+            backgroundColor: Colors.grey,
+            onDeleted: delete,
+            onPressed: change,
+            elevation: 2.0);
+}
