@@ -17,6 +17,7 @@ import 'package:chrome_management_app/controllers/devices.dart';
 import 'package:chrome_management_app/controllers/widget/custom_fields_card.dart';
 import 'package:chrome_management_app/controllers/widget/hardware_os_card.dart';
 import 'package:chrome_management_app/controllers/widget/remote_commands.dart';
+import 'package:chrome_management_app/controllers/widget/update_custom_fields_dialog.dart';
 import 'package:chrome_management_app/models/error_handler.dart';
 import 'package:chrome_management_app/models/globalObject.dart';
 import 'package:chrome_management_app/models/keys_util.dart';
@@ -90,6 +91,34 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
         _errorOnLoading = true;
         _warning = e;
       });
+    });
+  }
+
+  /// Shows up a edit custom fields dialog and then updates the device.
+  _updateCustomFields() async {
+    customFieldsTextDialog(context, _fullDevice).then((value) {
+      if (value != null) {
+        setState(() {
+          _loading = true;
+        });
+        updateDevice(
+                Provider.of<GlobalObject>(context, listen: false).client,
+                Provider.of<GlobalObject>(context, listen: false).accessToken,
+                _basicDevice.deviceId,
+                value)
+            .then((device) {
+          setState(() {
+            _fullDevice = device;
+            _loading = false;
+          });
+        }).catchError((e) {
+          setState(() {
+            _loading = false;
+            _errorOnLoading = true;
+            _warning = e;
+          });
+        });
+      }
     });
   }
 
@@ -198,7 +227,7 @@ class _DetailedDeviceSummaryState extends State<DetailedDeviceSummary> {
                             ),
                             HardwareAndOsCard(_fullDevice),
                             Padding(padding: EdgeInsets.all(10)),
-                            CustomFieldsCard(_fullDevice)
+                            CustomFieldsCard(_fullDevice, _updateCustomFields)
                           ],
                         ),
                       )
