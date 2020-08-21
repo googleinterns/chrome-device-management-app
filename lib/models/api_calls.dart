@@ -16,6 +16,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:chrome_management_app/controllers/widget/filter_search_bar.dart';
 import 'package:chrome_management_app/controllers/widget/remote_commands.dart';
+import 'package:chrome_management_app/controllers/widget/update_custom_fields_dialog.dart';
 import 'package:chrome_management_app/models/error_handler.dart';
 import 'package:http/http.dart' as http;
 import 'package:chrome_management_app/objects/account_devices.dart';
@@ -202,6 +203,45 @@ class ApiCalls {
     // response body
     if (response.statusCode == 200) {
       return true;
+    } else {
+      // If that call was not successful, throw an error.
+      throw ErrorHandler(response.statusCode);
+    }
+  }
+
+  /// Calls the Directory API to update the custom fields of a device.
+  ///
+  /// * [authToken] is the authentication token for API to accept the requests.
+  /// * [deviceId] is the ID of the device which its detailed information
+  /// will be retrieved.
+  /// * [updateValues] is map with the field and value that will be updated.
+  ///
+  /// This method returns a [DetailedDevice] object.
+  Future<DetailedDevice> updateCustomFields(String authToken, String deviceId,
+      Map<Fields, String> updateValues) async {
+    var response;
+    authToken = 'Bearer $authToken';
+    _client == null
+        ? response = await http.put(PREFIX + DETAILED_DEVICE_URL + deviceId,
+            headers: {HttpHeaders.authorizationHeader: authToken},
+            body: jsonEncode(<String, String>{
+              'annotatedAssetId': updateValues[Fields.id] ?? '',
+              'annotatedUser': updateValues[Fields.user] ?? '',
+              'annotatedLocation': updateValues[Fields.location] ?? '',
+              'notes': updateValues[Fields.notes] ?? ''
+            }))
+        : response = await _client.put(PREFIX + DETAILED_DEVICE_URL + deviceId,
+            headers: {HttpHeaders.authorizationHeader: authToken},
+            body: jsonEncode(<String, String>{
+              'annotatedAssetId': updateValues[Fields.id] ?? '',
+              'annotatedUser': updateValues[Fields.user] ?? '',
+              'annotatedLocation': updateValues[Fields.location] ?? '',
+              'notes': updateValues[Fields.notes] ?? ''
+            }));
+    // If conection is succesful return a DetailedDevice object by parsing the
+    // response body
+    if (response.statusCode == 200) {
+      return DetailedDevice.fromMap(json.decode(response.body));
     } else {
       // If that call was not successful, throw an error.
       throw ErrorHandler(response.statusCode);

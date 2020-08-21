@@ -14,6 +14,7 @@
 
 import 'package:chrome_management_app/controllers/widget/filter_search_bar.dart';
 import 'package:chrome_management_app/controllers/widget/remote_commands.dart';
+import 'package:chrome_management_app/controllers/widget/update_custom_fields_dialog.dart';
 import 'package:chrome_management_app/objects/detailed_device.dart';
 import 'package:http/http.dart' as http;
 import 'package:chrome_management_app/models/api_calls.dart';
@@ -48,4 +49,11 @@ Future<bool> changeState(http.Client client, String authToken, String deviceId,
     String action) async {
   ApiCalls apiCall = ApiCalls(client);
   return await apiCall.changeState(authToken, deviceId, action);
+}
+
+/// Method to update the information of a device.
+Future<DetailedDevice> updateDevice(http.Client client, String authToken,
+    String deviceId, Map<Fields, String> updateValues) async {
+  ApiCalls apiCall = ApiCalls(client);
+  return await apiCall.updateCustomFields(authToken, deviceId, updateValues);
 }

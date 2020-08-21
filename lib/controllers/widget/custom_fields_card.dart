@@ -21,10 +21,13 @@ import 'package:flutter/material.dart';
 /// fields of a device.
 class CustomFieldsCard extends StatefulWidget {
   /// Constructor
-  CustomFieldsCard(this._device, {Key key}) : super(key: key);
+  CustomFieldsCard(this._device, this._editValues, {Key key}) : super(key: key);
 
   /// Detailed device from which he information is taken
   final DetailedDevice _device;
+
+  /// Function to call when user clicks on edit values.
+  final Function _editValues;
 
   @override
   _CustomFieldsCardState createState() => new _CustomFieldsCardState();
@@ -39,13 +42,15 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
       new AnimatedSize(
           vsync: this,
           duration: const Duration(milliseconds: 500),
-          child: _isExpanded ? customFull(context) : customSummary(context))
+          child: _isExpanded
+              ? customFull(context, widget._editValues)
+              : customSummary(context, widget._editValues))
     ]);
   }
 
   /// Collapsed card widget to show a breif summary of the custom fields of a
   /// device.
-  Widget customSummary(BuildContext context) => Card(
+  Widget customSummary(BuildContext context, Function editValues) => Card(
           child: Column(children: <Widget>[
         Row(
           children: [
@@ -60,6 +65,13 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        IconButton(
+                            icon: Icon(Icons.edit), onPressed: editValues)
+                      ],
+                    ),
                     DetailedText(
                         title: 'Asset ID',
                         value: widget._device.annotatedAssetId ?? '-',
@@ -85,7 +97,7 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
 
   /// Expanded card widget to show full information of the custom fields from
   /// a device.
-  Widget customFull(BuildContext context) => Card(
+  Widget customFull(BuildContext context, Function editValues) => Card(
           child: Column(children: <Widget>[
         Row(
           children: [
@@ -100,6 +112,13 @@ class _CustomFieldsCardState extends State<CustomFieldsCard>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        IconButton(
+                            icon: Icon(Icons.edit), onPressed: editValues)
+                      ],
+                    ),
                     DetailedText(
                         title: 'Asset ID',
                         value: widget._device.annotatedAssetId ?? '-',
